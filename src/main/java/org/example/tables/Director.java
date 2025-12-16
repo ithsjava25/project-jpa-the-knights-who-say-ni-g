@@ -26,12 +26,20 @@ public class Director {
     @ManyToMany(mappedBy = "director")
     private Set<Movie> movie = new HashSet<Movie>();
 
-    public String getName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String setLastName(String lastName) {
+        return this.lastName = lastName;
     }
 
     public Set<Movie> getMovie() {

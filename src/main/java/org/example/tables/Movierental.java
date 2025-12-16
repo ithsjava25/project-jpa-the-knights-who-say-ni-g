@@ -8,7 +8,7 @@ public class Movierental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int MovieRentalId;
+    private int movieRentalId;
 
     public Movierental() {}
 

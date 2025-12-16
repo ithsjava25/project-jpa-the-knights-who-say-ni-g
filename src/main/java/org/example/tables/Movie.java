@@ -14,7 +14,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int item_id;
+    private int itemId;
 
     private String title;
 
@@ -63,7 +63,7 @@ public class Movie {
     }
 
     public int getId() {
-        return item_id;
+        return itemId;
     }
 
     public BigDecimal getPrice() {
@@ -88,14 +88,6 @@ public class Movie {
 
     public void setAvailable_stock(int available_stock) {
         this.available_stock = available_stock;
-    }
-
-    public List<Movierental> getInventoryCopies() {
-        return inventoryCopies;
-    }
-
-    public void setInventoryCopies(List<Movierental> inventoryCopies) {
-        this.inventoryCopies = inventoryCopies;
     }
 
     public String getGenre() {

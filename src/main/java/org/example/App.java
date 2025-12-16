@@ -28,6 +28,7 @@ public class App {
             emf.runInTransaction(
                 entityManager -> {
                     Customer customer = new Customer();
+
                 }
             );
         }
