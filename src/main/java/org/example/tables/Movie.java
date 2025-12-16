@@ -24,9 +24,9 @@ public class Movie {
 
     private BigDecimal price = new BigDecimal(0);
 
-    private int total_stock;
+    private int total_stock = 0;
 
-    private int available_stock;
+    private int available_stock = 0;
 
     public Movie(){}
 

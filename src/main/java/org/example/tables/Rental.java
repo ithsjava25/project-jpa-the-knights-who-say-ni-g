@@ -61,4 +61,21 @@ public class Rental {
     public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
+
+    public BigDecimal getTotalRentalPrice() {
+        return totalRentalPrice;
+    }
+
+    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
+        this.totalRentalPrice = totalRentalPrice;
+    }
+
+    public List<Movierental> getMovierental() {
+        return movierental;
+    }
+
+    public void setMovierental(List<Movierental> movierental) {
+        this.movierental = movierental;
+    }
 }
+
