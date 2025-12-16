@@ -22,7 +22,7 @@ public class Movie {
 
     private int duration;
 
-    private BigDecimal price;
+    private BigDecimal price = new BigDecimal(0);
 
     private int total_stock;
 
@@ -44,12 +44,11 @@ public class Movie {
                 joinColumns = @JoinColumn(name="movie_id"),
                 inverseJoinColumns = @JoinColumn(name="director_id"))
     private Set<Director> director = new HashSet<Director>();
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actor",
         joinColumns = @JoinColumn(name="movie_id"),
         inverseJoinColumns = @JoinColumn(name="actor_id"))
-    private Set<Actor> actor = new HashSet<Actor>();
+    private Set<Actor> actor = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
     private List<Movierental> inventoryCopies = new ArrayList<>();

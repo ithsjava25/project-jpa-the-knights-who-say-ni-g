@@ -26,6 +26,7 @@ public class Rental {
         this.rentalDate = LocalDateTime.now();
     }
 
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
