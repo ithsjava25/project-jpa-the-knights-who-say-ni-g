@@ -11,18 +11,10 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        List<Class<?>> entites;
+        List<Class<?>> entities = getClasses("org.example.tables");
+        System.out.println(entities.size());
 
-        try(ScanResult scanResult =
-                new ClassGraph()
-                        .verbose()
-                        .enableAllInfo()
-                        .acceptPackages("org.example.tables")
-                        .scan()) {
-            entites = scanResult.getClassesWithAnnotation(Entity.class).loadClasses();
-        }
-
-        final PersistenceConfiguration cfg = new HibernatePersistenceConfiguration("enf")
+        final PersistenceConfiguration cfg = new HibernatePersistenceConfiguration("emf")
             .jdbcUrl("jdbc:mysql://localhost:3306/blockbuster_gang")
             .jdbcUsername("root")
             .jdbcPassword("root")
@@ -30,10 +22,30 @@ public class App {
             .property("hibernate.show_sql", "true")
             .property("hibernate.format_sql", "true")
             .property("hibernate.highlight_sql", "true")
-            .managedClasses(entites);
+            .managedClasses(entities);
         try (EntityManagerFactory emf = cfg.createEntityManagerFactory()){
 
-
         }
+    }
+
+
+
+
+
+
+
+
+
+    private static List<Class<?>> getClasses(String pkg) {
+        List<Class<?>> entities;
+        try (ScanResult scanResult =
+                 new ClassGraph()
+                     .verbose()
+                     .enableAllInfo()
+                     .acceptPackages(pkg)
+                     .scan()) {
+            entities = scanResult.getClassesWithAnnotation(Entity.class).loadClasses();
+        }
+        return entities;
     }
 }
