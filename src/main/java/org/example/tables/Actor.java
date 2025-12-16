@@ -3,26 +3,28 @@ package org.example.tables;
 import jakarta.persistence.*;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "actor")
 public class Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int  id;
+    private int id;
 
     private String firstName;
 
     private String lastName;
 
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     public Actor(){}
 
-    public Actor(String firstName, String lastName, Date dateOfBirth){
+    public Actor(String firstName, String lastName, LocalDate dateOfBirth){
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

@@ -6,23 +6,32 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "director")
 public class Director {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
+
+    public Director(){}
+    public Director(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     @ManyToMany(mappedBy = "director")
     private Set<Movie> movie = new HashSet<Movie>();
 
     public String getName() {
-        return name;
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String firstName) {
+        this.firstName = firstName;
     }
 
     public Set<Movie> getMovie() {
