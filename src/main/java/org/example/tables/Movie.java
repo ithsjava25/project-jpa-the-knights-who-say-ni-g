@@ -34,6 +34,10 @@ public class Movie {
         return title;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -62,4 +66,19 @@ public class Movie {
         this.director = director;
     }
 
+    public Set<Actor> getActor() {
+        return actor;
+    }
+
+    public void setActor(Set<Actor> actor) {
+        this.actor = actor;
+    }
+
+    public List<Inventory> getInventoryList() {
+        return inventoryCopies;
+    }
+
+    public void setInventoryList(List<Inventory> inventoryList) {
+        this.inventoryCopies = inventoryList;
+    }
 }
