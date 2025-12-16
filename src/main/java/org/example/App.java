@@ -5,6 +5,7 @@ import io.github.classgraph.ScanResult;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceConfiguration;
+import org.example.tables.Customer;
 import org.hibernate.jpa.HibernatePersistenceConfiguration;
 
 import java.util.List;
@@ -24,7 +25,11 @@ public class App {
             .property("hibernate.highlight_sql", "true")
             .managedClasses(entities);
         try (EntityManagerFactory emf = cfg.createEntityManagerFactory()){
-
+            emf.runInTransaction(
+                entityManager -> {
+                    Customer customer = new Customer();
+                }
+            );
         }
     }
 

@@ -2,7 +2,9 @@ package org.example.tables;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +16,14 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rentalId;
 
-    private LocalDate rentalDate;
+    private LocalDateTime rentalDate;
 
-    private LocalDate returnDate;
+    private LocalDateTime returnDate;
 
-    public Rental() {}
+    private BigDecimal totalRentalPrice;
 
-    public Rental(LocalDate rentalDate, LocalDate returnDate){
-        this.rentalDate = rentalDate;
-        this.returnDate = returnDate; 
+    public Rental() {
+        this.rentalDate = LocalDateTime.now();
     }
 
     @ManyToOne
@@ -30,7 +31,7 @@ public class Rental {
     private Customer customer;
 
     @OneToMany(mappedBy = "rental", cascade = CascadeType.PERSIST)
-    private List<Inventory>  inventories = new ArrayList<>();
+    private List<Movierental> movierental  = new ArrayList<>();
 
     public Customer getCustomer() {
         return customer;
@@ -40,31 +41,23 @@ public class Rental {
         this.customer = customer;
     }
 
-    public List<Inventory> getInventories() {
-        return inventories;
-    }
-
-    public void setInventories(List<Inventory> inventories) {
-        this.inventories = inventories;
-    }
-
     public Long getRentalId() {
         return rentalId;
     }
 
-    public LocalDate getRentalDate() {
+    public LocalDateTime getRentalDate() {
         return rentalDate;
     }
 
-    public void setRentalDate(LocalDate rentalDate) {
+    public void setRentalDate(LocalDateTime rentalDate) {
         this.rentalDate = rentalDate;
     }
 
-    public LocalDate getReturnDate() {
+    public LocalDateTime getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 }

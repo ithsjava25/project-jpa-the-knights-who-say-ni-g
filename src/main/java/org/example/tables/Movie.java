@@ -2,6 +2,7 @@ package org.example.tables;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int item_id;
 
     private String title;
 
@@ -21,12 +22,21 @@ public class Movie {
 
     private int duration;
 
+    private BigDecimal price;
+
+    private int total_stock;
+
+    private int available_stock;
+
     public Movie(){}
 
-    public Movie(String title, String genre, int duration){
+    public Movie(String title, String genre, int duration, BigDecimal price,  int total_stock, int available_stock) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
+        this.price = price;
+        this.total_stock = total_stock;
+        this.available_stock = available_stock;
     }
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -42,19 +52,51 @@ public class Movie {
     private Set<Actor> actor = new HashSet<Actor>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
-    private List<Inventory> inventoryCopies = new ArrayList<>();
+    private List<Movierental> inventoryCopies = new ArrayList<>();
 
 
     public String getTitle() {
         return title;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getId() {
+        return item_id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public int getTotal_stock() {
+        return total_stock;
+    }
+
+    public void setTotal_stock(int total_stock) {
+        this.total_stock = total_stock;
+    }
+
+    public int getAvailable_stock() {
+        return available_stock;
+    }
+
+    public void setAvailable_stock(int available_stock) {
+        this.available_stock = available_stock;
+    }
+
+    public List<Movierental> getInventoryCopies() {
+        return inventoryCopies;
+    }
+
+    public void setInventoryCopies(List<Movierental> inventoryCopies) {
+        this.inventoryCopies = inventoryCopies;
     }
 
     public String getGenre() {
@@ -89,11 +131,11 @@ public class Movie {
         this.actor = actor;
     }
 
-    public List<Inventory> getInventoryList() {
+    public List<Movierental> getInventoryList() {
         return inventoryCopies;
     }
 
-    public void setInventoryList(List<Inventory> inventoryList) {
+    public void setInventoryList(List<Movierental> inventoryList) {
         this.inventoryCopies = inventoryList;
     }
 }
