@@ -14,4 +14,19 @@ public class AppController {
     Button placeorder;
 
     private final AppModel model = new AppModel();
+
+
+    @FXML
+    public void initialize(){
+        printOutButtons();
+    }
+
+    public void printOutButtons(){
+        searchmovietitle.setOnAction(e -> {
+            System.out.println("button searchMovie ");
+        });
+        placeorder.setOnAction(e -> {
+            System.out.println("button placeOrder ");
+        });
+    }
 }
