@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "rental")
 public class Rental {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rentalId;
@@ -33,6 +34,8 @@ public class Rental {
 
     @OneToMany(mappedBy = "rental", cascade = CascadeType.PERSIST)
     private List<Movierental> movierental  = new ArrayList<>();
+    //Blir det många listor om man har List<Movierental> här?
+    //Eller kan man slå ihop dem med att ha List<Movie> istället?
 
     public Customer getCustomer() {
         return customer;
@@ -70,7 +73,7 @@ public class Rental {
         this.totalRentalPrice = totalRentalPrice;
     }
 
-    public List<Movierental> getMovierental() {
+public List<Movierental> getMovierental() {
         return movierental;
     }
 
