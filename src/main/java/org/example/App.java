@@ -3,6 +3,7 @@ package org.example;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceConfiguration;
 import org.example.tables.Customer;
@@ -24,6 +25,7 @@ public class App {
             .property("hibernate.format_sql", "true")
             .property("hibernate.highlight_sql", "true")
             .managedClasses(entities);
+
         try (EntityManagerFactory emf = cfg.createEntityManagerFactory()){
             emf.runInTransaction(
                 entityManager -> {
@@ -31,15 +33,10 @@ public class App {
 
                 }
             );
+
+
         }
     }
-
-
-
-
-
-
-
 
 
     private static List<Class<?>> getClasses(String pkg) {
