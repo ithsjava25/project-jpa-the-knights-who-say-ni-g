@@ -3,9 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.AppController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+          <TextField text="sök fält."/>
+      </HBox>
 
-<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.AppController">
+   </top>
+   <left>
+       <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+       <Button fx:id="searchmovietitle">Sök på film title ...</Button>
+       <Button fx:id="placeorder">Lägg order ...</Button>
+       </ListView>
+   </left>
    <center>
-      <CheckBox mnemonicParsing="false" text="CheckBox" BorderPane.alignment="CENTER" />
+      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

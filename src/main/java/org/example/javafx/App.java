@@ -31,11 +31,11 @@ public class App extends Application{
 
 
     public static void main (String[] args){
-        try {
-            persistanceStart();
-        }catch (Exception e){
-            System.out.println("Error with hibernate start: " + e.getMessage());
-        }
+//        try {
+//            persistanceStart();
+//        }catch (Exception e){
+//            System.out.println("Error with hibernate start: " + e.getMessage());
+//        }
         try {
             launch();
         }catch (Exception e){

@@ -1,0 +1,12 @@
+
+
+#root{
+    -fx-background-color: gray;
+}
+
+#homebuttonpane{
+    -fx-alignment: TOP_RIGHT;
+}
+
+#spacer{
+}
