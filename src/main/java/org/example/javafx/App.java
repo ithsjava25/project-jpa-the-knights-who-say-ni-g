@@ -1,4 +1,4 @@
-package org.example;
+package org.example.javafx;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
@@ -6,6 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceConfiguration;
 import org.example.service.RentalService;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.hibernate.jpa.HibernatePersistenceConfiguration;
@@ -13,8 +18,34 @@ import org.hibernate.jpa.HibernatePersistenceConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class App {
-    public static void main(String[] args) {
+public class App extends Application{
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/example/homescreen.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 720, 480);
+        primaryStage.setTitle("Blockbuster");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+
+    public static void main (String[] args){
+        try {
+            persistanceStart();
+        }catch (Exception e){
+            System.out.println("Error with hibernate start: " + e.getMessage());
+        }
+        try {
+            launch();
+        }catch (Exception e){
+            System.out.println("Error running launch: " + e.getMessage() + " stack: " + e.getStackTrace());
+        }
+    }
+    private static void persistanceStart() {
         List<Class<?>> entities = getClasses("org.example.tables");
         System.out.println(entities.size());
 
@@ -48,14 +79,6 @@ public class App {
 //        rs.rentMovies(kund, test);
 
     }
-
-
-
-
-
-
-
-
 
     private static List<Class<?>> getClasses(String pkg) {
         List<Class<?>> entities;
