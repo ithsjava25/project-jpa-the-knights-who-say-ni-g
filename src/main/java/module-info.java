@@ -7,6 +7,7 @@ module App {
     requires jakarta.persistence;
     requires io.github.classgraph;
     requires org.hibernate.orm.core;
+    requires jakarta.data;
 
     opens org.example.javafx to javafx.fxml;
 
