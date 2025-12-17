@@ -1,5 +1,6 @@
 package org.example;
 
+import jakarta.transaction.Transactional;
 import org.example.repository.MovieRepository;
 import org.example.tables.Movie;
 
@@ -42,8 +43,6 @@ public class MovieService {
         return movieRepository.findByActor_FirstNameAndActor_LastName(firstName, lastName);
     }
 
-    // Addera check för totalStock och availableStock...
-
     public long countMoviesByGenre(String genre) {
         return movieRepository.countByGenre(genre);
     }
@@ -64,6 +63,7 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
+    @Transactional
     public boolean deleteMovie(int id) {
         if (movieRepository.existsById(id)){
             movieRepository.deleteById(id);
