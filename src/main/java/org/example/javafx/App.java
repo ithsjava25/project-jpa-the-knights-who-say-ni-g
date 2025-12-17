@@ -1,17 +1,40 @@
-package org.example;
+package org.example.javafx;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceConfiguration;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.example.tables.Customer;
 import org.hibernate.jpa.HibernatePersistenceConfiguration;
 
 import java.util.List;
 
-public class App {
-    public static void main(String[] args) {
+public class App extends Application{
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/homescreen.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 720, 480);
+        primaryStage.setTitle("Blockbuster");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+
+    public static void main (String[] args){
+        persistanceStart();
+        launch();
+    }
+    private static void persistanceStart() {
         List<Class<?>> entities = getClasses("org.example.tables");
         System.out.println(entities.size());
 
@@ -24,7 +47,9 @@ public class App {
             .property("hibernate.format_sql", "true")
             .property("hibernate.highlight_sql", "true")
             .managedClasses(entities);
-        try (EntityManagerFactory emf = cfg.createEntityManagerFactory()){
+
+
+        try (EntityManagerFactory emf = cfg.createEntityManagerFactory()) {
             emf.runInTransaction(
                 entityManager -> {
                     Customer customer = new Customer();
@@ -33,14 +58,6 @@ public class App {
             );
         }
     }
-
-
-
-
-
-
-
-
 
     private static List<Class<?>> getClasses(String pkg) {
         List<Class<?>> entities;
@@ -54,4 +71,12 @@ public class App {
         }
         return entities;
     }
+
+
 }
+
+
+
+
+
+
