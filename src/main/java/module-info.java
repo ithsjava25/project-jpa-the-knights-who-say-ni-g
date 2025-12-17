@@ -8,6 +8,8 @@ module App {
     requires io.github.classgraph;
     requires org.hibernate.orm.core;
     requires jakarta.data;
+    requires jakarta.transaction;
+    requires jakarta.cdi;
 
     opens org.example.javafx to javafx.fxml;
 
