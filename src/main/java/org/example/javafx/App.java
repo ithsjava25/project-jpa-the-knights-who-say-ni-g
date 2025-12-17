@@ -20,7 +20,7 @@ public class App extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/homescreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/example/homescreen.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, 720, 480);
         primaryStage.setTitle("Blockbuster");
@@ -31,8 +31,16 @@ public class App extends Application{
 
 
     public static void main (String[] args){
-        persistanceStart();
-        launch();
+        try {
+            persistanceStart();
+        }catch (Exception e){
+            System.out.println("Error with hibernate start: " + e.getMessage());
+        }
+        try {
+            launch();
+        }catch (Exception e){
+            System.out.println("Error running launch: " + e.getMessage() + " stack: " + e.getStackTrace());
+        }
     }
     private static void persistanceStart() {
         List<Class<?>> entities = getClasses("org.example.tables");
