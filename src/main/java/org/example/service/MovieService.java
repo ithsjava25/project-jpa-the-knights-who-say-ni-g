@@ -1,4 +1,4 @@
-package org.example;
+package org.example.service;
 
 import jakarta.transaction.Transactional;
 import org.example.repository.MovieRepository;
