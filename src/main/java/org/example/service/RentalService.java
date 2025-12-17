@@ -1,6 +1,7 @@
 package org.example.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.example.repository.CustomerRepository;
 import org.example.repository.RentalRepository;
 import org.example.tables.Customer;
@@ -13,30 +14,29 @@ import java.util.List;
 
 public class RentalService {
 
-    private CustomerRepository customerRepository;
-    private RentalRepository rentalRepository;
-    //private MovieRepository movieRepository;
+    private final CustomerRepository customerRepository;
+    private final RentalRepository rentalRepository;
+   // private final MovieRepository movieRepository;
 
-    public RentalService(){}
-    /*
-    public RentalService(CustomerRepository customerRepository, MovieRepository movieRepository, RentalRepository rentalRepository) {
+
+    public RentalService(CustomerRepository customerRepository, /*MovieRepository movieRepository,*/ RentalRepository rentalRepository) {
         this.customerRepository = customerRepository;
-        this.movieRepository = movieRepository;
+        //this.movieRepository = movieRepository;
         this.rentalRepository = rentalRepository;
     }
-     */
+
 
     // get all rentals for a costumer? Via Repository
 
     // Create a rental for a customer, information sent to Repository via save
-// @Transactional
+    @Transactional
     public Rental rentMovies(Customer customer, List<Movie> movies){
-        // Check the customer 
-        Customer verifiedCustomer;
+        // Check the customer (get customer id)?
+        Customer verifiedCustomer = null;
         try {
             verifiedCustomer = customerRepository.findByEmail(customer.getEmail());
         }catch(Exception e){
-            throw new EntityNotFoundException("The customer does not exist");
+            System.out.println("The customer does not exist");
         }
 
         Rental rental = new Rental();

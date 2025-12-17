@@ -14,7 +14,6 @@ public interface RentalRepository extends CrudRepository<Rental,Long> {
 
     @Find
     List<Rental> findByCustomerCustomerId(Long customerId);
-    List<Rental> findByCustomer(Customer customer); // ? Search by a customer object
 
     // Find totalRentPrice?
     // Find returnDate?

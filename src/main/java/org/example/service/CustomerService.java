@@ -22,16 +22,17 @@ public class CustomerService {
     //Saves a new Customer for the Customer table
     public Customer createCustomer(String firstName, String lastName, String email) {
 
-        if (findByEmail(email) != null) {
-            throw new IllegalArgumentException("Email-adress is already in use!");
-        }
 
         Customer customer = new Customer();
         customer.setFirstName(firstName);
         customer.setLastName(lastName);
         customer.setEmail(email);
 
-        return customerRepository.save(customer);
+        try {
+            return customerRepository.save(customer);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Email address is already in use!");
+        }
     }
 
     //Needs more operations?
