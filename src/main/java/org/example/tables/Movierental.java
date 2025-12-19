@@ -2,16 +2,17 @@ package org.example.tables;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "movie_rental")
+//Entity
+//@Table(name = "movie_rental")
 public class Movierental {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieRentalId;
 
     public Movierental() {}
 
+    /*
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
@@ -20,7 +21,9 @@ public class Movierental {
     @JoinColumn(name = "rental_id")
     private Rental rental;
 
+     */
 
+    /*
     public Rental getRental() {
         return rental;
     }
@@ -36,4 +39,6 @@ public class Movierental {
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
+
+     */
 }

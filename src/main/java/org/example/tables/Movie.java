@@ -3,9 +3,7 @@ package org.example.tables;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,20 +36,25 @@ public class Movie {
         this.total_stock = total_stock;
         this.available_stock = available_stock;
     }
-
+    /*
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_director",
                 joinColumns = @JoinColumn(name="movie_id"),
                 inverseJoinColumns = @JoinColumn(name="director_id"))
     private Set<Director> director = new HashSet<Director>();
-    @ManyToMany(cascade = CascadeType.PERSIST)
+
+     */
+    @ManyToMany
     @JoinTable(name = "movie_actor",
         joinColumns = @JoinColumn(name="movie_id"),
         inverseJoinColumns = @JoinColumn(name="actor_id"))
     private Set<Actor> actor = new HashSet<>();
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.PERSIST)
-    private List<Movierental> inventoryCopies = new ArrayList<>();
+
+    @ManyToMany(mappedBy ="movierental")
+    private Set<Rental> rentals = new HashSet<>();
+
+
 
 
     public String getTitle() {
@@ -105,7 +108,7 @@ public class Movie {
     public void setDuration(int duration) {
         this.duration = duration;
     }
-
+    /*
     public Set<Director> getDirector() {
         return director;
     }
@@ -113,6 +116,8 @@ public class Movie {
     public void setDirector(Set<Director> director) {
         this.director = director;
     }
+
+     */
 
     public Set<Actor> getActor() {
         return actor;
@@ -122,11 +127,12 @@ public class Movie {
         this.actor = actor;
     }
 
-    public List<Movierental> getInventoryList() {
-        return inventoryCopies;
+    public Set<Rental> getRentals() {
+        return rentals;
     }
 
-    public void setInventoryList(List<Movierental> inventoryList) {
-        this.inventoryCopies = inventoryList;
+    public void setRentals(Set<Rental> inventoryList) {
+        this.rentals = inventoryList;
     }
+
 }

@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "director")
+//@Entity
+//@Table(name = "director")
 public class Director {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     private String firstName;
@@ -23,7 +23,7 @@ public class Director {
         this.lastName = lastName;
     }
 
-    @ManyToMany(mappedBy = "director")
+    //@ManyToMany(mappedBy = "director")
     private Set<Movie> movie = new HashSet<Movie>();
 
     public String getFirstName() {

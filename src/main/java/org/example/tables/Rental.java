@@ -6,7 +6,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "rental")
@@ -32,10 +34,14 @@ public class Rental {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "rental", cascade = CascadeType.PERSIST)
-    private List<Movierental> movierental  = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "movie_rental",
+        joinColumns = @JoinColumn(name ="rental_id"),
+        inverseJoinColumns = @JoinColumn(name="movie_id"))
+    private Set<Movie> movierental  = new HashSet<>();
     //Blir det många listor om man har List<Movierental> här?
     //Eller kan man slå ihop dem med att ha List<Movie> istället?
+
 
     public Customer getCustomer() {
         return customer;
@@ -73,12 +79,13 @@ public class Rental {
         this.totalRentalPrice = totalRentalPrice;
     }
 
-public List<Movierental> getMovierental() {
+    public Set<Movie> getMovierental() {
         return movierental;
     }
 
-    public void setMovierental(List<Movierental> movierental) {
+    public void setMovierental(Set<Movie> movierental) {
         this.movierental = movierental;
     }
+
 }
 
