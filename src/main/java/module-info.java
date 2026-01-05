@@ -10,9 +10,13 @@ module App {
     requires jakarta.data;
     requires jakarta.transaction;
     requires jakarta.cdi;
+    requires jakarta.inject;
+    requires jakarta.el;
 
-    opens org.example.javafx to javafx.fxml;
+    opens org.example.javafx;
+    opens org.example.service;
+    opens org.example.tables;
+    opens org.example.repository;
 
-    opens org.example.tables to org.hibernate.orm.core;
     exports org.example.javafx;
 }

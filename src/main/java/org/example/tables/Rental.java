@@ -25,6 +25,8 @@ public class Rental {
 
     private BigDecimal totalRentalPrice;
 
+    private Long customerId;
+
     public Rental() {
         this.rentalDate = LocalDateTime.now();
     }
@@ -45,6 +47,14 @@ public class Rental {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public Long getId() {
+        return customerId;
+    }
+
+    public void setId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public void setCustomer(Customer customer) {

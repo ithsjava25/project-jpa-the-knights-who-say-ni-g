@@ -1,8 +1,11 @@
 package org.example.service;
 
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.example.repository.CustomerRepository;
+import org.example.repository.MovieRepository;
 import org.example.repository.RentalRepository;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
@@ -14,15 +17,19 @@ import java.util.List;
 
 public class RentalService {
 
-    private final CustomerRepository customerRepository;
-    private final RentalRepository rentalRepository;
-   // private final MovieRepository movieRepository;
+    @Inject
+    RentalRepository rentalRepository;
+    @Inject
+    EntityManager em;
 
 
-    public RentalService(CustomerRepository customerRepository, /*MovieRepository movieRepository,*/ RentalRepository rentalRepository) {
-        this.customerRepository = customerRepository;
+    public RentalService(CustomerRepository customerRepository, MovieRepository movieRepository, RentalRepository rentalRepository) {
+        //this.customerRepository = customerRepository;
         //this.movieRepository = movieRepository;
         this.rentalRepository = rentalRepository;
+    }
+
+    public RentalService() {
     }
 
 
@@ -34,7 +41,7 @@ public class RentalService {
         // Check the customer (get customer id)?
         Customer verifiedCustomer = null;
         try {
-            verifiedCustomer = customerRepository.findByEmail(customer.getEmail());
+            //verifiedCustomer = customerRepository.findByEmail(customer.getEmail());
         }catch(Exception e){
             System.out.println("The customer does not exist");
         }

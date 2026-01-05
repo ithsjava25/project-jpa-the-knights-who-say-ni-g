@@ -1,14 +1,25 @@
 package org.example.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.transaction.Transactional;
 import org.example.repository.CustomerRepository;
 import org.example.tables.Customer;
 
-//@ApplicationScooped
+@ApplicationScoped
 public class CustomerService {
 
-
     //Creates an object of CustomerRepository
+    @Inject
     private CustomerRepository customerRepository;
+
+    @Inject
+    private EntityManager em;
+
+    public CustomerService() {
+    }
 
     //Constructor for the field
     public CustomerService(CustomerRepository customerRepository){
@@ -20,19 +31,24 @@ public class CustomerService {
     }
 
     //Saves a new Customer for the Customer table
-    public Customer createCustomer(String firstName, String lastName, String email) {
+    public void createCustomer(String firstName, String lastName, String email) {
 
-
-        Customer customer = new Customer();
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setEmail(email);
-
+        EntityTransaction tx = em.getTransaction();
         try {
-            return customerRepository.save(customer);
+            tx.begin();
+            Customer customer = new Customer(firstName, lastName, email);
+            customerRepository.save(customer);
+            tx.commit();
         } catch (Exception e) {
-            throw new IllegalArgumentException("Email address is already in use!");
+            tx.rollback();
+            throw e;
         }
+
+//        try {
+//            return customerRepository.save(customer);
+//        } catch (Exception e) {
+//            throw new IllegalArgumentException("Email address is already in use!");
+//        }
     }
 
     //Needs more operations?

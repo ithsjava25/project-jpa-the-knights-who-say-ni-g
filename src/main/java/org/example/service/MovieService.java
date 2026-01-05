@@ -1,5 +1,7 @@
 package org.example.service;
 
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.example.repository.MovieRepository;
 import org.example.tables.Movie;
@@ -8,8 +10,17 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public class MovieService {
-    private final MovieRepository movieRepository;
+public class MovieService{
+    //private final MovieRepository movieRepository;
+
+    @Inject
+    MovieRepository movieRepository;
+
+    @Inject
+    EntityManager em;
+
+    public MovieService() {
+    }
 
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -59,8 +70,8 @@ public class MovieService {
         return movieRepository.countByActor_FirstNameAndActor_LastName(firstName, lastName);
     }
 
-    public Movie saveMovie(Movie movie) {
-        return movieRepository.save(movie);
+    public void saveMovie(Movie movie) {
+        movieRepository.save(movie);
     }
 
     @Transactional
