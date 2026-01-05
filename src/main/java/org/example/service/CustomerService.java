@@ -18,8 +18,6 @@ public class CustomerService {
     @Inject
     private CustomerRepositoryC customerRepository;
 
-    @Inject
-    private EntityManager em;
 
     public CustomerService() {
     }
@@ -36,25 +34,11 @@ public class CustomerService {
 
     //Saves a new Customer for the Customer table
     public void createCustomer(String firstName, String lastName, String email) {
-
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            Customer customer = new Customer(firstName, lastName, email);
-            customerRepository.save(customer);
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            throw e;
+        //input validation and stuffs then;
+        customerRepository.save(new Customer(firstName, lastName, email));
         }
 
-//        try {
-//            return customerRepository.save(customer);
-//        } catch (Exception e) {
-//            throw new IllegalArgumentException("Email address is already in use!");
-//        }
     }
 
     //Needs more operations?
 
-}

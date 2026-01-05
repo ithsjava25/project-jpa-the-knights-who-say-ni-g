@@ -18,8 +18,6 @@ public class RentalService {
 
     @Inject
     RentalRepositoryC rentalRepository;
-    @Inject
-    EntityManager em;
 
 
 

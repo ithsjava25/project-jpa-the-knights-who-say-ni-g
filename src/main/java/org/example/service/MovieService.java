@@ -17,8 +17,6 @@ public class MovieService{
     @Inject
     MovieRepositoryC movieRepository;
 
-    @Inject
-    EntityManager em;
 
     public MovieService() {
     }
