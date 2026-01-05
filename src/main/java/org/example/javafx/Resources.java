@@ -1,20 +1,20 @@
 package org.example.javafx;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Disposes;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
+@ApplicationScoped
 public class Resources {
 
 
     @Produces
-    public EntityManager openEntityManager(){
+    public EntityManager produceEntityManager(){
         return HibernateUtil.getSessionFactory().createEntityManager();
     }
 
-    public void closeEntityManager(@Disposes EntityManager em){
+    public void close(@Disposes EntityManager em){
         if(em.isOpen()){
             em.close();
         }

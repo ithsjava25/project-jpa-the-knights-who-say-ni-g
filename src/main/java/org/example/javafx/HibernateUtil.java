@@ -20,7 +20,8 @@ public class HibernateUtil {
     private static final SessionFactory sf = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory(){
-        List<Class<?>> entities = getClasses("org.example.tables");
+
+        System.out.println("DEBUGG: STARTA BUILD SESSION");
         try {
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySetting("connection.driver_class", "com.mysql.cj.jdbc.Driver")
@@ -35,16 +36,18 @@ public class HibernateUtil {
                 .applySetting("hibernate.hbm2ddl.auto", "update")
                 .build();
 
-            Metadata metadata =
-                new MetadataSources(registry)
-                .addAnnotatedClass(Actor.class)
-                .addAnnotatedClass(Customer.class)
-                .addAnnotatedClass(Movie.class)
-                .addAnnotatedClass(Rental.class)
-                .buildMetadata();
-
-            return metadata.buildSessionFactory();
+            return new MetadataSources(registry)
+                .addAnnotatedClasses(org.example.tables.Movie.class)
+                .addAnnotatedClasses(org.example.tables.Rental.class)
+                .addAnnotatedClasses(org.example.tables.Actor.class)
+                .addAnnotatedClasses(org.example.tables.Customer.class)
+                .getMetadataBuilder()
+                .build()
+                .getSessionFactoryBuilder()
+                .build();
         }catch (Exception e){
+            System.err.println("INITIALZATION ERROR HibernateUtil: ");
+            e.printStackTrace();
             throw new ExceptionInInitializerError(e);
         }
     }

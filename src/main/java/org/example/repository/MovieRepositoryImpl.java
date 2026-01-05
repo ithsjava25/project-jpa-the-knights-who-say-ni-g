@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MovieRepository extends CrudRepository<Movie, Integer> {
+public interface MovieRepositoryImpl extends CrudRepository<Movie, Integer> {
 
     boolean existsById(Integer id);
 

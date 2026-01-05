@@ -6,14 +6,17 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.transaction.Transactional;
 import org.example.repository.CustomerRepository;
+import org.example.repository.CustomerRepositoryC;
 import org.example.tables.Customer;
+
+import java.util.Optional;
 
 @ApplicationScoped
 public class CustomerService {
 
     //Creates an object of CustomerRepository
     @Inject
-    private CustomerRepository customerRepository;
+    private CustomerRepositoryC customerRepository;
 
     @Inject
     private EntityManager em;
@@ -22,11 +25,12 @@ public class CustomerService {
     }
 
     //Constructor for the field
-    public CustomerService(CustomerRepository customerRepository){
-        this.customerRepository = customerRepository;
-    }
+    //public CustomerService(CustomerRepository customerRepository){
+//        this.customerRepository = customerRepository;
+//    }
+
     //Reads Customer from the table
-    public Customer findByEmail(String email){
+    public Optional<Customer> findByEmail(String email){
         return customerRepository.findByEmail(email);
     }
 
