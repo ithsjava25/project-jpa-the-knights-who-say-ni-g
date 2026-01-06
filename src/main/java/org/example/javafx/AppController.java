@@ -9,7 +9,6 @@ import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
-import org.hibernate.StatelessSession;
 
 import java.math.BigDecimal;
 
@@ -17,9 +16,9 @@ public class AppController {
 
     @Inject
     CustomerService customerService;
-    //@Inject
+    @Inject
     MovieService movieService;
-    //@Inject
+    @Inject
     RentalService rentalService;
 
     @FXML
@@ -31,36 +30,27 @@ public class AppController {
 
     private final AppModel model = new AppModel();
 
-
     @FXML
-    public void initialize(){
+    public void initialize() {
 
         printOutButtons();
     }
 
-    public void printOutButtons(){
-        try(StatelessSession session = HibernateUtil.getSessionFactory().openStatelessSession()) {
+    public void printOutButtons() {
 //        System.out.println("New customer! ");
 //        session.beginTransaction();
 //        Customer customer = new Customer("Bob", "bobby", "bobatsson");
 //        session.insert(customer);
 //        session.getTransaction().commit();
-            searchmovietitle.setOnAction(e -> {
-                System.out.println("Added test moive ");
-                session.beginTransaction();
-                Movie movie = new Movie("test", "action", 200, BigDecimal.TEN, 5, 10);
+        searchmovietitle.setOnAction(e -> {
+            customerService.updateCustomer("Roger", "Eriksson", "erik@mail");
+        });
 
+        placeorder.setOnAction(e -> {
+            System.out.println("Add customer anna anderson");
+            customerService.createCustomer("Anna", "Andersson", "test");
 
-                session.insert(movie);
-                session.getTransaction().commit();
-                System.out.println("done!");
-            });
-
-            placeorder.setOnAction(e -> {
-                System.out.println("Add customer anna anderson");
-                customerService.createCustomer("Anna", "Andersson", "test");
-
-            });
-        }
+        });
     }
 }
+
