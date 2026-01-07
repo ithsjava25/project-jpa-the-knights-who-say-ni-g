@@ -1,8 +1,9 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import org.example.repository.CustomerRepositoryC;
+import org.example.javafx.HibernateUtil;
+import org.example.repository.CustomerRepository;
+import org.example.repository.CustomerRepository_;
 import org.example.tables.Customer;
 
 import java.util.Optional;
@@ -11,8 +12,8 @@ import java.util.Optional;
 public class CustomerService {
 
     //Creates an object of CustomerRepository
-    @Inject
-    private CustomerRepositoryC customerRepository;
+    //@Inject
+    private CustomerRepository customerRepository = new CustomerRepository_(HibernateUtil.getSessionFactory().openStatelessSession());
 
 
     //Reads Customer from the table

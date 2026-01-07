@@ -6,13 +6,11 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-
 public class HibernateUtil {
 
     private static final SessionFactory sf = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory(){
-
         try {
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySetting("connection.driver_class", "com.mysql.cj.jdbc.Driver")
@@ -25,6 +23,8 @@ public class HibernateUtil {
                 .applySetting("hibernate.show_sql", "true")
                 .applySetting("hibernate.format_sql", "true")
                 .applySetting("hibernate.hbm2ddl.auto", "update")
+                .applySetting("hibernate.transaction.coordinator_class", "jta")
+                .applySetting("hibernate.transaction.jta.platform", "org.hibernate.engine.transaction.jta.platform.internal.JBossStandAloneJtaPlatform")
                 .build();
 
             return new MetadataSources(registry)

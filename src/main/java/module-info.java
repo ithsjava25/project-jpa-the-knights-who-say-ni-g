@@ -14,6 +14,7 @@ module App {
     requires jakarta.inject;
     requires jakarta.el;
     requires weld.se.core;
+    requires narayana.jta;
 
     opens org.example.javafx;
     opens org.example.service;

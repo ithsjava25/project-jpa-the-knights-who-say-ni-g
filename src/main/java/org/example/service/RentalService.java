@@ -1,11 +1,10 @@
 package org.example.service;
 
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import org.example.repository.CustomerRepository;
+import org.example.javafx.HibernateUtil;
 import org.example.repository.RentalRepository;
-import org.example.repository.RentalRepositoryC;
+import org.example.repository.RentalRepository_;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.example.tables.Rental;
@@ -13,12 +12,10 @@ import org.example.tables.Rental;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@ApplicationScoped
 public class RentalService {
 
-    @Inject
-    RentalRepositoryC rentalRepository;
-
+    RentalRepository rentalRepository = new RentalRepository_(HibernateUtil.getSessionFactory().openStatelessSession());
 
 
     // get all rentals for a costumer? Via Repository

@@ -7,10 +7,6 @@ import javafx.scene.layout.BorderPane;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
-import org.example.tables.Customer;
-import org.example.tables.Movie;
-
-import java.math.BigDecimal;
 
 public class AppController {
 

@@ -10,14 +10,13 @@ public class Resources {
 
 
     @Produces
-    public EntityManager produceEntityManager(){
+    public EntityManager produceEntityManager() {
         return HibernateUtil.getSessionFactory().createEntityManager();
     }
 
-    public void close(@Disposes EntityManager em){
-        if(em.isOpen()){
+    public void close(@Disposes EntityManager em) {
+        if (em.isOpen()) {
             em.close();
         }
     }
-
 }

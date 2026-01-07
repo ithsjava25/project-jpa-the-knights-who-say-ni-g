@@ -1,27 +1,19 @@
 package org.example.service;
 
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
-import org.example.repository.MovieRepositoryC;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.example.javafx.HibernateUtil;
+import org.example.repository.MovieRepository;
+import org.example.repository.MovieRepository_;
 import org.example.tables.Movie;
-
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
-
+@ApplicationScoped
 public class MovieService{
     //private final MovieRepository movieRepository;
 
-    @Inject
-    MovieRepositoryC movieRepository;
+    MovieRepository movieRepository = new MovieRepository_(HibernateUtil.getSessionFactory().openStatelessSession());
 
 
     public MovieService() {
-    }
-
-    public MovieService(MovieRepositoryC movieRepository) {
-        this.movieRepository = movieRepository;
     }
 
     public Optional<Movie> findMovieById(int id) {
