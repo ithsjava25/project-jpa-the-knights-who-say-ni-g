@@ -13,12 +13,12 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory(){
         try {
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .applySetting("connection.driver_class", "com.mysql.cj.jdbc.Driver")
-                .applySetting("dialect", "org.hibernate.dialect.MySQL8Dialect")
+                .applySetting("Hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver")
+                .applySetting("dialect", "org.hibernate.dialect.MySQLDialect")
                 .applySetting("hibernate.connection.url",
-                    "jdbc:mysql://localhost:3306/blockbuster_gang")
-                .applySetting("hibernate.connection.username", "root")
-                .applySetting("hibernate.connection.password", "root")
+                    System.getenv("DB_URL"))
+                .applySetting("hibernate.connection.username", System.getenv("DB_USERNAME"))
+                .applySetting("hibernate.connection.password", System.getenv("DB_PASSWORD"))
                 .applySetting("hibernate.current_session_context_class", "thread")
                 .applySetting("hibernate.show_sql", "true")
                 .applySetting("hibernate.format_sql", "true")
@@ -37,7 +37,7 @@ public class HibernateUtil {
                 .getSessionFactoryBuilder()
                 .build();
         }catch (Exception e){
-            System.err.println("INITIALZATION ERROR HibernateUtil: ");
+            System.err.println("INITIALIZATION ERROR HibernateUtil: ");
             e.printStackTrace();
             throw new ExceptionInInitializerError(e);
         }
