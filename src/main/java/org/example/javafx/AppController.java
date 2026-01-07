@@ -1,10 +1,21 @@
 package org.example.javafx;
 
+import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import org.example.service.CustomerService;
+import org.example.service.MovieService;
+import org.example.service.RentalService;
 
 public class AppController {
+
+    @Inject
+    CustomerService customerService;
+    @Inject
+    MovieService movieService;
+    @Inject
+    RentalService rentalService;
 
     @FXML
     BorderPane root;
@@ -15,18 +26,27 @@ public class AppController {
 
     private final AppModel model = new AppModel();
 
-
     @FXML
-    public void initialize(){
+    public void initialize() {
+
         printOutButtons();
     }
 
-    public void printOutButtons(){
+    public void printOutButtons() {
+//        System.out.println("New customer! ");
+//        session.beginTransaction();
+//        Customer customer = new Customer("Bob", "bobby", "bobatsson");
+//        session.insert(customer);
+//        session.getTransaction().commit();
         searchmovietitle.setOnAction(e -> {
-            System.out.println("button searchMovie ");
+            customerService.updateCustomer("Roger", "Eriksson", "test");
         });
+
         placeorder.setOnAction(e -> {
-            System.out.println("button placeOrder ");
+            System.out.println("Add customer anna anderson");
+            customerService.createCustomer("Anna", "Andersson", "test");
+
         });
     }
 }
+
