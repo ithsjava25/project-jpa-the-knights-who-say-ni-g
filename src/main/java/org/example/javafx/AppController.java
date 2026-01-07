@@ -43,7 +43,7 @@ public class AppController {
 //        session.insert(customer);
 //        session.getTransaction().commit();
         searchmovietitle.setOnAction(e -> {
-            customerService.updateCustomer("Roger", "Eriksson", "erik@mail");
+            customerService.updateCustomer("Roger", "Eriksson", "test");
         });
 
         placeorder.setOnAction(e -> {

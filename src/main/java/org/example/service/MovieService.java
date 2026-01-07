@@ -4,7 +4,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.example.repository.MovieRepositoryC;
-import org.example.repository.MovieRepositoryImpl;
 import org.example.tables.Movie;
 
 import java.math.BigDecimal;

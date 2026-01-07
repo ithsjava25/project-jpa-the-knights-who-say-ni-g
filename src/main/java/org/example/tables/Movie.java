@@ -16,25 +16,25 @@ public class Movie {
 
     private String title;
 
-    private String genre;
+    //private String genre;
 
-    private int duration;
+    //private int duration;
 
-    private BigDecimal price = new BigDecimal(0);
+    //private BigDecimal price = new BigDecimal(0);
 
-    private int total_stock = 0;
+    //private int total_stock = 0;
 
-    private int available_stock = 0;
+    //private int available_stock = 0;
 
     public Movie(){}
 
     public Movie(String title, String genre, int duration, BigDecimal price,  int total_stock, int available_stock) {
         this.title = title;
-        this.genre = genre;
-        this.duration = duration;
-        this.price = price;
-        this.total_stock = total_stock;
-        this.available_stock = available_stock;
+//        this.genre = genre;
+//        this.duration = duration;
+//        this.price = price;
+//        this.total_stock = total_stock;
+//        this.available_stock = available_stock;
     }
     /*
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -69,45 +69,45 @@ public class Movie {
         return itemId;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getTotal_stock() {
-        return total_stock;
-    }
-
-    public void setTotal_stock(int total_stock) {
-        this.total_stock = total_stock;
-    }
-
-    public int getAvailable_stock() {
-        return available_stock;
-    }
-
-    public void setAvailable_stock(int available_stock) {
-        this.available_stock = available_stock;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+//    public BigDecimal getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(BigDecimal price) {
+//        this.price = price;
+//    }
+//
+//    public int getTotal_stock() {
+//        return total_stock;
+//    }
+//
+//    public void setTotal_stock(int total_stock) {
+//        this.total_stock = total_stock;
+//    }
+//
+//    public int getAvailable_stock() {
+//        return available_stock;
+//    }
+//
+//    public void setAvailable_stock(int available_stock) {
+//        this.available_stock = available_stock;
+//    }
+//
+//    public String getGenre() {
+//        return genre;
+//    }
+//
+//    public void setGenre(String genre) {
+//        this.genre = genre;
+//    }
+//
+//    public int getDuration() {
+//        return duration;
+//    }
+//
+//    public void setDuration(int duration) {
+//        this.duration = duration;
+//    }
     /*
     public Set<Director> getDirector() {
         return director;

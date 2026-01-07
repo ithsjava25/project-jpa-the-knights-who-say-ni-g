@@ -1,10 +1,10 @@
 package org.example.service;
 
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.example.repository.CustomerRepositoryC;
-import org.example.repository.MovieRepositoryC;
+import org.example.repository.CustomerRepository;
+import org.example.repository.RentalRepository;
 import org.example.repository.RentalRepositoryC;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
@@ -55,9 +55,9 @@ public class RentalService {
     public BigDecimal calculatePrice(List<Movie> movies){
             BigDecimal sum = BigDecimal.ZERO;
         for(Movie movie:movies) {
-            if(movie.getPrice() != null) {
-                sum = sum.add(movie.getPrice());
-            }
+//            if(movie.getPrice() != null) {
+//                sum = sum.add(movie.getPrice());
+//            }
         }
         return sum;
     }

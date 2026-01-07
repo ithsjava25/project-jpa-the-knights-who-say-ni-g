@@ -21,9 +21,9 @@ public class Rental {
 
     private LocalDateTime rentalDate;
 
-    private LocalDateTime returnDate;
+    //private LocalDateTime returnDate;
 
-    private BigDecimal totalRentalPrice;
+    //private BigDecimal totalRentalPrice;
 
     private Long customerId;
 
@@ -43,6 +43,7 @@ public class Rental {
     private Set<Movie> movierental  = new HashSet<>();
     //Blir det många listor om man har List<Movierental> här?
     //Eller kan man slå ihop dem med att ha List<Movie> istället?
+
 
 
     public Customer getCustomer() {
@@ -73,21 +74,21 @@ public class Rental {
         this.rentalDate = rentalDate;
     }
 
-    public LocalDateTime getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDateTime returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public BigDecimal getTotalRentalPrice() {
-        return totalRentalPrice;
-    }
-
-    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
-        this.totalRentalPrice = totalRentalPrice;
-    }
+//    public LocalDateTime getReturnDate() {
+//        return returnDate;
+//    }
+//
+//    public void setReturnDate(LocalDateTime returnDate) {
+//        this.returnDate = returnDate;
+//    }
+//
+//    public BigDecimal getTotalRentalPrice() {
+//        return totalRentalPrice;
+//    }
+//
+//    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
+//        this.totalRentalPrice = totalRentalPrice;
+//    }
 
     public Set<Movie> getMovierental() {
         return movierental;

@@ -20,14 +20,14 @@ public class Actor {
 
     private String lastName;
 
-    private LocalDate dateOfBirth;
+    //private LocalDate dateOfBirth;
 
     public Actor(){}
 
     public Actor(String firstName, String lastName, LocalDate dateOfBirth){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+        //this.dateOfBirth = dateOfBirth;
     }
 
     @ManyToMany(mappedBy = "actor")
@@ -53,13 +53,13 @@ public class Actor {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+//    public LocalDate getDateOfBirth() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(LocalDate dateOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//    }
 
     public Set<Movie> getMovie() {
         return movie;
