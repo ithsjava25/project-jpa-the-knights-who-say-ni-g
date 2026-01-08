@@ -98,5 +98,13 @@ public class Rental {
         this.movierental = movierental;
     }
 
-}
+
+        public void addMovie(Movie movie) {
+            if (movie != null) {
+                this.movierental.add(movie);
+                movie.getRentals().add(this);
+            }
+        }
+    }
+
 
