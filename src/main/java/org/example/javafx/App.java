@@ -49,7 +49,7 @@ public class App extends Application{
         container.close();
     }
 
-
+//Hickaricp, använder en pool av connections till databasen
     public static void main (String[] args){
         try {
             launch(args);

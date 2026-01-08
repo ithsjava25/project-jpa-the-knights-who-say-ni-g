@@ -16,7 +16,7 @@ public class Movie {
 
     private String title;
 
-    //private String genre;
+    private String genre;
 
     //private int duration;
 
@@ -30,7 +30,7 @@ public class Movie {
 
     public Movie(String title, String genre, int duration, BigDecimal price,  int total_stock, int available_stock) {
         this.title = title;
-//        this.genre = genre;
+        this.genre = genre;
 //        this.duration = duration;
 //        this.price = price;
 //        this.total_stock = total_stock;
@@ -93,13 +93,13 @@ public class Movie {
 //        this.available_stock = available_stock;
 //    }
 //
-//    public String getGenre() {
-//        return genre;
-//    }
+    public String getGenre() {
+        return genre;
+    }
 //
-//    public void setGenre(String genre) {
-//        this.genre = genre;
-//    }
+   public void setGenre(String genre) {
+       this.genre = genre;
+   }
 //
 //    public int getDuration() {
 //        return duration;
