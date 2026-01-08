@@ -18,32 +18,17 @@ public class Movie {
 
     private String genre;
 
-    //private int duration;
+    private BigDecimal price = new BigDecimal(0);
 
-    //private BigDecimal price = new BigDecimal(0);
-
-    //private int total_stock = 0;
-
-    //private int available_stock = 0;
 
     public Movie(){}
 
     public Movie(String title, String genre, int duration, BigDecimal price,  int total_stock, int available_stock) {
         this.title = title;
         this.genre = genre;
-//        this.duration = duration;
-//        this.price = price;
-//        this.total_stock = total_stock;
-//        this.available_stock = available_stock;
+        this.price = price;
     }
-    /*
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "movie_director",
-                joinColumns = @JoinColumn(name="movie_id"),
-                inverseJoinColumns = @JoinColumn(name="director_id"))
-    private Set<Director> director = new HashSet<Director>();
 
-     */
     @ManyToMany
     @JoinTable(name = "movie_actor",
         joinColumns = @JoinColumn(name="movie_id"),
@@ -69,55 +54,23 @@ public class Movie {
         return itemId;
     }
 
-//    public BigDecimal getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(BigDecimal price) {
-//        this.price = price;
-//    }
-//
-//    public int getTotal_stock() {
-//        return total_stock;
-//    }
-//
-//    public void setTotal_stock(int total_stock) {
-//        this.total_stock = total_stock;
-//    }
-//
-//    public int getAvailable_stock() {
-//        return available_stock;
-//    }
-//
-//    public void setAvailable_stock(int available_stock) {
-//        this.available_stock = available_stock;
-//    }
-//
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+
     public String getGenre() {
         return genre;
     }
-//
+
    public void setGenre(String genre) {
        this.genre = genre;
    }
-//
-//    public int getDuration() {
-//        return duration;
-//    }
-//
-//    public void setDuration(int duration) {
-//        this.duration = duration;
-//    }
-    /*
-    public Set<Director> getDirector() {
-        return director;
-    }
 
-    public void setDirector(Set<Director> director) {
-        this.director = director;
-    }
-
-     */
 
     public Set<Actor> getActor() {
         return actor;
