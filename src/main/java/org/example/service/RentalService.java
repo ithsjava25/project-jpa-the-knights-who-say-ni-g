@@ -43,9 +43,10 @@ public class RentalService {
             for (Movie movie : movies) {
                 rental.addMovie(movie);
 
+            }
                 rentalRepository.createRental(rental);
                 tx.commit();
-            }
+
 
         } catch (Exception e) {
             tx.rollback();
