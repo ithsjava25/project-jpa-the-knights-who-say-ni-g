@@ -1,14 +1,14 @@
-package org.example.javafx;
+package org.example.javafx.controller;
 
+import com.sun.tools.javac.Main;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
@@ -18,14 +18,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.example.javafx.AppModel;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Movie;
 
 import java.util.List;
-
-public class AppController {
+public class HomeScreenController {
 
     @Inject
     CustomerService customerService;
@@ -34,31 +34,36 @@ public class AppController {
     @Inject
     RentalService rentalService;
     @Inject
-    private Instance<Object> instance; //container injection
+    NavigationService navigation;
+
+    private final String moviePosterURL = "/org/example/movieposter.fxml";
+    private final String shoppingCartURL = "/org/example/choppingcart.fxml";
+
 
     @FXML
     BorderPane root;
     @FXML
-    ScrollPane scrollTopPane;
+    ScrollPane scrollTopPane = new ScrollPane();
     @FXML
     ScrollPane scrollLowPane;
     @FXML
     HBox topMoviecard;
     @FXML
     HBox lowMoviecard;
-    @FXML
-    Button homeButton;
 
     private final AppModel model = new AppModel();
 
     @FXML
     public void initialize() {
         getAllMovies();
-        topListener();
+//        topListener();
         //printOutButtons();
     }
+    public void setRoot(BorderPane root) {
+        this.root = root;
+    }
 
-    public Node createMoviePosters(Movie movie) {
+    public void createMoviePosters(Movie movie) {
         VBox card = new VBox();
         card.setAlignment(Pos.CENTER);
         card.setSpacing(5);
@@ -77,72 +82,54 @@ public class AppController {
         card.getChildren().addAll(poster, titleLabel);
         topMoviecard.setSpacing(10);
         topMoviecard.getChildren().add(card);
-
+        scrollTopPane.setContent(topMoviecard);
         card.setOnMouseClicked(event -> handleMovieClick(movie));
 
-        return card;
+
     }
 
 
     private void handleMovieClick(Movie movie) {
-        try {
-            //load new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/movieposter.fxml"));
-
-            loader.setControllerFactory(type -> instance.select(type).get());
-
-            Parent nextView = loader.load();
-
-            movieposterController controller = loader.getController();
-
-            controller.initData(movie, model);
-            root.setCenter(nextView);
-        } catch (Exception e) {
-            System.out.println("Error from switching view!");
-            e.printStackTrace();
-
-            if (e.getCause() != null) {
-                System.err.println("------Cause------");
-                e.getCause().printStackTrace();
-            }
-        }
-    }
-    public void topListener(){
-        homeButton.setOnMouseClicked(event -> {
-            changeToHomescreen();
-        });
+        navigation.setCenter(moviePosterURL, movie);
+        navigation.setLeft(shoppingCartURL);
 
     }
+//    public void topListener(){
+//        homeButton.setOnMouseClicked(event -> {
+//            changeToHomescreen();
+//        });
+//
+//    }
 
     public void getAllMovies(){
         List<Movie> allMovies = movieService.getAllMovies();
 
         for(Movie movie : allMovies){
-            Node moviePoster = createMoviePosters(movie);
+            createMoviePosters(movie);
         }
     }
 
-    public void changeToHomescreen(){
-        try {
-            //load new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/homescreen.fxml"));
-
-            loader.setControllerFactory(type -> instance.select(type).get());
-
-            Parent nextView = loader.load();
-
-            AppController controller = loader.getController();
-
-            root.setCenter(nextView);
-        } catch (Exception e) {
-            System.out.println("Error from switching view!");
-            e.printStackTrace();
-
-            if (e.getCause() != null) {
-                System.err.println("------Cause------");
-                e.getCause().printStackTrace();
-            }
-        }
-    }
+//    public void changeToHomescreen(){
+//        try {
+//            //load new FXML file
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/homescreen.fxml"));
+//
+//            loader.setControllerFactory(type -> instance.select(type).get());
+//
+//            Parent nextView = loader.load();
+//
+//            HomeScreenController controller = loader.getController();
+//
+//            root.setCenter(nextView);
+//        } catch (Exception e) {
+//            System.out.println("Error from switching view!");
+//            e.printStackTrace();
+//
+//            if (e.getCause() != null) {
+//                System.err.println("------Cause------");
+//                e.getCause().printStackTrace();
+//            }
+//        }
+//    }
 }
 

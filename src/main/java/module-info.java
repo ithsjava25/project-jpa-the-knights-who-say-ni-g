@@ -15,6 +15,7 @@ module App {
     requires jakarta.el;
     requires weld.se.core;
     requires narayana.jta;
+    requires jdk.compiler;
 
     opens org.example.javafx;
     opens org.example.service;
@@ -22,4 +23,6 @@ module App {
     opens org.example.repository;
 
     exports org.example.javafx;
+    exports org.example.javafx.controller;
+    opens org.example.javafx.controller;
 }

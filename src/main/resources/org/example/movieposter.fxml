@@ -3,8 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.movieposterController">
+<BorderPane fx:id="movieRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.MoviePosterController">
 <!--    <top>-->
 <!--        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">-->
 <!--            <HBox>-->
@@ -17,14 +17,9 @@
 <!--        </HBox>-->
 <!--    </top>-->
     <center>
-        <Pane fx:id="centerPane" >
+        <HBox>
+            <Label text="HELLO FROM MOVIEPOSTER" />
+        </HBox>
 
-        </Pane>
     </center>
-    <left>
-        <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <Button fx:id="searchmovietitle">Sök på film title ...</Button>
-            <Button fx:id="placeorder">Lägg order ...</Button>
-        </ListView>
-    </left>
 </BorderPane>

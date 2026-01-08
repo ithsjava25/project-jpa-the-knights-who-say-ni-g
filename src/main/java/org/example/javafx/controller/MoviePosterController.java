@@ -1,19 +1,21 @@
-package org.example.javafx;
+package org.example.javafx.controller;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.*;
+import org.example.javafx.AppModel;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Movie;
 
-
-public class movieposterController {
+public class MoviePosterController {
     @Inject
     CustomerService customerService;
     @Inject
@@ -27,24 +29,13 @@ public class movieposterController {
     Button placeorder;
     @FXML
     Button searchmovietitle;
+    @FXML
+    private BorderPane movieRoot;
 
-
-    public void initData(Movie movie, AppModel model){
-    starter();
+    public void initData(Movie movie){
     }
 
-    public void starter(){
-        placeorder.setOnAction(e -> {
-            customerService.createCustomer("Anna", "Svensson", "test@mail");
-        });
 
-        searchmovietitle.setOnAction(e -> {
-            var firstname = customerService.findByEmail("test");
-            if(firstname.isPresent()){
-                firstname.get().getFirstName();
-            }
-        });
-    }
 
     private void createMovieInfo(Movie movie){
         VBox totalCard = new VBox();
