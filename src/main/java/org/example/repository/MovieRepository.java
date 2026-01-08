@@ -3,7 +3,9 @@ package org.example.repository;
 import jakarta.data.repository.*;
 import org.example.tables.Movie;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Repository
 
@@ -11,10 +13,13 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
     //boolean existsById(Integer id);
 
-    // --FIND--
+
     @Find
-    Optional<Movie> findByTitle(String title);
-//    List<Movie> findByGenre(String genre);
+    Optional<Movie> findByTitleIgnoringCase(String title);
+
+    @Find
+    List<Movie> findByGenreIgnoringCase(String genre);
+
 //    List<Movie> findByDuration(int duration);
 //    List<Movie> findByPrice(BigDecimal price);
 //
