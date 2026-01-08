@@ -91,19 +91,6 @@ public class MainController {
         }
     }
 
-//    public class CenterStartController {
-//        private MainController mc;
-//
-//        public CenterStartController(MainController mc){
-//            this.mc = mc;
-//        }
-//        @FXML
-//        public void onNext(){
-//            mc.setCenter("CenterNext.fxml");
-//        }
-//
-//    }
-
 
 
 

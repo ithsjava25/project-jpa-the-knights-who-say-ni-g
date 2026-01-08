@@ -109,27 +109,5 @@ public class HomeScreenController {
         }
     }
 
-//    public void changeToHomescreen(){
-//        try {
-//            //load new FXML file
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/homescreen.fxml"));
-//
-//            loader.setControllerFactory(type -> instance.select(type).get());
-//
-//            Parent nextView = loader.load();
-//
-//            HomeScreenController controller = loader.getController();
-//
-//            root.setCenter(nextView);
-//        } catch (Exception e) {
-//            System.out.println("Error from switching view!");
-//            e.printStackTrace();
-//
-//            if (e.getCause() != null) {
-//                System.err.println("------Cause------");
-//                e.getCause().printStackTrace();
-//            }
-//        }
-//    }
 }
 
