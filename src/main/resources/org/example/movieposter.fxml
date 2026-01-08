@@ -8,4 +8,10 @@
     <center>
         <CheckBox mnemonicParsing="false" text="CheckBox" BorderPane.alignment="CENTER" />
     </center>
+    <left>
+        <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Button fx:id="searchmovietitle">Sök på film title ...</Button>
+            <Button fx:id="placeorder">Lägg order ...</Button>
+        </ListView>
+    </left>
 </BorderPane>

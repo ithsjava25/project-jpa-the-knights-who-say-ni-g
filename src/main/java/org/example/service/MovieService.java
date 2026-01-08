@@ -5,6 +5,8 @@ import org.example.javafx.HibernateUtil;
 import org.example.repository.MovieRepository;
 import org.example.repository.MovieRepository_;
 import org.example.tables.Movie;
+
+import java.util.List;
 import java.util.Optional;
 @ApplicationScoped
 public class MovieService{
@@ -18,6 +20,10 @@ public class MovieService{
 
     public Optional<Movie> findMovieById(int id) {
         return movieRepository.findById(id);
+    }
+
+    public List<Movie> getAllMovies(){
+        return movieRepository.findAll().toList();
     }
 
     public Optional<Movie> findMovieByTitle(String title) {
@@ -36,10 +42,6 @@ public class MovieService{
 //        return movieRepository.findByPrice(price);
 //    }
 //
-//    public List<Movie> findByDirector(String firstName, String lastName) {
-//        return movieRepository.findByDirector_FirstNameAndDirector_LastName(firstName, lastName);
-//    }
-//
 //    public List<Movie> findByActor(String firstName, String lastName) {
 //        return movieRepository.findByActor_FirstNameAndActor_LastName(firstName, lastName);
 //    }
@@ -52,9 +54,6 @@ public class MovieService{
 //        return movieRepository.countByDuration(duration);
 //    }
 //
-//    public long countMoviesByDirector(String firstName, String lastName) {
-//        return movieRepository.countByDirector_FirstNameAndDirector_LastName(firstName, lastName);
-//    }
 //
 //    public long countMoviesByActor(String firstName, String lastName) {
 //        return movieRepository.countByActor_FirstNameAndActor_LastName(firstName, lastName);

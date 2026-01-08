@@ -24,8 +24,8 @@ public class CustomerService {
     //Saves a new Customer for the Customer table
     public void createCustomer(String firstName, String lastName, String email) {
         //input validation and stuffs then;
-        customerRepository.save(new Customer(firstName, lastName, email));
-
+        //customerRepository.save(new Customer(firstName, lastName, email));
+        customerRepository.insert(new Customer(firstName, lastName, email));
     }
 
     public void deleteCustomer(String email) {
