@@ -16,7 +16,6 @@
                 <TextField style="-fx-background-color: lightblue;" text="Sök."/>
             </HBox>
         </HBox>
-
     </top>
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">

@@ -84,9 +84,13 @@ public class AppController {
             loader.setControllerFactory(type -> instance.select(type).get());
 
             Parent nextView = loader.load();
+
+            movieposterController controller = loader.getController();
+
+            controller.initData(movie, model);
             root.setCenter(nextView);
         } catch (Exception e) {
-            System.out.println("Error from start app overide!");
+            System.out.println("Error from switching view!");
             e.printStackTrace();
 
             if (e.getCause() != null) {

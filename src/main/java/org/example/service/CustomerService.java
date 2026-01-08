@@ -1,6 +1,7 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityTransaction;
 import org.example.javafx.HibernateUtil;
 import org.example.repository.CustomerRepository;
 import org.example.repository.CustomerRepository_;
@@ -25,7 +26,19 @@ public class CustomerService {
     public void createCustomer(String firstName, String lastName, String email) {
         //input validation and stuffs then;
         //customerRepository.save(new Customer(firstName, lastName, email));
-        customerRepository.insert(new Customer(firstName, lastName, email));
+        EntityTransaction tx = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
+        System.out.println("tx: " + tx.toString());
+        try{
+            tx.begin();
+            Customer newCustomer = new Customer(firstName, lastName, email);
+            System.out.println(newCustomer.getFirstName());
+            customerRepository.insert(newCustomer);
+            tx.commit();
+            System.out.println("commited");
+        }catch(Exception e){
+            tx.rollback();
+            throw e;
+        }
     }
 
     public void deleteCustomer(String email) {
