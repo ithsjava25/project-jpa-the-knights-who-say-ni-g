@@ -1,38 +1,64 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityTransaction;
 import org.example.javafx.HibernateUtil;
 import org.example.repository.MovieRepository;
 import org.example.repository.MovieRepository_;
 import org.example.tables.Movie;
+import org.hibernate.StatelessSession;
 
 import java.util.List;
 import java.util.Optional;
 @ApplicationScoped
 public class MovieService{
-    //private final MovieRepository movieRepository;
-
-    MovieRepository movieRepository = new MovieRepository_(HibernateUtil.getSessionFactory().openStatelessSession());
 
 
-    public MovieService() {
-    }
+    StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession();
+    private final MovieRepository movieRepository = new MovieRepository_(ss);
+    private final EntityTransaction tx = ss.getTransaction();
+
 
     public Optional<Movie> findMovieById(int id) {
         return movieRepository.findById(id);
     }
 
     public List<Movie> getAllMovies(){
-        return movieRepository.findAll().toList();
+      try {
+          tx.begin();
+          List<Movie> movies = movieRepository.findAll().toList();
+          tx.commit();
+          return movies;
+      } catch (Exception e) {
+          tx.rollback();
+          throw e;
+      }
     }
 
     public Optional<Movie> findMovieByTitle(String title) {
-        return movieRepository.findByTitle(title);
+       try {
+           tx.begin();
+           Optional<Movie> movie = movieRepository.findByTitleIgnoringCase(title);
+           tx.commit();
+           return movie;
+       } catch (Exception e) {
+           tx.rollback();
+           throw e;
+       }
     }
-//
-//    public List<Movie> findMoviesByGenre(String genre) {
-//        return movieRepository.findByGenre(genre);
-//    }
+
+    public List<Movie> findMoviesByGenre(String genre) {
+        try {
+            tx.begin();
+           List<Movie> movies = movieRepository.findByGenreIgnoringCase(genre);
+           tx.commit();
+           return movies;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        }
+    }
+
 //
 //    public List<Movie> findMoviesByDuration(int duration) {
 //        return movieRepository.findByDuration(duration);
