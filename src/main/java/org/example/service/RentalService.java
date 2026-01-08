@@ -10,6 +10,7 @@ import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.example.tables.Rental;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,15 +21,15 @@ public class RentalService {
 
     StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession();
     private final RentalRepository rentalRepository = new RentalRepository_(ss);
-    private final EntityTransaction tx = ss.getTransaction();
+
 
     // get all rentals for a costumer? Via Repository
 
     // Create a rental for a customer, information sent to Repository via save
     public void rentMovies(Customer customer, List<Movie> movies) {
         // Check the customer (get customer id)?
+        Transaction tx = ss.beginTransaction();
         try {
-            tx.begin();
             //         Customer verifiedCustomer = null;
 //            try {
 //                verifiedCustomer = CustomerRepository.findByEmail(customer.getEmail());
@@ -39,28 +40,39 @@ public class RentalService {
             Rental rental = new Rental();
             rental.setCustomer(customer);
             rental.setRentalDate(LocalDateTime.now());
-            // Connect movies to the rental
+
+            // Calculates total price for movie rentals
+            rental.setTotalRentalPrice(calculatePrice(movies));
+
+            // Create a Rental to get an ID - Because of StatelessSession we need to insert every object
+            ss.insert(rental);
+
             for (Movie movie : movies) {
-                rental.addMovie(movie);
+                // Manuell SQL eftersom det inte finns någon entitet för kopplingen
+                ss.createNativeQuery("INSERT INTO movie_rental (rental_id, movie_id) VALUES (:rId, :mId)")
+                    .setParameter("rId", rental.getRentalId())
+                    .setParameter("mId", movie.getId())
+                    .executeUpdate();
+                }
 
-            }
-                rentalRepository.createRental(rental);
-                tx.commit();
-
-
+                    tx.commit();
+            System.out.println("Movie rental created with total price: " + rental.getTotalRentalPrice());
         } catch (Exception e) {
             tx.rollback();
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not create rental", e);
         }
+
     }
+    // Return a 'list' in view for the customer to see which movies he/she rents
+    // public List<>
 
     //Calculate total rent price based on prices from MovieRepository
     public BigDecimal calculatePrice(List<Movie> movies) {
         BigDecimal sum = BigDecimal.ZERO;
         for (Movie movie : movies) {
-//            if(movie.getPrice() != null) {
-//                sum = sum.add(movie.getPrice());
-//            }
+            if(movie.getPrice() != null) {
+                sum = sum.add(movie.getPrice());
+           }
         }
         return sum;
     }
