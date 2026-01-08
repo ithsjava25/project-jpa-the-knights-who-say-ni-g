@@ -23,9 +23,9 @@ public class Rental {
 
     //private LocalDateTime returnDate;
 
-    //private BigDecimal totalRentalPrice;
+    private BigDecimal totalRentalPrice;
 
-    private Long customerId;
+   // private Long customerId;
 
     public Rental() {
         this.rentalDate = LocalDateTime.now();
@@ -50,13 +50,9 @@ public class Rental {
         return customer;
     }
 
-    public Long getId() {
-        return customerId;
-    }
+   // public Long getId() {return customerId;}
 
-    public void setId(Long customerId) {
-        this.customerId = customerId;
-    }
+  //  public void setId(Long customerId) { this.customerId = customerId;}
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
@@ -82,13 +78,13 @@ public class Rental {
 //        this.returnDate = returnDate;
 //    }
 //
-//    public BigDecimal getTotalRentalPrice() {
-//        return totalRentalPrice;
-//    }
-//
-//    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
-//        this.totalRentalPrice = totalRentalPrice;
-//    }
+    public BigDecimal getTotalRentalPrice() {
+        return totalRentalPrice;
+    }
+
+    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
+        this.totalRentalPrice = totalRentalPrice;
+    }
 
     public Set<Movie> getMovierental() {
         return movierental;

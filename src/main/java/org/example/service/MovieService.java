@@ -1,12 +1,12 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityTransaction;
 import org.example.javafx.HibernateUtil;
 import org.example.repository.MovieRepository;
 import org.example.repository.MovieRepository_;
 import org.example.tables.Movie;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,6 @@ public class MovieService{
 
     StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession();
     private final MovieRepository movieRepository = new MovieRepository_(ss);
-    private final EntityTransaction tx = ss.getTransaction();
 
 
     public Optional<Movie> findMovieById(int id) {
@@ -24,8 +23,8 @@ public class MovieService{
     }
 
     public List<Movie> getAllMovies(){
+        Transaction tx = ss.beginTransaction();
       try {
-          tx.begin();
           List<Movie> movies = movieRepository.findAll().toList();
           tx.commit();
           return movies;
@@ -36,8 +35,8 @@ public class MovieService{
     }
 
     public Optional<Movie> findMovieByTitle(String title) {
+        Transaction tx = ss.beginTransaction();
        try {
-           tx.begin();
            Optional<Movie> movie = movieRepository.findByTitleIgnoringCase(title);
            tx.commit();
            return movie;
@@ -48,8 +47,8 @@ public class MovieService{
     }
 
     public List<Movie> findMoviesByGenre(String genre) {
+        Transaction tx = ss.beginTransaction();
         try {
-            tx.begin();
            List<Movie> movies = movieRepository.findByGenreIgnoringCase(genre);
            tx.commit();
            return movies;

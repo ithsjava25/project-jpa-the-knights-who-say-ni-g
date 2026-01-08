@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface RentalRepository extends CrudRepository<Rental,Long> {
 
-    @Find
-    List<Rental> findByCustomerCustomerId(Long customerId);
+//    @Find
+//    List<Rental> findByCustomerCustomerId(Long customerId);
 
     // Find totalRentPrice?
     // Find returnDate?
