@@ -12,6 +12,9 @@
                 <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>
             </HBox>
             <Region HBox.hgrow="ALWAYS"/>
+            <HBox>
+                <Button fx:id="homeButton" text="goHome" />
+            </HBox>
             <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">
                 <TextField style="-fx-background-color: lightblue;" text="Sök."/>
             </HBox>
@@ -23,7 +26,7 @@
                 <VBox spacing="30" style="-fx-padding: 20;">
                     <VBox spacing="10">
                         <Label text="Genre"/>
-                        <ScrollPane fx:id="scrollTopPane" vbarPolicy="NEVER" style="-fx-background-color: transparet;">
+                        <ScrollPane fx:id="scrollTopPane" vbarPolicy="NEVER"  prefHeight="200" style="-fx-background-color: transparet;">
                             <HBox fx:id="topMoviecard">
 <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
 <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
@@ -36,7 +39,7 @@
                     <VBox spacing="30">
                         <VBox spacing="10">
                             <Label text="Genre"/>
-                            <ScrollPane fx:id="scrollLowPane" vbarPolicy="NEVER" style="-fx-background-color: transparent;">
+                            <ScrollPane fx:id="scrollLowPane" vbarPolicy="NEVER" prefHeight="200" style="-fx-background-color: transparent;">
                                 <HBox fx:id="lowMoviecard" spacing="10">
                                     <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
                                     <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>

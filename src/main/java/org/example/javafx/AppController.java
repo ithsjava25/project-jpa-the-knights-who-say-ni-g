@@ -4,12 +4,14 @@ import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -44,18 +46,19 @@ public class AppController {
     HBox topMoviecard;
     @FXML
     HBox lowMoviecard;
-
+    @FXML
+    Button homeButton;
 
     private final AppModel model = new AppModel();
 
     @FXML
     public void initialize() {
         getAllMovies();
+        topListener();
         //printOutButtons();
     }
 
     public Node createMoviePosters(Movie movie) {
-        System.out.println("I got a movie!" + movie.getTitle());
         VBox card = new VBox();
         card.setAlignment(Pos.CENTER);
         card.setSpacing(5);
@@ -67,7 +70,12 @@ public class AppController {
         poster.setStroke(Color.BLACK);
 
         Label titleLabel = new Label(movie.getTitle());
+        titleLabel.setMaxWidth((115));
+        titleLabel.setWrapText(false);
+        titleLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
+        titleLabel.setAlignment(Pos.CENTER);
         card.getChildren().addAll(poster, titleLabel);
+        topMoviecard.setSpacing(10);
         topMoviecard.getChildren().add(card);
 
         card.setOnMouseClicked(event -> handleMovieClick(movie));
@@ -99,12 +107,41 @@ public class AppController {
             }
         }
     }
+    public void topListener(){
+        homeButton.setOnMouseClicked(event -> {
+            changeToHomescreen();
+        });
+
+    }
 
     public void getAllMovies(){
         List<Movie> allMovies = movieService.getAllMovies();
 
         for(Movie movie : allMovies){
             Node moviePoster = createMoviePosters(movie);
+        }
+    }
+
+    public void changeToHomescreen(){
+        try {
+            //load new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/homescreen.fxml"));
+
+            loader.setControllerFactory(type -> instance.select(type).get());
+
+            Parent nextView = loader.load();
+
+            AppController controller = loader.getController();
+
+            root.setCenter(nextView);
+        } catch (Exception e) {
+            System.out.println("Error from switching view!");
+            e.printStackTrace();
+
+            if (e.getCause() != null) {
+                System.err.println("------Cause------");
+                e.getCause().printStackTrace();
+            }
         }
     }
 }

@@ -5,19 +5,19 @@
 
 <BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.movieposterController">
-    <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">
-            <HBox>
-                <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>
-            </HBox>
-            <Region HBox.hgrow="ALWAYS"/>
-            <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">
-                <TextField style="-fx-background-color: lightblue;" text="Sök."/>
-            </HBox>
-        </HBox>
-    </top>
+<!--    <top>-->
+<!--        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">-->
+<!--            <HBox>-->
+<!--                <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>-->
+<!--            </HBox>-->
+<!--            <Region HBox.hgrow="ALWAYS"/>-->
+<!--            <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">-->
+<!--                <TextField style="-fx-background-color: lightblue;" text="Sök."/>-->
+<!--            </HBox>-->
+<!--        </HBox>-->
+<!--    </top>-->
     <center>
-        <Pane fx:id="centerPane">
+        <Pane fx:id="centerPane" >
 
         </Pane>
     </center>

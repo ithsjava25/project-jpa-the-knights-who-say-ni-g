@@ -1,3 +1,4 @@
+use blockbuster_gang;
 insert into movie(title, genre)
 values ('The Shawshank Redemption', 'Drama'),
        ('The Godfather', 'Crime'),
