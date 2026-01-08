@@ -6,6 +6,7 @@ import org.example.javafx.HibernateUtil;
 import org.example.repository.CustomerRepository;
 import org.example.repository.CustomerRepository_;
 import org.example.tables.Customer;
+import org.hibernate.StatelessSession;
 
 import java.util.Optional;
 
@@ -14,20 +15,28 @@ public class CustomerService {
 
     //Creates an object of CustomerRepository
     //@Inject
-    private CustomerRepository customerRepository = new CustomerRepository_(HibernateUtil.getSessionFactory().openStatelessSession());
+    StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession();
+    private final CustomerRepository customerRepository = new CustomerRepository_(ss);
+    private final EntityTransaction tx = ss.getTransaction();
 
 
     //Reads Customer from the table
     public Optional<Customer> findByEmail(String email) {
-        return customerRepository.findByEmail(email);
+        try{
+            tx.begin();
+            var customer = customerRepository.findByEmail(email);
+            tx.commit();
+            return customer;
+        }catch(Exception e){
+            tx.rollback();
+            throw e;
+        }
     }
 
     //Saves a new Customer for the Customer table
     public void createCustomer(String firstName, String lastName, String email) {
         //input validation and stuffs then;
         //customerRepository.save(new Customer(firstName, lastName, email));
-        EntityTransaction tx = HibernateUtil.getSessionFactory().getCurrentSession().getTransaction();
-        System.out.println("tx: " + tx.toString());
         try{
             tx.begin();
             Customer newCustomer = new Customer(firstName, lastName, email);
@@ -43,14 +52,30 @@ public class CustomerService {
 
     public void deleteCustomer(String email) {
         var customer = findByEmail(email);
-        customer.ifPresent(c -> customerRepository.delete(c));
+        try{
+            tx.begin();
+            customer.ifPresent(c -> customerRepository.delete(c));
+            tx.commit();
+            System.out.println("deleted");
+        }catch(Exception e){
+            tx.rollback();
+            throw e;
+        }
+
     }
     public void updateCustomer(String firstName, String lastName, String email) {
         var customer = findByEmail(email);
-        if(customer.isPresent()) {
-            customer.get().setFirstName(firstName);
-            customer.get().setLastName(lastName);
-            customerRepository.save(customer.get());
+        try {
+            tx.begin();
+            if (customer.isPresent()) {
+                customer.get().setFirstName(firstName);
+                customer.get().setLastName(lastName);
+                customerRepository.insert(customer.get());
+            }
+            tx.commit();
+        }catch(Exception e){
+            tx.rollback();
+            throw e;
         }
     }
 }
