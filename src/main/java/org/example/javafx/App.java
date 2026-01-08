@@ -39,6 +39,11 @@ public class App extends Application{
         }
 
     }
+
+    public SeContainer getContainer() {
+        return container;
+    }
+
     @Override
     public void stop() {
         container.close();

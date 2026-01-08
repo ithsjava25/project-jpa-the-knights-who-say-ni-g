@@ -3,20 +3,52 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.AppController">
-   <top>
-      <HBox prefHeight="100.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-          <TextField text="sök fält."/>
-      </HBox>
-
-   </top>
-   <left>
-       <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-       <Button fx:id="searchmovietitle">Sök på film title ...</Button>
-       <Button fx:id="placeorder">Lägg order ...</Button>
-       </ListView>
-   </left>
-   <center>
-      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
+<?import javafx.scene.shape.Rectangle?>
+<BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.AppController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">
+            <HBox>
+                <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">
+                <TextField style="-fx-background-color: lightblue;" text="Sök."/>
+            </HBox>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="30" style="-fx-padding: 20;">
+                    <VBox spacing="10">
+                        <Label text="Genre"/>
+                        <ScrollPane fx:id="scrollTopPane" vbarPolicy="NEVER" style="-fx-background-color: transparet;">
+                            <HBox fx:id="topMoviecard">
+<!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+<!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+<!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+<!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+<!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+                            </HBox>
+                        </ScrollPane>
+                    </VBox>
+                    <VBox spacing="30">
+                        <VBox spacing="10">
+                            <Label text="Genre"/>
+                            <ScrollPane fx:id="scrollLowPane" vbarPolicy="NEVER" style="-fx-background-color: transparent;">
+                                <HBox fx:id="lowMoviecard" spacing="10">
+                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
+                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
+                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
+                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
+                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
+                                </HBox>
+                            </ScrollPane>
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
 </BorderPane>
