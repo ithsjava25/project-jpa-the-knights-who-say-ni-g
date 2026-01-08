@@ -3,11 +3,15 @@ package org.example.javafx;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.*;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Movie;
+
 
 public class movieposterController {
     @Inject
@@ -40,5 +44,17 @@ public class movieposterController {
                 firstname.get().getFirstName();
             }
         });
+    }
+
+    private void createMovieInfo(Movie movie){
+        VBox totalCard = new VBox();
+        totalCard.setAlignment(Pos.CENTER);
+
+        VBox titleCard = new VBox();
+        titleCard.getChildren().add(new Text(movie.getTitle()));
+
+        VBox blobWindow = new VBox();
+        blobWindow.setAlignment(Pos.CENTER);
+
     }
 }
