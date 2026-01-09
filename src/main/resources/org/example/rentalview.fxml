@@ -14,23 +14,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.RentalViewController">
-    <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">
-            <HBox>
-                <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>
-            </HBox>
-            <Region HBox.hgrow="ALWAYS"/>
-            <HBox>
-                <Button fx:id="homeButton" text="goHome"/>
-            </HBox>
-            <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">
-                <TextField style="-fx-background-color: lightblue;" text="Sök."/>
-            </HBox>
-        </HBox>
-    </top>
 
-
-    <Separator opacity="0" prefHeight="20" />
+    <center>
 
     <VBox spacing="10" style="-fx-border-color: black; -fx-border-width: 3; -fx-padding: 15;">
         <Label text="Valda filmer" style="-fx-font-size: 20; -fx-text-fill: maroon; -fx-font-weight: bold; -fx-underline: true;" />
@@ -60,4 +45,6 @@
     <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
         <Button style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;" text="CHECK OUT" />
     </HBox>
+
+    </center>
 </BorderPane>
