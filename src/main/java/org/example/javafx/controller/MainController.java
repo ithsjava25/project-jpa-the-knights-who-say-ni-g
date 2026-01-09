@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.example.javafx.AppModel;
 import org.example.tables.Movie;
 
 //All fxml controller has Dependent as default but invisible. here is only for example
@@ -28,6 +29,8 @@ public class MainController {
     //CDI if new classes needs to be made, Controller factory must be made from this
     @Inject
     private Instance<Object> instance;
+    @Inject
+    private AppModel model;
 
     //If a class needs contact with MainController, use navigation instead.
     @Inject
@@ -57,6 +60,7 @@ public class MainController {
     }
     public void setCenter(String fxml, Movie movie){
         emptyCenter();
+        model.testStart();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             loader.setControllerFactory(type -> instance.select(type).get());

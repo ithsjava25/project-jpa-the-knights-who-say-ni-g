@@ -1,6 +1,7 @@
 package org.example.tables;
 
 import jakarta.persistence.*;
+import javafx.collections.ObservableArray;
 
 import java.math.BigDecimal;
 import java.util.HashSet;

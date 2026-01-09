@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<?import javafx.scene.shape.Rectangle?>
-<BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Button?>
+<BorderPane fx:id="rentalRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.RentalViewController">
+<center>
+    <VBox>
+        <VBox>
+            <Label text="Valda filmer"/>
 
-    <center>
+            <HBox spacing="0">
+                <Label prefWidth="350" text="Film"/>
+                <Label prefWidth="100" text="Pris" textAlignment="RIGHT"/>
+            </HBox>
+            <TableView fx:id="rentalTable" prefHeight="300" styleClass="custom-table">
+                <columns>
+                    <TableColumn fx:id="titleColumn" prefWidth="350" resizable="false" text="C1"/>
+                    <TableColumn fx:id="priceColumn" prefWidth="80" resizable="false" text="C2"/>
+                </columns>
+                <columnResizePolicy>
+                    <!--                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />-->
+                </columnResizePolicy>
+            </TableView>
 
-    <VBox spacing="10" style="-fx-border-color: black; -fx-border-width: 3; -fx-padding: 15;">
-        <Label text="Valda filmer" style="-fx-font-size: 20; -fx-text-fill: maroon; -fx-font-weight: bold; -fx-underline: true;" />
+            <HBox style="-fx-border-color: black; -fx-border-width: 2 0 0 0; -fx-padding: 5 0 0 0;">
+                <Label text="Totalt pris:" style="-fx-font-weight: bold; -fx-underline: true;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="totalPriceLabel" text="0 kr" style="-fx-font-weight: bold;"/>
+            </HBox>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
+                <Button
+                    style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;"
+                    text="CHECK OUT"/>
+            </HBox>
 
-        <HBox spacing="0">
-            <Label prefWidth="350" text="Film" style="-fx-text-fill: maroon; -fx-font-weight: bold; -fx-underline: true;" />
-            <Label prefWidth="100" text="Pris" style="-fx-text-fill: maroon; -fx-font-weight: bold; -fx-underline: true;" textAlignment="RIGHT" />
-        </HBox>
+        </VBox>
 
-        <TableView fx:id="rentalTable" prefHeight="300" styleClass="custom-table">
-            <columns>
-                <TableColumn fx:id="titleColumn" prefWidth="350" resizable="false" text="C1" />
-                <TableColumn fx:id="priceColumn" prefWidth="80" resizable="false" text="C2" />
-            </columns>
-            <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-        </TableView>
-
-        <HBox style="-fx-border-color: black; -fx-border-width: 2 0 0 0; -fx-padding: 5 0 0 0;">
-            <Label text="Totalt pris:" style="-fx-font-weight: bold; -fx-underline: true;" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Label fx:id="totalPriceLabel" text="0 kr" style="-fx-font-weight: bold;" />
-        </HBox>
     </VBox>
 
-    <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
-        <Button style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;" text="CHECK OUT" />
-    </HBox>
-
-    </center>
+</center>
 </BorderPane>
