@@ -32,6 +32,9 @@ public class AppModel {
     public void init(){
 
         //TODO hämta den inloggade personen
+        if(customerService.findByEmail("bob@mail").isEmpty()){
+            customerService.createCustomer("bob","bobson","bob@mail");
+        }
         loggedCustomer = customerService.findByEmail("bob@mail").get();
 
     }
