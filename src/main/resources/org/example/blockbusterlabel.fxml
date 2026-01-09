@@ -9,6 +9,9 @@
                 <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>
             </HBox>
             <Region HBox.hgrow="ALWAYS"/>
+        <HBox>
+            <Button fx:id="rentalView" text="Rentals"/>
+        </HBox>
             <HBox>
                 <Button fx:id="homeButton" text="goHome"/>
             </HBox>

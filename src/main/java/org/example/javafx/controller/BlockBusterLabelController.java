@@ -22,6 +22,8 @@ public class BlockBusterLabelController {
     @FXML
     private Button homeButton;
     @FXML
+    private Button rentalView;
+    @FXML
     ScrollPane scrollMain;
     @Inject
     private Instance<Object> instance; //container injection
@@ -37,7 +39,10 @@ public class BlockBusterLabelController {
 
     public void starter() {
         homeButton.setOnAction(event -> {
-           navigation.setCenter(rentalViewURL);
+           navigation.setCenter(movieListURL);
+        });
+        rentalView.setOnAction(event -> {
+            navigation.setCenter(rentalViewURL);
         });
     }
 
