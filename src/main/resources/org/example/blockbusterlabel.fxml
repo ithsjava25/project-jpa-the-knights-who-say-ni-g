@@ -16,7 +16,7 @@
                 <Button fx:id="homeButton" text="goHome"/>
             </HBox>
             <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">
-                <TextField fx:id="globalSearchField" style="-fx-background-color: lightblue;" text="Sök."/>
+                <TextField fx:id="globalSearchField" style="-fx-background-color: lightblue;" promptText="Search."/>
             </HBox>
         </HBox>
     </top>

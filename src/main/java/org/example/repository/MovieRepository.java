@@ -14,7 +14,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
     // To support smart-search in search field
     // Query needs to be written manually here to function
-   @Query("SELECT m FROM Movie m WHERE LOWER(m.title) LIKE LOWER(:q) OR LOWER(m.genre) LIKE (:q)")
+   @Query("SELECT m FROM Movie m WHERE LOWER(m.title) LIKE LOWER(:q) OR LOWER(m.genre) LIKE LOWER(:q)")
    List<Movie> smartSearch(@Param("q") String q);
 
     @Find

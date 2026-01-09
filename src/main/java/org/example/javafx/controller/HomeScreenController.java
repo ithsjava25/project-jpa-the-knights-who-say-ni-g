@@ -63,7 +63,6 @@ public class HomeScreenController {
             refreshMovieDisplay(newValue);
         });
 
-       // getAllMovies();
 //        topListener();
         //printOutButtons();
     }
