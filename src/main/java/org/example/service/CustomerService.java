@@ -34,6 +34,18 @@ public class CustomerService {
         }
     }
 
+    public Optional<Customer> findById(Long id){
+        Transaction tx = ss.beginTransaction();
+        try{
+                var customer = customerRepository.findById(id);
+                tx.commit();
+                return customer;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        }
+    }
+
     //Saves a new Customer for the Customer table
     public void createCustomer(String firstName, String lastName, String email) {
         //input validation and stuffs then;

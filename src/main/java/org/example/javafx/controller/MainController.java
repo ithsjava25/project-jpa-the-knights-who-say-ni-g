@@ -41,6 +41,8 @@ public class MainController {
         navigationService.setMainController(this);
         setTop("/org/example/blockbusterlabel.fxml");
         setCenter("/org/example/homescreen.fxml");
+        System.out.println("instance loaded from mainController: " + (instance != null));
+
     }
 
     public void emptyCenter(){

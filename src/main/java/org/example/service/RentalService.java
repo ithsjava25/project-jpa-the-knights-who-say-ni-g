@@ -67,11 +67,13 @@ public class RentalService {
     // Return a 'list' in view for the customer to see which movies he/she rents
     // public List<>
     public List<Movie> getRentedMoviesByCustomer(Customer customer) {
+        //Returnerar en tom lista om det inte fins några uthyrda filmer
+        if (customer == null) return List.of();
         // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
         return ss.createNativeQuery(
-                "SELECT m.* FROM movies m " +
-                    "JOIN movie_rental mr ON m.id = mr.movie_id " +
-                    "JOIN rental r ON mr.rental_id = r.rental_id " +
+                "SELECT * FROM movie m " +
+                    "JOIN movie_rental mr ON m.itemId = mr.movie_id " +
+                    "JOIN rental r ON mr.rental_id = r.rentalId " +
                     "WHERE r.customer_id = :cId", Movie.class)
             .setParameter("cId", customer.getCustomerId())
             .getResultList();
