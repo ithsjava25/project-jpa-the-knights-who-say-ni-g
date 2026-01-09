@@ -43,7 +43,7 @@ public class HomeScreenController {
     @FXML
     BorderPane root;
     @FXML
-    ScrollPane scrollTopPane = new ScrollPane();
+    ScrollPane scrollTopPane;
     @FXML
     ScrollPane scrollLowPane;
     @FXML
