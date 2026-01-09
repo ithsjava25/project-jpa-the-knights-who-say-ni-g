@@ -58,7 +58,6 @@ public class RentalViewController {
 
     @FXML
     public void initialize() {
-        System.out.println("instance loaded from RentalviewConteroller: " + (instance != null));
 
         //Kopplar text till
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));

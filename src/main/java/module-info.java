@@ -16,6 +16,7 @@ module App {
     requires weld.se.core;
     requires narayana.jta;
     requires jdk.compiler;
+    requires java.smartcardio;
 
     opens org.example.javafx;
     opens org.example.service;
