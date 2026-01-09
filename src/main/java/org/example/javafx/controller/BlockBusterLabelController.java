@@ -29,6 +29,7 @@ public class BlockBusterLabelController {
     NavigationService navigation;
 
     private final String movieListURL = "/org/example/homescreen.fxml";
+    private final String rentalViewURL = "/org/example/rentalview.fxml";
 
     public void initialize() {
         starter();
@@ -36,7 +37,7 @@ public class BlockBusterLabelController {
 
     public void starter() {
         homeButton.setOnAction(event -> {
-           navigation.setCenter(movieListURL);
+           navigation.setCenter(rentalViewURL);
         });
     }
 
