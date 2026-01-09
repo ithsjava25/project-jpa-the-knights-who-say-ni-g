@@ -16,9 +16,9 @@
                 </VBox>
             </VBox>
             <HBox fx:id="buttonSpace" spacing="10" alignment="CENTER" maxWidth="120">
-                <HBox fx:id="addButtonBox" />
-                <Region  HBox.hgrow="ALWAYS"/>
                 <HBox fx:id="priceBox" />
+                <Region  HBox.hgrow="ALWAYS"/>
+                <HBox fx:id="addButtonBox" />
             </HBox>
         </VBox>
 

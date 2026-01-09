@@ -30,6 +30,8 @@ public class MoviePosterController {
     RentalService rentalService;
     @Inject
     private Instance<Object> instance; //container injection
+    @Inject
+    AppModel model;
 
     @FXML
     Button placeorder;
@@ -53,9 +55,10 @@ public class MoviePosterController {
     private HBox priceBox;
 
     Button addMovieButton;
+    Movie selectedMovie;
 
     public void initData(Movie movie) {
-        System.out.println("initdata movie:" + movie.getTitle());
+        selectedMovie = movie;
         Rectangle poster = new Rectangle(120, 160);
         poster.setArcHeight(15);
         poster.setArcWidth(15);
@@ -68,7 +71,17 @@ public class MoviePosterController {
         posterSpace.getChildren().add(poster);
         addButtonBox.getChildren().add(addMovieButton);
         priceBox.getChildren().add(priceText);
+        addListener();
     }
+
+    public void addListener() {
+        addMovieButton.setOnAction(e -> {
+            System.out.println("Add movie shopping");
+            model.addToShoppingCart(selectedMovie);
+        });
+    }
+
+
 
 
     private void createMovieInfo(Movie movie) {

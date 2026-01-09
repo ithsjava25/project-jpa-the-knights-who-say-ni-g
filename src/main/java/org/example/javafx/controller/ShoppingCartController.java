@@ -1,19 +1,19 @@
 package org.example.javafx.controller;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import org.example.javafx.AppModel;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
+import org.example.tables.Movie;
 
-public class ChoppingCartController {
+public class ShoppingCartController {
 
     @Inject
     NavigationService navigation;
@@ -31,8 +31,8 @@ public class ChoppingCartController {
     private ListView shoppingList;
 
     public void initialize() {
-        //starter();
-        getShoppingList();
+        fixListViewFactory();
+        shoppingList.setItems(model.getShoppingCartList());
     }
 
     @PostConstruct
@@ -50,19 +50,17 @@ public class ChoppingCartController {
     }
 
 
-    public void starter() {
-
-
-        placeorder.setOnAction(e -> {
-            customerService.createCustomer("Anna", "Svensson", "test@mail");
-        });
-        //TODO Om flere resultat hittas, skiter den it.
-        searchmovietitle.setOnAction(e -> {
-            var firstname = customerService.findByEmail("test@mail");
-            if (firstname.isPresent()) {
-                firstname.get().getFirstName();
-            } else {
-                System.out.println("none was found");
+    public void fixListViewFactory() {
+        shoppingList.setCellFactory(lv -> new ListCell<Movie>(){
+            @Override
+            protected void updateItem(Movie item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                }else{
+                    setText(item.getTitle());
+                }
             }
         });
     }

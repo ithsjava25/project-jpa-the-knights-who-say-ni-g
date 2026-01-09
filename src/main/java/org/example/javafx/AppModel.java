@@ -28,14 +28,9 @@ public class AppModel {
     }
     @PostConstruct
     public void init(){
-        System.out.println("App model skapad av weld!");
-        System.out.println("service laddad: " + (movieService != null));
     }
     public void testStart(){
         movieList = movieService.getAllMovies();
-        System.out.println("movielsit in model count: " + movieList.size());
-        shoppingCartList.add(movieList.getFirst());
-        System.out.println("Shoppingcart list: "  + shoppingCartList.size());
     }
 
     public List<Movie>getMovieList(){
@@ -49,6 +44,10 @@ public class AppModel {
     }
     public void removeFromShoppingCart(Movie movie){
         shoppingCartList.remove(movie);
+    }
+
+    public void clearShoppingCart(){
+        shoppingCartList.clear();
     }
 
 

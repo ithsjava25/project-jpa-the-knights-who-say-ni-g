@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="choppingRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.ChoppingCartController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.ShoppingCartController">
     <left>
         <VBox>
             <VBox>
-        <ListView fx:id="shoppingList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <ListView fx:id="shoppingList" prefWidth="200.0">
 
         </ListView>
             </VBox>
             <HBox>
-                <Button fx:id="searchmovietitle">Sök på film title ...</Button>
-                <Button fx:id="placeorder">Lägg order ...</Button>
+                <Button fx:id="removeMovie">Ta bort film</Button>
+                <Button fx:id="rentMovies">Film</Button>
             </HBox>
         </VBox>
     </left>
