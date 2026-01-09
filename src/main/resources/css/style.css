@@ -10,3 +10,28 @@
 
 #spacer{
 }
+
+/* Ta bort rubrikerna på TableView då du har egna labels i skissen */
+.custom-table .column-header-background {
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-visibility: hidden;
+}
+
+.custom-table {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+
+.custom-table .table-row-cell {
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0; /* Horisontella linjer mellan filmerna */
+    -fx-background-color: white;
+}
+
+.custom-table .table-cell {
+    -fx-border-color: transparent black transparent transparent; /* Vertikal linje innan priset */
+    -fx-padding: 5;
+}

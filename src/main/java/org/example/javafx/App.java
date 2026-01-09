@@ -16,18 +16,21 @@ public class App extends Application{
     @Override
     public void start(Stage primaryStage) {
         try {
+
             //Start Weld
             container = SeContainerInitializer.newInstance().initialize();
             //Start fxml
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/example/homescreen.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/example/maincontrollerview.fxml"));
             //Connect weld with fxml
             fxmlLoader.setControllerFactory(type -> container.select(type).get());
 
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 720, 480);
+
             primaryStage.setTitle("Blockbuster");
             primaryStage.setScene(scene);
             primaryStage.show();
+
         }catch (Exception e){
             System.out.println("Error from start app overide!");
             e.printStackTrace();

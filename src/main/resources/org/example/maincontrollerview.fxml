@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.MainController">
+    <top>
+    <HBox fx:id="topHbox" minHeight="100">
+
+    </HBox>
+    </top>
+    <center>
+    <VBox fx:id="centerVbox">
+
+    </VBox>
+    </center>
+    <left>
+    <VBox fx:id="leftVbox">
+
+    </VBox>
+    </left>
+
+</BorderPane>

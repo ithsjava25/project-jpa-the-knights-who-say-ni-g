@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="choppingRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.ChoppingCartController">
+    <left>
+        <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Button fx:id="searchmovietitle">Sök på film title ...</Button>
+            <Button fx:id="placeorder">Lägg order ...</Button>
+        </ListView>
+    </left>
+</BorderPane>
