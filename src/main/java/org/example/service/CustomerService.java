@@ -7,6 +7,7 @@ import org.example.repository.CustomerRepository;
 import org.example.repository.CustomerRepository_;
 import org.example.tables.Customer;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
 import java.util.Optional;
 
@@ -17,13 +18,13 @@ public class CustomerService {
     //@Inject
     StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession();
     private final CustomerRepository customerRepository = new CustomerRepository_(ss);
-    private final EntityTransaction tx = ss.getTransaction();
+
 
 
     //Reads Customer from the table
     public Optional<Customer> findByEmail(String email) {
-        try{
-            tx.begin();
+        Transaction tx = ss.beginTransaction();
+        try {
             var customer = customerRepository.findByEmail(email);
             tx.commit();
             return customer;
@@ -33,12 +34,24 @@ public class CustomerService {
         }
     }
 
+    public Optional<Customer> findById(Long id){
+        Transaction tx = ss.beginTransaction();
+        try{
+                var customer = customerRepository.findById(id);
+                tx.commit();
+                return customer;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        }
+    }
+
     //Saves a new Customer for the Customer table
     public void createCustomer(String firstName, String lastName, String email) {
         //input validation and stuffs then;
-        //customerRepository.save(new Customer(firstName, lastName, email));
+
+        Transaction tx = ss.beginTransaction();
         try{
-            tx.begin();
             Customer newCustomer = new Customer(firstName, lastName, email);
             System.out.println(newCustomer.getFirstName());
             customerRepository.insert(newCustomer);
@@ -52,8 +65,8 @@ public class CustomerService {
 
     public void deleteCustomer(String email) {
         var customer = findByEmail(email);
-        try{
-            tx.begin();
+        Transaction tx = ss.beginTransaction();
+        try {
             customer.ifPresent(c -> customerRepository.delete(c));
             tx.commit();
             System.out.println("deleted");
@@ -65,8 +78,8 @@ public class CustomerService {
     }
     public void updateCustomer(String firstName, String lastName, String email) {
         var customer = findByEmail(email);
+        Transaction tx = ss.beginTransaction();
         try {
-            tx.begin();
             if (customer.isPresent()) {
                 customer.get().setFirstName(firstName);
                 customer.get().setLastName(lastName);

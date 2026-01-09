@@ -62,5 +62,7 @@ public class Customer {
     public void setRentalList(List<Rental> rentalList) {
         this.rentalList = rentalList;
     }
+
+    public Long getCustomerId(){return customerId; }
 }
 

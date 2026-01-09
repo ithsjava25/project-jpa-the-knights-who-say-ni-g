@@ -5,6 +5,7 @@ import javafx.collections.ObservableArray;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -89,4 +90,14 @@ public class Movie {
         this.rentals = inventoryList;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Movie movie)) return false;
+        return itemId == movie.itemId && Objects.equals(title, movie.title) && Objects.equals(genre, movie.genre) && Objects.equals(price, movie.price) && Objects.equals(actor, movie.actor) && Objects.equals(rentals, movie.rentals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId, title, genre, price, actor, rentals);
+    }
 }

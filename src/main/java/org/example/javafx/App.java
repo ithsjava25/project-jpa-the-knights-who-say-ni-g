@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.service.RentalService;
 
 
 public class App extends Application{
@@ -20,6 +21,18 @@ public class App extends Application{
 
             //Start Weld
             container = SeContainerInitializer.newInstance().initialize();
+
+            // Gets RentalService from container, new instance is created by Weld
+            RentalService rentalService = container.select(RentalService.class).get();
+
+            // Clears old rentals from database
+            try {
+                rentalService.deleteOldRentals();
+                System.out.println("Startup: Old rentals cleared");
+            } catch (Exception e) {
+                System.out.println("Could not clear old rentals during startup" + e.getMessage());
+            }
+
             //Start fxml
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/example/maincontrollerview.fxml"));
             //Connect weld with fxml
