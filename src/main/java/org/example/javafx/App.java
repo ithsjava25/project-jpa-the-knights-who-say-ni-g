@@ -24,6 +24,7 @@ public class App extends Application{
             //Connect weld with fxml
             fxmlLoader.setControllerFactory(type -> container.select(type).get());
 
+
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, 720, 480);
 
