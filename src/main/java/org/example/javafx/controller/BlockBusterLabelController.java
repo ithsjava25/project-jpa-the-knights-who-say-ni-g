@@ -1,17 +1,12 @@
 package org.example.javafx.controller;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class BlockBusterLabelController {
 
@@ -21,6 +16,8 @@ public class BlockBusterLabelController {
     private Label BlockbusterGang;
     @FXML
     private Button homeButton;
+    @FXML
+    private Button rentalView;
     @FXML
     ScrollPane scrollMain;
     @Inject
@@ -37,7 +34,10 @@ public class BlockBusterLabelController {
 
     public void starter() {
         homeButton.setOnAction(event -> {
-           navigation.setCenter(rentalViewURL);
+           navigation.setCenter(movieListURL);
+        });
+        rentalView.setOnAction(event -> {
+            navigation.setCenter(rentalViewURL);
         });
     }
 

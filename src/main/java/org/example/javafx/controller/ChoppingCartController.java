@@ -37,8 +37,6 @@ public class ChoppingCartController {
 
     @PostConstruct
     public void init(){
-        System.out.println("Shopping controller laddad av weld!");
-        System.out.println("Movie service är laddad " + (movieService != null));
     }
 
     public void getShoppingList() {
