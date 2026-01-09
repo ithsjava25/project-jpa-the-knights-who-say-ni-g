@@ -51,7 +51,6 @@ public class HomeScreenController {
     @FXML
     HBox lowMoviecard;
 
-    private final AppModel model = new AppModel();
 
     @FXML
     public void initialize() {
