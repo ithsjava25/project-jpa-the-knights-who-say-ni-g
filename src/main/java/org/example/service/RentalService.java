@@ -49,7 +49,8 @@ public class RentalService {
 
             for (Movie movie : movies) {
                 // Manuell SQL eftersom det inte finns någon entitet för kopplingen
-                ss.createNativeQuery("INSERT INTO movie_rental (rental_id, movie_id) VALUES (:rId, :mId)")
+                ss.createNativeQuery(
+                    "INSERT INTO movie_rental (rental_id, movie_id) VALUES (:rId, :mId)")
                     .setParameter("rId", rental.getRentalId())
                     .setParameter("mId", movie.getId())
                     .executeUpdate();
@@ -65,6 +66,16 @@ public class RentalService {
     }
     // Return a 'list' in view for the customer to see which movies he/she rents
     // public List<>
+    public List<Movie> getRentedMoviesByCustomer(Customer customer) {
+        // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
+        return ss.createNativeQuery(
+                "SELECT m.* FROM movies m " +
+                    "JOIN movie_rental mr ON m.id = mr.movie_id " +
+                    "JOIN rental r ON mr.rental_id = r.rental_id " +
+                    "WHERE r.customer_id = :cId", Movie.class)
+            .setParameter("cId", customer.getCustomerId())
+            .getResultList();
+    }
 
     //Calculate total rent price based on prices from MovieRepository
     public BigDecimal calculatePrice(List<Movie> movies) {
