@@ -17,7 +17,7 @@
             </VBox>
             <HBox>
                 <Button fx:id="removeMovie">Ta bort film</Button>
-                <Button fx:id="rentMovies">Film</Button>
+                <Button fx:id="rentMovies">Hyr</Button>
             </HBox>
         </VBox>
     </left>

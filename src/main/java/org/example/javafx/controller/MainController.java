@@ -61,7 +61,6 @@ public class MainController {
     }
     public void setCenter(String fxml, Movie movie){
         emptyCenter();
-        model.testStart();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             loader.setControllerFactory(type -> instance.select(type).get());

@@ -8,6 +8,7 @@ import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
+import org.example.tables.Customer;
 import org.example.tables.Movie;
 
 import java.util.ArrayList;
@@ -22,15 +23,25 @@ public class AppModel {
 
     private List<Movie>movieList;
     private ObservableList<Movie> shoppingCartList = FXCollections.observableArrayList();
+    private Customer loggedCustomer;
 
     public AppModel(){
 
     }
     @PostConstruct
     public void init(){
+
+        //TODO hämta den inloggade personen
+        loggedCustomer = customerService.findByEmail("bob@mail").get();
+
     }
     public void testStart(){
+        //good or bad idea to save list locally...
         movieList = movieService.getAllMovies();
+    }
+
+    public Customer getLoggedCustomer() {
+        return loggedCustomer;
     }
 
     public List<Movie>getMovieList(){

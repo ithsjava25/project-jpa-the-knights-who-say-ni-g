@@ -2,6 +2,7 @@ package org.example.javafx.controller;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -11,6 +12,7 @@ import javafx.scene.text.Text;
 import org.example.javafx.AppModel;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
+import org.example.service.RentalService;
 import org.example.tables.Movie;
 
 public class ShoppingCartController {
@@ -20,19 +22,23 @@ public class ShoppingCartController {
     @Inject
     AppModel model;
     @Inject
-    CustomerService customerService;
-    @Inject
-    MovieService movieService;
+    RentalService rentalService;
 
-    public Button searchmovietitle;
-    public Button placeorder;
-    public BorderPane choppingRoot;
     @FXML
     private ListView shoppingList;
+    @FXML
+    private Button removeMovie;
+    @FXML
+    private Button rentMovies;
+
+    private final String rentalView = "/org/example/rentalview.fxml";
 
     public void initialize() {
         fixListViewFactory();
         shoppingList.setItems(model.getShoppingCartList());
+        addListener();
+        removeMovie.disableProperty().bind(shoppingList.getSelectionModel().selectedItemProperty().isNull());
+        rentMovies.disableProperty().bind(Bindings.isEmpty(model.getShoppingCartList()));
     }
 
     @PostConstruct
@@ -61,6 +67,21 @@ public class ShoppingCartController {
                 }else{
                     setText(item.getTitle());
                 }
+            }
+        });
+    }
+    public void addListener() {
+        rentMovies.setOnAction(e -> {
+            rentalService.rentMovies(model.getLoggedCustomer(), model.getShoppingCartList());
+            model.clearShoppingCart();
+            navigation.setCenter(rentalView);
+        });
+
+        removeMovie.setOnAction(e -> {
+           //find out a way to mark a movie and remove from cart.
+            Movie selectedMovie = (Movie) shoppingList.getSelectionModel().getSelectedItem();
+            if (selectedMovie != null){
+                model.removeFromShoppingCart(selectedMovie);
             }
         });
     }

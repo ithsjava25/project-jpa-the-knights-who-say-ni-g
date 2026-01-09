@@ -20,35 +20,17 @@ import org.example.service.RentalService;
 import org.example.tables.Movie;
 
 import javax.smartcardio.Card;
+import java.math.BigDecimal;
 
 public class MoviePosterController {
-    @Inject
-    CustomerService customerService;
-    @Inject
-    MovieService movieService;
-    @Inject
-    RentalService rentalService;
-    @Inject
-    private Instance<Object> instance; //container injection
+
     @Inject
     AppModel model;
 
     @FXML
-    Button placeorder;
-    @FXML
-    Button searchmovietitle;
-    @FXML
-    private BorderPane movieRoot;
-    @FXML
-    private VBox baseVbox;
-    @FXML
-    private VBox moviePoster;
-    @FXML
     private VBox posterSpace;
     @FXML
     private VBox titleSpace;
-    @FXML
-    private HBox buttonSpace;
     @FXML
     private HBox addButtonBox;
     @FXML
@@ -65,7 +47,7 @@ public class MoviePosterController {
         poster.setFill(Color.WHITE);
         poster.setStroke(Color.BLACK);
         addMovieButton = new Button("Lägg till");
-        Text priceText = new Text("299kr");
+        Text priceText = new Text(String.format("%.2f kr", movie.getPrice()));
 
         titleSpace.getChildren().add(new Text(movie.getTitle()));
         posterSpace.getChildren().add(poster);
@@ -81,11 +63,4 @@ public class MoviePosterController {
         });
     }
 
-
-
-
-    private void createMovieInfo(Movie movie) {
-
-
-    }
 }
