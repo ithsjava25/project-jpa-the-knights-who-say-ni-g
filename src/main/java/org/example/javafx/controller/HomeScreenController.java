@@ -1,15 +1,8 @@
 package org.example.javafx.controller;
 
-import com.sun.tools.javac.Main;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
@@ -18,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import org.example.javafx.AppModel;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
@@ -37,7 +29,7 @@ public class HomeScreenController {
     NavigationService navigation;
 
     private final String moviePosterURL = "/org/example/movieposter.fxml";
-    private final String shoppingCartURL = "/org/example/choppingcart.fxml";
+    private final String shoppingCartURL = "/org/example/shoppingcart.fxml";
 
 
     @FXML

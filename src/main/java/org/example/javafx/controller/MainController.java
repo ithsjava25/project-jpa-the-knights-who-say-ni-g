@@ -41,7 +41,6 @@ public class MainController {
         navigationService.setMainController(this);
         setTop("/org/example/blockbusterlabel.fxml");
         setCenter("/org/example/homescreen.fxml");
-        System.out.println("instance loaded from mainController: " + (instance != null));
 
     }
 
@@ -62,7 +61,6 @@ public class MainController {
     }
     public void setCenter(String fxml, Movie movie){
         emptyCenter();
-        model.testStart();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             loader.setControllerFactory(type -> instance.select(type).get());

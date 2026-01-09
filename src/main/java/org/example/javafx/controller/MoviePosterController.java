@@ -20,59 +20,47 @@ import org.example.service.RentalService;
 import org.example.tables.Movie;
 
 import javax.smartcardio.Card;
+import java.math.BigDecimal;
 
 public class MoviePosterController {
-    @Inject
-    CustomerService customerService;
-    @Inject
-    MovieService movieService;
-    @Inject
-    RentalService rentalService;
-    @Inject
-    private Instance<Object> instance; //container injection
 
-    @FXML
-    Button placeorder;
-    @FXML
-    Button searchmovietitle;
-    @FXML
-    private BorderPane movieRoot;
-    @FXML
-    private VBox baseVbox;
-    @FXML
-    private VBox moviePoster;
+    @Inject
+    AppModel model;
+
     @FXML
     private VBox posterSpace;
     @FXML
     private VBox titleSpace;
-    @FXML
-    private HBox buttonSpace;
     @FXML
     private HBox addButtonBox;
     @FXML
     private HBox priceBox;
 
     Button addMovieButton;
+    Movie selectedMovie;
 
     public void initData(Movie movie) {
-        System.out.println("initdata movie:" + movie.getTitle());
+        selectedMovie = movie;
         Rectangle poster = new Rectangle(120, 160);
         poster.setArcHeight(15);
         poster.setArcWidth(15);
         poster.setFill(Color.WHITE);
         poster.setStroke(Color.BLACK);
         addMovieButton = new Button("Lägg till");
-        Text priceText = new Text("299kr");
+        Text priceText = new Text(String.format("%.2f kr", movie.getPrice()));
 
         titleSpace.getChildren().add(new Text(movie.getTitle()));
         posterSpace.getChildren().add(poster);
         addButtonBox.getChildren().add(addMovieButton);
         priceBox.getChildren().add(priceText);
+        addListener();
     }
 
-
-    private void createMovieInfo(Movie movie) {
-
-
+    public void addListener() {
+        addMovieButton.setOnAction(e -> {
+            System.out.println("Add movie shopping");
+            model.addToShoppingCart(selectedMovie);
+        });
     }
+
 }

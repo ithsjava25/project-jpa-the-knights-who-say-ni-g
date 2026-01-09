@@ -6,7 +6,7 @@
 <BorderPane fx:id="movieRoot"  stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.MoviePosterController">
     <center>
-        <VBox fx:id="baseVbox" alignment="CENTER" style="-fx-border-color: white">
+        <VBox fx:id="baseVbox" alignment="CENTER" >
             <VBox fx:id="moviePoster">
                 <VBox fx:id="titleSpace" alignment="CENTER">
 
@@ -16,9 +16,9 @@
                 </VBox>
             </VBox>
             <HBox fx:id="buttonSpace" spacing="10" alignment="CENTER" maxWidth="120">
-                <HBox fx:id="addButtonBox" />
-                <Region  HBox.hgrow="ALWAYS"/>
                 <HBox fx:id="priceBox" />
+                <Region  HBox.hgrow="ALWAYS"/>
+                <HBox fx:id="addButtonBox" />
             </HBox>
         </VBox>
 

@@ -8,6 +8,7 @@ import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
+import org.example.tables.Customer;
 import org.example.tables.Movie;
 
 import java.util.ArrayList;
@@ -22,20 +23,28 @@ public class AppModel {
 
     private List<Movie>movieList;
     private ObservableList<Movie> shoppingCartList = FXCollections.observableArrayList();
+    private Customer loggedCustomer;
 
     public AppModel(){
 
     }
     @PostConstruct
     public void init(){
-        System.out.println("App model skapad av weld!");
-        System.out.println("service laddad: " + (movieService != null));
+
+        //TODO hämta den inloggade personen
+        if(customerService.findByEmail("bob@mail").isEmpty()){
+            customerService.createCustomer("bob","bobson","bob@mail");
+        }
+        loggedCustomer = customerService.findByEmail("bob@mail").get();
+
     }
     public void testStart(){
+        //good or bad idea to save list locally...
         movieList = movieService.getAllMovies();
-        System.out.println("movielsit in model count: " + movieList.size());
-        shoppingCartList.add(movieList.getFirst());
-        System.out.println("Shoppingcart list: "  + shoppingCartList.size());
+    }
+
+    public Customer getLoggedCustomer() {
+        return loggedCustomer;
     }
 
     public List<Movie>getMovieList(){
@@ -49,6 +58,10 @@ public class AppModel {
     }
     public void removeFromShoppingCart(Movie movie){
         shoppingCartList.remove(movie);
+    }
+
+    public void clearShoppingCart(){
+        shoppingCartList.clear();
     }
 
 
