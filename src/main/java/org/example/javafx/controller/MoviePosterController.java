@@ -68,7 +68,6 @@ public class MoviePosterController {
         posterSpace.getChildren().add(poster);
         addButtonBox.getChildren().add(addMovieButton);
         priceBox.getChildren().add(priceText);
-        buttonSpace.getChildren().addAll(addButtonBox, priceBox);
     }
 
 
