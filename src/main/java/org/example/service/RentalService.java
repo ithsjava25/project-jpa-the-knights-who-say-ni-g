@@ -92,12 +92,12 @@ public class RentalService {
 
         try {
             // Finds all rentals older than 24h
-            List<Rental> oldRentals = rentalRepository.findByRentalDateBefore(cutoff);
+            List<Rental> oldRentals = rentalRepository.findByRentalDateLessThan(cutoff);
 
             // Loops through and deletes
             // Måste rensa kopplingstabellen manuellt först via NativeQuery pga StatelessSession
             for (Rental rental : oldRentals) {
-                ss.createNativeQuery("DELETE from movie_rental mr WHERE mr.rental_id = :rId")
+                ss.createNativeQuery("DELETE from movie_rental WHERE rental_id = :rId")
                     .setParameter("rId", rental.getRentalId())
                     .executeUpdate();
 

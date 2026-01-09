@@ -20,7 +20,7 @@ public interface RentalRepository extends CrudRepository<Rental,Long> {
     Rental createRental(Rental rental);
 
     @Find
-    List<Rental> findByRentalDateBefore(LocalDateTime rentalDate);
+    List<Rental> findByRentalDateLessThan(LocalDateTime rentalDate);
 
     @Delete
     void delete(Rental rental);
