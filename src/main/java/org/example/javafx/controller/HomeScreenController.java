@@ -22,6 +22,8 @@ public class HomeScreenController {
     @Inject
     CustomerService customerService;
     @Inject
+    SearchService searchService;
+    @Inject
     MovieService movieService;
     @Inject
     RentalService rentalService;
@@ -46,12 +48,36 @@ public class HomeScreenController {
 
     @FXML
     public void initialize() {
-        getAllMovies();
+        // Initial loading
+        refreshMovieDisplay("");
+
+        searchService.searchQueryProperty().addListener((observable, oldValue, newValue) -> {
+            refreshMovieDisplay(newValue);
+        });
+
 //        topListener();
         //printOutButtons();
     }
     public void setRoot(BorderPane root) {
         this.root = root;
+    }
+
+    private void refreshMovieDisplay(String searchText) {
+        topMoviecard.getChildren().clear();
+
+        // Gets filtered movie list based on search input
+        List<Movie> filteredMovies = movieService.searchMovies(searchText);
+
+        if (filteredMovies.isEmpty()) {
+            System.out.println("No movies found" + searchText);
+        } else {
+            // Creates new movie posters based on new list
+            for (Movie movie : filteredMovies) {
+                createMoviePosters(movie);
+                System.out.println("Film: " + movie.getTitle() + " Genre: " + movie.getGenre());
+            }
+        }
+
     }
 
     public void createMoviePosters(Movie movie) {
@@ -70,13 +96,20 @@ public class HomeScreenController {
         titleLabel.setWrapText(false);
         titleLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
         titleLabel.setAlignment(Pos.CENTER);
-        card.getChildren().addAll(poster, titleLabel);
+
+        // Adds genre to MoviePosters, can be modified later!
+        Label genreLabel = new Label(movie.getGenre());
+        genreLabel.setMaxWidth((115));
+        genreLabel.setWrapText(false);
+        genreLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
+        genreLabel.setAlignment(Pos.CENTER);
+
+        card.getChildren().addAll(poster, titleLabel,genreLabel);
+
         topMoviecard.setSpacing(10);
         topMoviecard.getChildren().add(card);
         scrollTopPane.setContent(topMoviecard);
         card.setOnMouseClicked(event -> handleMovieClick(movie));
-
-
     }
 
 
@@ -92,13 +125,13 @@ public class HomeScreenController {
 //
 //    }
 
-    public void getAllMovies(){
-        List<Movie> allMovies = movieService.getAllMovies();
-
-        for(Movie movie : allMovies){
-            createMoviePosters(movie);
-        }
-    }
+//    public void getAllMovies(){
+//        List<Movie> allMovies = movieService.getAllMovies();
+//
+//        for(Movie movie : allMovies){
+//            createMoviePosters(movie);
+//        }
+//    }
 
 }
 

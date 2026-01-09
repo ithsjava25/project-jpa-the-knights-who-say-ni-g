@@ -13,7 +13,6 @@ import java.util.Optional;
 @ApplicationScoped
 public class MovieService{
 
-
     StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession();
     private final MovieRepository movieRepository = new MovieRepository_(ss);
 
@@ -29,19 +28,27 @@ public class MovieService{
           tx.commit();
           return movies;
       } catch (Exception e) {
-          tx.rollback();
+          if (tx != null) tx.rollback();
           throw e;
       }
     }
 
-    public Optional<Movie> findMovieByTitle(String title) {
+    public List<Movie> searchMovies(String query) {
+        // If Search field is empty, show all movies as default
+        if (query == null || query.isEmpty()) {
+            return getAllMovies();
+        }
+
         Transaction tx = ss.beginTransaction();
        try {
-           Optional<Movie> movie = movieRepository.findByTitleIgnoringCase(title);
+          String searchParam = "%" + query + "%";
+
+          List<Movie> movies = movieRepository.smartSearch(searchParam);
+
            tx.commit();
-           return movie;
+           return movies;
        } catch (Exception e) {
-           tx.rollback();
+           if (tx != null) tx.rollback();
            throw e;
        }
     }
@@ -53,37 +60,12 @@ public class MovieService{
            tx.commit();
            return movies;
         } catch (Exception e) {
-            tx.rollback();
+            if (tx != null) tx.rollback();
             throw e;
         }
     }
 
-//
-//    public List<Movie> findMoviesByDuration(int duration) {
-//        return movieRepository.findByDuration(duration);
-//    }
-//
-//    public List<Movie> findByPrice(BigDecimal price) {
-//        return movieRepository.findByPrice(price);
-//    }
-//
-//    public List<Movie> findByActor(String firstName, String lastName) {
-//        return movieRepository.findByActor_FirstNameAndActor_LastName(firstName, lastName);
-//    }
-//
-//    public long countMoviesByGenre(String genre) {
-//        return movieRepository.countByGenre(genre);
-//    }
-//
-//    public long countMoviesByDuration(int duration) {
-//        return movieRepository.countByDuration(duration);
-//    }
-//
-//
-//    public long countMoviesByActor(String firstName, String lastName) {
-//        return movieRepository.countByActor_FirstNameAndActor_LastName(firstName, lastName);
-//    }
-//
+
 //    public void saveMovie(Movie movie) {
 //        movieRepository.save(movie);
 //    }
