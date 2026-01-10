@@ -40,7 +40,7 @@ public class MainController {
     public void initialize(){
         navigationService.setMainController(this);
         setTop("/org/example/blockbusterlabel.fxml");
-        setCenter("/org/example/homescreen.fxml");
+        setCenter("/org/example/loginview.fxml");
 
     }
 

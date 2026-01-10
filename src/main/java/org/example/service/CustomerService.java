@@ -20,7 +20,16 @@ public class CustomerService {
     private final CustomerRepository customerRepository = new CustomerRepository_(ss);
 
 
+    //Metod för att hantera inloggning av användare returnerar en användare och loggar in denna om den finns i databasen
+    //Annars skapas en ny
+    public Customer logInOrRegister(String firstName, String lastName, String eMail){
+        return findByEmail(eMail)
+            .orElseGet(()-> {
+                createCustomer(firstName, lastName, eMail);
+                return findByEmail(eMail).get();
+            });
 
+    }
     //Reads Customer from the table
     public Optional<Customer> findByEmail(String email) {
         Transaction tx = ss.beginTransaction();
