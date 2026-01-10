@@ -85,6 +85,7 @@ public class RentalViewController {
 
         try{
             Customer currentCustomer = model.getLoggedCustomer();
+
             //Anropar listan som skapats i Rentalservice via Native Query
             List<Movie> rentedMovies = rentalService.getRentedMoviesByCustomer(currentCustomer);
 

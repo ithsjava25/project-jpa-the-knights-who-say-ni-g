@@ -23,10 +23,18 @@ public class CustomerService {
     //Metod för att hantera inloggning av användare returnerar en användare och loggar in denna om den finns i databasen
     //Annars skapas en ny
     public Customer logInOrRegister(String firstName, String lastName, String eMail){
+           if (firstName == null || lastName == null || eMail == null) {
+                 throw new IllegalArgumentException("Name and email cannot be null");
+                }
+            if (!eMail.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+                    throw new IllegalArgumentException("Invalid email format");
+                }
         return findByEmail(eMail)
             .orElseGet(()-> {
                 createCustomer(firstName, lastName, eMail);
-                return findByEmail(eMail).get();
+                return findByEmail(eMail)
+                    .orElseThrow(()-> new IllegalStateException(
+                        "Failed to retrieve customer after creation"));
             });
 
     }

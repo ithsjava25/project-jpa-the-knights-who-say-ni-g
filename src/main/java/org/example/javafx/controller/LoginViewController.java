@@ -29,10 +29,9 @@ public class LoginViewController {
     AppModel model;
 
 
-
     @FXML
-    public void initialize(){
-        handleLogIn();
+    public void initialize() {
+        logInReg.setOnAction(event -> handleLogIn());
     }
 
     public void handleLogIn() {
@@ -45,15 +44,25 @@ public class LoginViewController {
             errorLabel.setVisible(true);
             return;
         }
+        try {
+            Customer customer = customerService.logInOrRegister(
+                forNamn.getText(),
+                efterNamn.getText(),
+                eMail.getText()
+            );
 
-        Customer customer = customerService.logInOrRegister(
-            forNamn.getText(),
-            efterNamn.getText(),
-            eMail.getText()
-        );
+            if (customer == null) {
+                errorLabel.setText("Inloggning misslyckades");
+                errorLabel.setVisible(true);
+                return;
+            }
 
-        model.setLoggedCustomer(customer);
-        navigator.setCenter("/org/example/homescreen.fxml");
+            model.setLoggedCustomer(customer);
+            navigator.setCenter("/org/example/homescreen.fxml");
+        } catch (Exception e) {
+            errorLabel.setText("Ett fel uppstod: " + e.getMessage());
+            errorLabel.setVisible(true);
+        }
     }
 
 }

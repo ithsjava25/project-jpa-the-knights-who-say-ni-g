@@ -36,10 +36,6 @@ public class AppModel {
         //LoginView sätter nya värdet på logged customer via textfälten i vyn
         loggedCustomer = null;
 
-//        if(customerService.findByEmail("bob@mail").isEmpty()){
-//            customerService.createCustomer("bob","bobson","bob@mail");
-//        }
-//        loggedCustomer = customerService.findByEmail("bob@mail").get();
 
     }
     public void testStart(){

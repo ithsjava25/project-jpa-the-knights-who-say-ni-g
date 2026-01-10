@@ -32,7 +32,7 @@
                     text="Logga in / Registrera"
                     prefWidth="200"
                     style="-fx-font-weight: bold;"
-                    onAction="#handleLogIn"/>
+                    />
 
             <Label fx:id="errorLabel"
                    textFill="red"
