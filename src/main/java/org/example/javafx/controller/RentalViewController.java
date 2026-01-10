@@ -31,6 +31,9 @@ import java.util.stream.Collectors;
 public class RentalViewController {
 
     @Inject
+    NavigationService navigator;
+
+    @Inject
     private RentalService rentalService;
 
     @Inject
@@ -70,7 +73,8 @@ public class RentalViewController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         logOut.setOnAction(event -> {
-            Platform.exit();
+            navigator.setCenter("/org/example/loginview.fxml");
+            //Platform.exit();
         });
 
         loadRentedMovies();
