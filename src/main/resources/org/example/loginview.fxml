@@ -7,10 +7,37 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="loginRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.HomeScreenController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.LoginViewController">
     <center>
 
+        <VBox spacing="15" alignment="CENTER"
+              style="-fx-padding: 40; -fx-border-color: black; -fx-border-width: 3;">
 
+            <Label text="Blockbuster Login"
+                   style="-fx-font-size: 22; -fx-font-weight: bold;" />
+
+            <TextField fx:id="forNamn"
+                       promptText="Förnamn"
+                       prefWidth="250"/>
+
+            <TextField fx:id="efterNamn"
+                       promptText="Efternamn"
+                       prefWidth="250"/>
+
+            <TextField fx:id="eMail"
+                       promptText="Email"
+                       prefWidth="250"/>
+
+            <Button fx:id="logInReg"
+                    text="Logga in / Registrera"
+                    prefWidth="200"
+                    style="-fx-font-weight: bold;"
+                    />
+
+            <Label fx:id="errorLabel"
+                   textFill="red"
+                   visible="false"/>
+        </VBox>
 
     </center>
 

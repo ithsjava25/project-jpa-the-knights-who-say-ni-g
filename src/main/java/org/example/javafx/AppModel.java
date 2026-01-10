@@ -32,10 +32,10 @@ public class AppModel {
     public void init(){
 
         //TODO hämta den inloggade personen
-        if(customerService.findByEmail("bob@mail").isEmpty()){
-            customerService.createCustomer("bob","bobson","bob@mail");
-        }
-        loggedCustomer = customerService.findByEmail("bob@mail").get();
+
+        //LoginView sätter nya värdet på logged customer via textfälten i vyn
+        loggedCustomer = null;
+
 
     }
     public void testStart(){
@@ -45,6 +45,11 @@ public class AppModel {
 
     public Customer getLoggedCustomer() {
         return loggedCustomer;
+    }
+
+    //För att kunna sätta värdet på loggedcustomer från vyn
+    public void setLoggedCustomer(Customer loggedCustomer){
+        this.loggedCustomer = loggedCustomer;
     }
 
     public List<Movie>getMovieList(){

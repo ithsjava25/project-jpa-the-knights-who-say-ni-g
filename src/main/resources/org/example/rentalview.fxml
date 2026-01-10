@@ -13,7 +13,7 @@
 <center>
     <VBox>
         <VBox>
-            <Label text="Valda filmer"/>
+            <Label text="Dina hyrda filmer"/>
 
             <HBox spacing="0">
                 <Label prefWidth="350" text="Film"/>
@@ -35,9 +35,9 @@
                 <Label fx:id="totalPriceLabel" text="0 kr" style="-fx-font-weight: bold;"/>
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
-                <Button
+                <Button fx:id="logOut"
                     style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;"
-                    text="CHECK OUT"/>
+                    text="Logga ut"/>
             </HBox>
 
         </VBox>
