@@ -8,6 +8,7 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,7 +17,15 @@ import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Movie;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.example.tables.Actor_.movie;
+import static org.example.tables.Movie_.genre;
+
 public class HomeScreenController {
 
     @Inject
@@ -51,9 +60,14 @@ public class HomeScreenController {
         // Initial loading
         refreshMovieDisplay("");
 
+        refreshGenreDisplay();
+
         searchService.searchQueryProperty().addListener((observable, oldValue, newValue) -> {
             refreshMovieDisplay(newValue);
         });
+
+
+
 
 //        topListener();
         //printOutButtons();
@@ -112,6 +126,50 @@ public class HomeScreenController {
         card.setOnMouseClicked(event -> handleMovieClick(movie));
     }
 
+    public void refreshGenreDisplay() {
+        lowMoviecard.getChildren().clear();
+
+        // Gets all movies
+        List<Movie> allMovies = movieService.getAllMovies();
+
+        // Extracts all unique genres+ filter away null-values
+        Set<String> uniqueGenres = allMovies.stream()
+            .map(Movie::getGenre)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
+
+        // Creates unique card for every genre
+        for (String genre : uniqueGenres) {
+            createGenreCard(genre);
+        }
+    }
+
+    public void createGenreCard(String genre) {
+        StackPane cardStack = new StackPane();
+
+        Rectangle genreCard = new Rectangle(120, 120);
+        genreCard.setArcHeight(15);
+        genreCard.setArcWidth(15);
+        genreCard.setFill(Color.WHITE);
+        genreCard.setStroke(Color.BLACK);
+
+        Label genreLabel = new Label(genre.toUpperCase());
+        genreLabel.setStyle("-fx-font-weight: bold");
+        genreLabel.setWrapText(true);
+        genreLabel.setTextFill(Color.BLACK);
+        genreLabel.setMaxWidth((115));
+        genreLabel.setAlignment(Pos.CENTER);
+
+        cardStack.getChildren().addAll(genreCard, genreLabel);
+
+        cardStack.setOnMouseClicked(event -> {
+            searchService.setSearchQuery(genre);
+            refreshMovieDisplay(genre);
+        });
+
+        lowMoviecard.setSpacing(10);
+        lowMoviecard.getChildren().add(cardStack);
+    }
 
     private void handleMovieClick(Movie movie) {
         navigation.setCenter(moviePosterURL, movie);

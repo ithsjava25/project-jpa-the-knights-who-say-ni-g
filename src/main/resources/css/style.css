@@ -11,6 +11,46 @@
 #spacer{
 }
 
+.main-scroll-pane {
+    -fx-background-color: gray;
+    -fx-background: gray;
+    -fx-border-color: transparent;
+
+}
+
+/* Kontrollerar storlek/placering av Movie/Genre-text */
+.label-text {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-padding: 0 0 0 15px;
+}
+
+
+.content-scroll-pane {
+    -fx-background-color: transparent;
+
+    -fx-border-color: transparent;
+    -fx-padding: 5px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+
+.scroll-pane .scroll-bar:horizontal{
+    -fx-background-color: transparent; /* Just nu transparant vertikal scrollbar */
+}
+
+.scroll-pane .scroll-bar:vertical{
+    -fx-background-color: transparent; /* Just nu transparant vertikal scrollbar */
+}
+
+
+
+
 /* Ta bort rubrikerna på TableView då du har egna labels i skissen */
 .custom-table .column-header-background {
     -fx-max-height: 0;

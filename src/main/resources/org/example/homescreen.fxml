@@ -4,15 +4,16 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.geometry.Insets?>
 <BorderPane fx:id="homeRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.HomeScreenController">
     <center>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+        <ScrollPane fitToWidth="true" styleClass="main-scroll-pane">
             <content>
-                <VBox spacing="30" style="-fx-padding: 20;">
+                <VBox spacing="30" style="-fx-padding: 0;">
                     <VBox spacing="10">
-                        <Label text="Genre"/>
-                        <ScrollPane fx:id="scrollTopPane" vbarPolicy="NEVER"  prefHeight="200" style="-fx-background-color: transparet;">
+                        <Label text="Movies" styleClass="label-text"/>
+                        <ScrollPane fx:id="scrollTopPane" styleClass="content-scroll-pane" vbarPolicy="NEVER"  prefHeight="230">
                             <HBox fx:id="topMoviecard">
                                 <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
                                 <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
@@ -24,14 +25,14 @@
                     </VBox>
                     <VBox spacing="30">
                         <VBox spacing="10">
-                            <Label text="Genre"/>
-                            <ScrollPane fx:id="scrollLowPane" vbarPolicy="NEVER" prefHeight="200" style="-fx-background-color: transparent;">
+                            <Label text="Genres" styleClass="label-text"/>
+                            <ScrollPane fx:id="scrollLowPane" vbarPolicy="NEVER" prefHeight="200" styleClass="content-scroll-pane">
                                 <HBox fx:id="lowMoviecard" spacing="10">
-                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
-                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
-                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
-                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
-                                    <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>
+                                    <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+                                    <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+                                    <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+                                    <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
+                                    <!--                                <Rectangle width="120" height="120" fill="aquamarine" stroke="BLACK"/>-->
                                 </HBox>
                             </ScrollPane>
                         </VBox>

@@ -6,7 +6,7 @@
     <top>
     <HBox  alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">
             <HBox>
-                <Label text="BlockbusterGang" style="-fx-font-size: 30; -fx-font-weight: bold;" textAlignment="CENTER"/>
+                <Label text="BlockbusterGang" style="-fx-font-size: 35; -fx-font-weight: bold;" textAlignment="CENTER"/>
             </HBox>
             <Region HBox.hgrow="ALWAYS"/>
         <HBox>
