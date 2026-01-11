@@ -108,6 +108,7 @@ public class HomeScreenController {
         Label titleLabel = new Label(movie.getTitle());
         titleLabel.setMaxWidth((115));
         titleLabel.setWrapText(false);
+        titleLabel.setTextFill(Color.BLACK);
         titleLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
         titleLabel.setAlignment(Pos.CENTER);
 
@@ -115,6 +116,7 @@ public class HomeScreenController {
         Label genreLabel = new Label(movie.getGenre());
         genreLabel.setMaxWidth((115));
         genreLabel.setWrapText(false);
+        genreLabel.setTextFill(Color.BLACK);
         genreLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
         genreLabel.setAlignment(Pos.CENTER);
 
@@ -181,14 +183,6 @@ public class HomeScreenController {
 //            changeToHomescreen();
 //        });
 //
-//    }
-
-//    public void getAllMovies(){
-//        List<Movie> allMovies = movieService.getAllMovies();
-//
-//        for(Movie movie : allMovies){
-//            createMoviePosters(movie);
-//        }
 //    }
 
 }

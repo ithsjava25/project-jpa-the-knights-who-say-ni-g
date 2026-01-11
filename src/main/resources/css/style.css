@@ -1,51 +1,91 @@
 
 
-#root{
+#root {
     -fx-background-color: gray;
+    -fx-font-family: Arial;
 }
 
-#homebuttonpane{
+#homebuttonpane {
     -fx-alignment: TOP_RIGHT;
 }
 
-#spacer{
-}
-
+/* Den yttre huvud-scrollen */
 .main-scroll-pane {
     -fx-background-color: gray;
     -fx-background: gray;
     -fx-border-color: transparent;
-
 }
 
-/* Kontrollerar storlek/placering av Movie/Genre-text */
+
 .label-text {
     -fx-font-size: 25px;
-    -fx-font-weight: bold;
     -fx-text-fill: black;
-    -fx-padding: 0 0 0 15px;
+    -fx-padding: 5px 0 10px 15px;
+    -fx-background-color: transparent;
 }
 
-
+/* --- Inre ScrollPanes (movies/genres) --- */
 .content-scroll-pane {
     -fx-background-color: transparent;
-
+    -fx-background: transparent;
     -fx-border-color: transparent;
-    -fx-padding: 5px;
+    -fx-padding: 0;
 }
 
-.scroll-pane .viewport {
+.content-scroll-pane .viewport {
     -fx-background-color: transparent;
-    -fx-padding: 10px;
+    -fx-padding: 15px;
+}
+
+/* --- Scrollbar (Main) --- */
+.main-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-width: 12px;
+}
+
+.main-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.main-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 10px;
+    -fx-background-insets: 2px;
 }
 
 
-.scroll-pane .scroll-bar:horizontal{
-    -fx-background-color: transparent; /* Just nu transparant vertikal scrollbar */
+
+/* Tar bort pilar */
+.main-scroll-pane .scroll-bar:vertical .increment-button,
+.main-scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: " ";
+    -fx-padding: 0;
 }
 
-.scroll-pane .scroll-bar:vertical{
-    -fx-background-color: transparent; /* Just nu transparant vertikal scrollbar */
+/* --- Horisontella scrollbarerna (Inuti rutorna) --- */
+.content-scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.content-scroll-pane .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.content-scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 10px;
+    -fx-background-insets: 2px;
+}
+
+/* Tar bort pilar */
+.content-scroll-pane .scroll-bar:horizontal .increment-button,
+.content-scroll-pane .scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: " ";
+    -fx-padding: 0;
 }
 
 
