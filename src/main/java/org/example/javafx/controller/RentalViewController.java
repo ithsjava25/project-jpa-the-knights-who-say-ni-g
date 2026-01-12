@@ -4,10 +4,7 @@ import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import org.example.javafx.AppModel;
@@ -20,6 +17,7 @@ import org.example.tables.Rental;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RentalViewController {
@@ -63,6 +61,10 @@ public class RentalViewController {
     @Inject
     private CustomerService customerService;
 
+    private static final DateTimeFormatter returnDateTimeFormat =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
     @FXML
     public void initialize() {
 
@@ -70,6 +72,20 @@ public class RentalViewController {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         returnColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
+
+        returnColumn.setCellFactory(column -> new TableCell<>() {
+
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(returnDateTimeFormat));
+                }
+            }
+        });
 
         logOut.setOnAction(event -> {
             navigator.setCenter("/org/example/loginview.fxml");

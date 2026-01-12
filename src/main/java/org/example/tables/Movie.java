@@ -14,6 +14,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "item_id")
     private int itemId;
 
     private String title;
@@ -25,7 +26,7 @@ public class Movie {
 
     public Movie(){}
 
-    public Movie(String title, String genre, int duration, BigDecimal price,  int total_stock, int available_stock) {
+    public Movie(String title, String genre, BigDecimal price) {
         this.title = title;
         this.genre = genre;
         this.price = price;
