@@ -35,7 +35,7 @@ public class MoviePosterController {
     @FXML private Label priceLabel;
     @FXML private Rectangle posterRectangle;
     @FXML private Button MovieButton;
-    @FXML public Button RentMoreMoviesButton;
+    @FXML private Button RentMoreMoviesButton;
 
     private Movie selectedMovie;
 
