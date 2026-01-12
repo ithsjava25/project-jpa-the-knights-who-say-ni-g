@@ -1,7 +1,9 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.Tuple;
 import org.example.javafx.HibernateUtil;
+import org.example.javafx.controller.RentedMovieView;
 import org.example.repository.RentalRepository;
 import org.example.repository.RentalRepository_;
 import org.example.tables.Customer;
@@ -11,7 +13,9 @@ import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -34,13 +38,15 @@ public class RentalService {
 //            } catch (Exception e) {
 //                System.out.println("The customer does not exist");
 //            }
+            LocalDateTime now = LocalDateTime.now();
             // Create rental-objekt
             Rental rental = new Rental();
             rental.setCustomer(customer);
-            rental.setRentalDate(LocalDateTime.now());
+            rental.setRentalDate(now);
+            rental.setReturnDate(now.plusHours(24));
 
             // Calculates total price for movie rentals
-            rental.setTotalRentalPrice(calculatePrice(movies));
+            rental.setTotalRentalPrice(calculateTotalPriceFromMovies(movies));
 
             // Create a Rental to get an ID - Because of StatelessSession we need to insert every object
             ss.insert(rental);
@@ -64,26 +70,57 @@ public class RentalService {
     }
     // Return a 'list' in view for the customer to see which movies he/she rents
     // public List<>
-    public List<Movie> getRentedMoviesByCustomer(Customer customer) {
+    //Testade med att använda Object[] men detta blev fel när jag försökte sätta kolumnnamnen i Array, då ordningen ej är tydlig eller kan ändras i tabellen
+    //Tuple är en rad från databasen där varje kolumn har ett namn(Ett alternativ till Object[]). Nycklarna används sedan i mapToRentedMovies för att använda rätt kolumner i tabellen
+    //Tuple ger ett lättviktigt och tydligt sätt att hämta exakt de värden som behövs och sedan mappa dem till en view-modell (RentedMovieView).
+    public List<RentedMovieView> getRentedMoviesByCustomer(Customer customer) {
         //Returnerar en tom lista om det inte fins några uthyrda filmer
         if (customer == null) return List.of();
         // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
-        return ss.createNativeQuery(
-                "SELECT * FROM movie m " +
+        List<Tuple> rows =
+         ss.createNativeQuery(
+                "SELECT m.title as title, m.price as price, r.returnDate as returnDate FROM movie m " +
                     "JOIN movie_rental mr ON m.itemId = mr.movie_id " +
                     "JOIN rental r ON mr.rental_id = r.rentalId " +
-                    "WHERE r.customer_id = :cId", Movie.class)
+                    "WHERE r.customer_id = :cId", Tuple.class)
             .setParameter("cId", customer.getCustomerId())
             .getResultList();
+
+        return mapToRentedMovieView(rows);
+    }
+
+    //Gör om rådatan till JavaFX-vänliga Objekt
+    private List<RentedMovieView> mapToRentedMovieView(List<Tuple> rows) {
+        List<RentedMovieView> result = rows.stream()
+            .map(t -> new RentedMovieView(
+                t.get("title", String.class),
+                t.get("price", BigDecimal.class),
+                t.get("returnDate", LocalDateTime.class)
+            ))
+            .toList();
+
+        return result;
     }
 
     //Calculate total rent price based on prices from MovieRepository
-    public BigDecimal calculatePrice(List<Movie> movies) {
+    //För uthyrning
+    public BigDecimal calculateTotalPriceFromMovies(List<Movie> movies) {
         BigDecimal sum = BigDecimal.ZERO;
         for (Movie movie : movies) {
             if(movie.getPrice() != null) {
                 sum = sum.add(movie.getPrice());
            }
+        }
+        return sum;
+    }
+
+    //För vyn
+    public BigDecimal calculateTotalPriceFromView(List<RentedMovieView> movies) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (RentedMovieView movie : movies) {
+            if(movie.getPrice() != null) {
+                sum = sum.add(movie.getPrice());
+            }
         }
         return sum;
     }

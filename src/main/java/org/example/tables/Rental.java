@@ -18,7 +18,7 @@ public class Rental {
 
     private LocalDateTime rentalDate;
 
-    //private LocalDateTime returnDate;
+    private LocalDateTime returnDate;
 
     private BigDecimal totalRentalPrice;
 
@@ -66,14 +66,14 @@ public class Rental {
         this.rentalDate = rentalDate;
     }
 
-    //    public LocalDateTime getReturnDate() {
-//        return returnDate;
-//    }
-//
-//    public void setReturnDate(LocalDateTime returnDate) {
-//        this.returnDate = returnDate;
-//    }
-//
+        public LocalDateTime getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
+    }
+
     public BigDecimal getTotalRentalPrice() {
         return totalRentalPrice;
     }
