@@ -2,33 +2,26 @@ package org.example.javafx.controller;
 
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
-
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import org.example.javafx.AppModel;
-import org.example.repository.CustomerRepository;
-import org.example.repository.MovieRepository;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
+import org.example.tables.Rental;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class RentalViewController {
+
 
     @Inject
     NavigationService navigator;
@@ -46,13 +39,16 @@ public class RentalViewController {
     AppModel model;
 
     @FXML
-    TableView<Movie> rentalTable;
+    TableView<RentedMovieView> rentalTable; // todo: lösa så att tableview kan se rentaltabellen
 
     @FXML
-    TableColumn titleColumn;
+    TableColumn<RentedMovieView, LocalDateTime> returnColumn;
 
     @FXML
-    TableColumn priceColumn;
+    TableColumn<RentedMovieView, String> titleColumn;
+
+    @FXML
+    TableColumn<RentedMovieView, BigDecimal> priceColumn;
 
     @FXML
     Label totalPriceLabel;
@@ -65,12 +61,31 @@ public class RentalViewController {
     @Inject
     private CustomerService customerService;
 
+    private static final DateTimeFormatter returnDateTimeFormat =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
     @FXML
     public void initialize() {
 
         //Kopplar text till
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        returnColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
+
+        returnColumn.setCellFactory(column -> new TableCell<>() {
+
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(returnDateTimeFormat));
+                }
+            }
+        });
 
         logOut.setOnAction(event -> {
             navigator.setCenter("/org/example/loginview.fxml");
@@ -87,13 +102,13 @@ public class RentalViewController {
             Customer currentCustomer = model.getLoggedCustomer();
 
             //Anropar listan som skapats i Rentalservice via Native Query
-            List<Movie> rentedMovies = rentalService.getRentedMoviesByCustomer(currentCustomer);
+            List<RentedMovieView> rentedMovies = rentalService.getRentedMoviesByCustomer(currentCustomer);
 
             //Lägger till listan i TableView
             rentalTable.setItems(FXCollections.observableArrayList(rentedMovies));
 
             //Uppdaterar totalpriset av alla filmer och syns som text
-            BigDecimal totalPrice = rentalService.calculatePrice(rentedMovies);
+            BigDecimal totalPrice = rentalService.calculateTotalPriceFromView(rentedMovies);
             totalPriceLabel.setText(totalPrice.toString() + "kr");
         } catch (Exception e) {
             System.err.println("Kunde inte visa några filmer: " + e.getMessage());

@@ -14,15 +14,19 @@ public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "rental_id")
     private Long rentalId;
 
+    @Column(name= "rental_date")
     private LocalDateTime rentalDate;
 
-    //private LocalDateTime returnDate;
+    @Column(name= "return_date")
+    private LocalDateTime returnDate;
 
+    @Column(name= "total_rental_price")
     private BigDecimal totalRentalPrice;
 
-    // private Long customerId;
+
 
     public Rental() {
         this.rentalDate = LocalDateTime.now();
@@ -46,10 +50,6 @@ public class Rental {
         return customer;
     }
 
-    // public Long getId() {return customerId;}
-
-    //  public void setId(Long customerId) { this.customerId = customerId;}
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
@@ -66,14 +66,14 @@ public class Rental {
         this.rentalDate = rentalDate;
     }
 
-    //    public LocalDateTime getReturnDate() {
-//        return returnDate;
-//    }
-//
-//    public void setReturnDate(LocalDateTime returnDate) {
-//        this.returnDate = returnDate;
-//    }
-//
+        public LocalDateTime getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
+    }
+
     public BigDecimal getTotalRentalPrice() {
         return totalRentalPrice;
     }
