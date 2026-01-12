@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -27,40 +28,43 @@ public class MoviePosterController {
     @Inject
     AppModel model;
 
-    @FXML
-    private VBox posterSpace;
-    @FXML
-    private VBox titleSpace;
-    @FXML
-    private HBox addButtonBox;
-    @FXML
-    private HBox priceBox;
+    @Inject
+    NavigationService navigator;
 
-    Button addMovieButton;
-    Movie selectedMovie;
+    @FXML private Label titleLabel;
+    @FXML private Label priceLabel;
+    @FXML private Rectangle posterRectangle;
+    @FXML private Button MovieButton;
+    @FXML private Button RentMoreMoviesButton;
+
+    private Movie selectedMovie;
 
     public void initData(Movie movie) {
-        selectedMovie = movie;
-        Rectangle poster = new Rectangle(120, 160);
-        poster.setArcHeight(15);
-        poster.setArcWidth(15);
-        poster.setFill(Color.WHITE);
-        poster.setStroke(Color.BLACK);
-        addMovieButton = new Button("Lägg till");
-        Text priceText = new Text(String.format("%.2f kr", movie.getPrice()));
+        this.selectedMovie = movie;
 
-        titleSpace.getChildren().add(new Text(movie.getTitle()));
-        posterSpace.getChildren().add(poster);
-        addButtonBox.getChildren().add(addMovieButton);
-        priceBox.getChildren().add(priceText);
+        // Uppdaterar innehållet dynamiskt
+       titleLabel.setText(movie.getTitle());
+       priceLabel.setText(String.format("%.2f", movie.getPrice()));
+
+        // PLaceholder för framtida bilder
+        // Image image = new Image(movie.getImageUrl());
+        //posterRectangle.setFill(new ImagePattern(img));
+
         addListener();
     }
 
     public void addListener() {
-        addMovieButton.setOnAction(e -> {
+        // Lägger till film i kundvagnen
+        MovieButton.setOnAction(e -> {
             System.out.println("Add movie shopping");
             model.addToShoppingCart(selectedMovie);
         });
-    }
 
+        // Knapp --> Gå tillbaka till startsidan/Homescreen
+        RentMoreMoviesButton.setOnAction(e -> {
+            System.out.println("Navigerar tillbaka till startsidan...");
+            navigator.setCenter("/org/example/homescreen.fxml");
+
+        });
+    }
 }
