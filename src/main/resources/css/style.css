@@ -1,15 +1,93 @@
 
 
-#root{
+#root {
     -fx-background-color: gray;
+    -fx-font-family: Arial;
 }
 
-#homebuttonpane{
+#homebuttonpane {
     -fx-alignment: TOP_RIGHT;
 }
 
-#spacer{
+/* Den yttre huvud-scrollen */
+.main-scroll-pane {
+    -fx-background-color: gray;
+    -fx-background: gray;
+    -fx-border-color: transparent;
 }
+
+
+.label-text {
+    -fx-font-size: 25px;
+    -fx-text-fill: black;
+    -fx-padding: 5px 0 10px 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+}
+
+/* --- Inre ScrollPanes (movies/genres) --- */
+.content-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.content-scroll-pane .viewport {
+    -fx-background-color: transparent;
+    -fx-padding: 15px;
+}
+
+/* --- Scrollbar (Main) --- */
+.main-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-width: 12px;
+}
+
+.main-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.main-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 10px;
+    -fx-background-insets: 2px;
+}
+
+
+/* Tar bort pilar */
+.main-scroll-pane .scroll-bar:vertical .increment-button,
+.main-scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* --- Horisontella scrollbarerna (Inuti rutorna) --- */
+.content-scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.content-scroll-pane .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.content-scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 10px;
+    -fx-background-insets: 2px;
+}
+
+/* Tar bort pilar */
+.content-scroll-pane .scroll-bar:horizontal .increment-button,
+.content-scroll-pane .scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
 
 /* Ta bort rubrikerna på TableView då du har egna labels i skissen */
 .custom-table .column-header-background {
