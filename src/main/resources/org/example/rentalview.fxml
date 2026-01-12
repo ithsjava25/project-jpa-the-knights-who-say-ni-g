@@ -19,17 +19,35 @@
                     <TableColumn fx:id="titleColumn" prefWidth="350" resizable="false" text="C1" />
                     <TableColumn fx:id="returnColumn" prefWidth="200" resizable="false" text="C1" />
                     <TableColumn fx:id="priceColumn" prefWidth="80" resizable="false" text="C2" />
+                    <TableColumn fx:id="renewColumn" prefWidth="100" resizable="false" text="C2"/>
+
                 </columns>
             </TableView>
 
-            <HBox style="-fx-border-color: black; -fx-border-width: 2 0 0 0; -fx-padding: 5 0 0 0;">
-                <Label style="-fx-font-weight: bold; -fx-underline: true;" text="Totalt pris:" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Label fx:id="totalPriceLabel" style="-fx-font-weight: bold;" text="0 kr" />
-            </HBox>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
-                <Button fx:id="logOut" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;" text="Logga ut" />
-            </HBox>
+            <VBox spacing="5"
+                  style="-fx-border-color: black; -fx-border-width: 2 0 0 0; -fx-padding: 5 0 0 0;">
+
+                <HBox>
+                    <Label text="Extra avgifter:" style="-fx-font-weight: bold;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="extraPriceLabel" style="-fx-font-weight: bold;" text="0 kr" />
+                </HBox>
+
+                <HBox>
+                    <Label text="Totalt pris:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="totalPriceLabel"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;"
+                           text="0 kr" />
+
+                </HBox>
+                <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
+                <Button fx:id="logOut" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;" text="Logga ut"/>
+                </HBox>
+
+            </VBox>
+
+
 
         </VBox>
 
