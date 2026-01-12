@@ -21,6 +21,7 @@
     -fx-font-size: 25px;
     -fx-text-fill: black;
     -fx-padding: 5px 0 10px 15px;
+    -fx-font-weight: bold;
     -fx-background-color: transparent;
 }
 
@@ -55,7 +56,6 @@
 }
 
 
-
 /* Tar bort pilar */
 .main-scroll-pane .scroll-bar:vertical .increment-button,
 .main-scroll-pane .scroll-bar:vertical .decrement-button {
@@ -87,8 +87,6 @@
     -fx-shape: " ";
     -fx-padding: 0;
 }
-
-
 
 
 /* Ta bort rubrikerna på TableView då du har egna labels i skissen */
