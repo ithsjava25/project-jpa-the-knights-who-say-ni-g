@@ -11,9 +11,11 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="JavaJPA" value="99f4c46b-9224-49bc-b260-700f3a3c13a2" />
+          <factory-entry name="JavaJPA" />
         </datasource-mapping>
-        <naming-strategy-map />
+        <naming-strategy-map>
+          <unit-entry name="JavaJPA" />
+        </naming-strategy-map>
       </configuration>
     </facet>
   </component>
