@@ -77,7 +77,7 @@ public class RentalService {
         // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
         List<Tuple> rows =
             ss.createNativeQuery(
-                    "SELECT r.rental_id as rentalId, m.title as title, m.price as price, r.return_date as returnDate FROM movie m " +
+                    "SELECT r.rental_id as rentalId, m.title as title, m.price as price, r.return_date as returnDate, r.total_rental_price as totalRentalPrice FROM movie m " +
                         "JOIN movie_rental mr ON m.item_id = mr.movie_id " +
                         "JOIN rental r ON mr.rental_id = r.rental_id " +
                         "WHERE r.customer_id = :cId", Tuple.class)
@@ -95,12 +95,13 @@ public class RentalService {
                 t.get("rentalId", Long.class),
                 t.get("title", String.class),
                 t.get("price", BigDecimal.class),
-                t.get("returnDate", LocalDateTime.class)
+                t.get("returnDate", LocalDateTime.class),
+                t.get("totalRentalPrice", BigDecimal.class)
             ))
             .toList();
     }
 
-    //Calculate total rent price based on prices from MovieRepository
+    //Calculate total rent price based on prices from Movie
     //För uthyrning
     public BigDecimal calculateTotalPriceFromMovies(List<Movie> movies) {
         BigDecimal sum = BigDecimal.ZERO;
@@ -112,16 +113,6 @@ public class RentalService {
         return sum;
     }
 
-    //För vyn
-    public BigDecimal calculateTotalPriceFromView(List<RentedMovieView> movies) {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (RentedMovieView movie : movies) {
-            if (movie.getPrice() != null) {
-                sum = sum.add(movie.getPrice());
-            }
-        }
-        return sum;
-    }
 
     //Förnyar en uthyrning med 24h, lägger då på 29kr, queryn uppdaterar raden för valt id
     public void renewRental(Long rentalId) {

@@ -11,14 +11,25 @@ public class RentedMovieView {
     private final SimpleStringProperty title;
     private final SimpleObjectProperty<BigDecimal> price;
     private final SimpleObjectProperty<LocalDateTime> returnDate;
+    private final SimpleObjectProperty<BigDecimal> totalRentalPrice;
 
-    public RentedMovieView(Long rentalId, String title, BigDecimal price, LocalDateTime returnDate) {
+
+
+    public SimpleObjectProperty<BigDecimal> totalRentalPriceProperty() {
+        return totalRentalPrice;
+    }
+
+    public RentedMovieView(Long rentalId, String title, BigDecimal price, LocalDateTime returnDate, BigDecimal totalRentalPrice) {
         this.rentalId = rentalId;
         this.title = new SimpleStringProperty(title);
         this.price = new SimpleObjectProperty<>(price);
         this.returnDate = new SimpleObjectProperty<>(returnDate);
+        this.totalRentalPrice = new SimpleObjectProperty<>(totalRentalPrice);
     }
 
+    public BigDecimal getTotalRentalPrice() {
+        return totalRentalPrice.get();
+    }
     public BigDecimal getPrice() {
         return price.get();
     }

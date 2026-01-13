@@ -145,9 +145,11 @@ public class RentalViewController {
             //Lägger till listan i TableView
             rentalTable.setItems(FXCollections.observableArrayList(rentedMovies));
 
+            //Visar totalt pris för uthyrning - hämtas via RentedMovieView
+            BigDecimal totalRentalPrice = rentedMovies.getFirst().getTotalRentalPrice();
+
             //Uppdaterar totalpriset av alla filmer och syns som text
-            BigDecimal totalPrice = rentalService.calculateTotalPriceFromView(rentedMovies);
-            totalPriceLabel.setText(totalPrice.toString() + "kr");
+            totalPriceLabel.setText(totalRentalPrice.toString() + "kr");
         } catch (Exception e) {
             System.err.println("Kunde inte visa några filmer: " + e.getMessage());
         }
