@@ -66,7 +66,7 @@ public class RentalService {
         }
 
     }
-
+    //Projection, istället för att hämta en entitet - hämta ett dto-objekt
     // Return a 'list' in view for the customer to see which movies he/she rents
     // public List<>
     //Testade med att använda Object[] men detta blev fel när jag försökte sätta kolumnnamnen i Array, då ordningen ej är tydlig eller kan ändras i tabellen
