@@ -40,12 +40,8 @@ public class Rental {
     private Customer customer;
 
     //ersätta many to many - egen entitet med id sammansatt nyckel film id och rental id
-    @ManyToMany
-    @JoinTable(name = "movie_rental",
-        joinColumns = @JoinColumn(name = "rental_id"),
-        inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    //Två kolumner för pris och återlämning
-    private Set<Movie> movierental = new HashSet<>();
+    @OneToMany(mappedBy = "rental")
+    private Set<RentalMovie> movierental = new HashSet<>();
     //Blir det många listor om man har List<Movierental> här?
     //Eller kan man slå ihop dem med att ha List<Movie> istället?
 
