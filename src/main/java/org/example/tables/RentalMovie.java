@@ -11,6 +11,7 @@ public class RentalMovie {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name= "movie_rental_id")
         private Long id;
 
         @ManyToOne(optional = false)
@@ -19,14 +20,18 @@ public class RentalMovie {
         @ManyToOne(optional = false)
         private Movie movie;
 
-        @Column(nullable = false)
-        private BigDecimal price; //Grundpris för filmen
+        @Column(nullable = false, name = "base_price")
+        private BigDecimal basePrice; //Grundpris för filmen
 
-        @Column(nullable = false)
-        private LocalDateTime rentedAt; //returdatum per film
+        @Column(nullable = false, name = "return_date")
+        private LocalDateTime returnDate; //returdatum per film
 
-        @Column(nullable = false)
-        private BigDecimal additionalCost; // t.ex. 29 kr per förlängning
+        @Column(nullable = false,name = "additional_cost")
+        private BigDecimal additionalCost = BigDecimal.ZERO; // t.ex. 29 kr per förlängning - default 0
+
+    public BigDecimal getTotalPrice() {
+        return basePrice.add(additionalCost);
+    }
 
     public BigDecimal getAdditionalCost() {
         return additionalCost;
@@ -53,11 +58,11 @@ public class RentalMovie {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return basePrice;
     }
 
     public void setPrice(BigDecimal price) {
-        this.price = price;
+        this.basePrice = price;
     }
 
     public Rental getRental() {
@@ -69,11 +74,11 @@ public class RentalMovie {
     }
 
     public LocalDateTime getRentedAt() {
-        return rentedAt;
+        return returnDate;
     }
 
     public void setRentedAt(LocalDateTime rentedAt) {
-        this.rentedAt = rentedAt;
+        this.returnDate = rentedAt;
     }
 }
 

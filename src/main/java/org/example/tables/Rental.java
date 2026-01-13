@@ -20,14 +20,10 @@ public class Rental {
     @Column(name= "rental_date")
     private LocalDateTime rentalDate;
 
-    @Column(name= "return_date")
-    private LocalDateTime returnDate;
-
+    //TotalRentalPrice ska ej lagras permanent, ska beräknas från rentalmovie
     @Column(name= "total_rental_price")
     private BigDecimal totalRentalPrice;
 
-    @Column(name = "additional_cost")
-    private BigDecimal additionalCost = BigDecimal.valueOf(0);
 
 
     public Rental() {
@@ -40,7 +36,9 @@ public class Rental {
     private Customer customer;
 
     //ersätta many to many - egen entitet med id sammansatt nyckel film id och rental id
-    @OneToMany(mappedBy = "rental")
+    //Cascade.all tar bort föräldern samt barn
+    //orphanRemoval tvingar movieRental-tabellen att ta bort objektet om en rental försvinner, en rentalMovie ska inte kunna existera utan en rental
+    @OneToMany(mappedBy = "rental",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RentalMovie> movierental = new HashSet<>();
     //Blir det många listor om man har List<Movierental> här?
     //Eller kan man slå ihop dem med att ha List<Movie> istället?
@@ -66,13 +64,6 @@ public class Rental {
         this.rentalDate = rentalDate;
     }
 
-        public LocalDateTime getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDateTime returnDate) {
-        this.returnDate = returnDate;
-    }
 
     public BigDecimal getTotalRentalPrice() {
         return totalRentalPrice;
@@ -82,27 +73,26 @@ public class Rental {
         this.totalRentalPrice = totalRentalPrice;
     }
 
-    public Set<Movie> getMovierental() {
+    public Set<RentalMovie> getMovierental() {
         return movierental;
     }
 
-    public void setMovierental(Set<Movie> movierental) {
+    public void setMovierental(Set<RentalMovie> movierental) {
         this.movierental = movierental;
     }
 
-    public BigDecimal getAdditionalCost() {
-        return additionalCost;
-    }
 
-    public void setAdditionalCost(BigDecimal additionalCost) {
-        this.additionalCost = additionalCost;
-    }
 
-    public void addMovie(Movie movie) {
-        if (movie != null) {
-            this.movierental.add(movie);
-            movie.getRentals().add(this);
+    public void addItem(RentalMovie item) {
+        if (item != null) {
+            movierental.add(item);
+            item.setRental(this);
         }
+    }
+
+    public void removeItem(RentalMovie item) {
+        movierental.remove(item);
+        item.setRental(null);
     }
 
     @Override

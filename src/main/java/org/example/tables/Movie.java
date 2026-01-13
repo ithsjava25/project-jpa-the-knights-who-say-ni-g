@@ -39,8 +39,8 @@ public class Movie {
     private Set<Actor> actor = new HashSet<>();
 
 
-    @ManyToMany(mappedBy ="movierental")
-    private Set<Rental> rentals = new HashSet<>();
+    @OneToMany(mappedBy ="movie")
+    private Set<RentalMovie> rentals = new HashSet<>();
 
 
 
@@ -83,11 +83,11 @@ public class Movie {
         this.actor = actor;
     }
 
-    public Set<Rental> getRentals() {
+    public Set<RentalMovie> getRentals() {
         return rentals;
     }
 
-    public void setRentals(Set<Rental> inventoryList) {
+    public void setRentals(Set<RentalMovie> inventoryList) {
         this.rentals = inventoryList;
     }
 
