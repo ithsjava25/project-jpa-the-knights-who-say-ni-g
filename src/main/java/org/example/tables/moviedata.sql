@@ -21,32 +21,32 @@ values ('The Shawshank Redemption', 'Drama', 79),
        ('Spirited Away', 'Animation', 99),
        ('The Lion King', 'Animation', 49);
 
-INSERT INTO customer (firstname, lastname, email)
-VALUES ('Anna', 'Andersson', 'anna.andersson@test.se');
-SET @customer_id = LAST_INSERT_ID();
-
-INSERT INTO rental (rentalDate, customer_id)
-VALUES (
-           NOW(),
-           @customer_id
-       );
-
-SET @rental_id = LAST_INSERT_ID();
-
-SELECT itemId, title FROM movie LIMIT 2;
-
-SET @movie1_id = 1;
-SET @movie2_id = 2;
-
-
-INSERT INTO movie_rental (rental_id, movie_id)
-VALUES
-    (@rental_id, @movie1_id),
-    (@rental_id, @movie2_id);
-
-select * from movie m
-join movie_rental mr on m.itemId = mr.movie_id
-join rental r on mr.rental_id = r.rentalId
-where r.customer_id = 3;
-
-delete from customer where customerId = 2;
+# INSERT INTO customer (firstname, lastname, email)
+# VALUES ('Anna', 'Andersson', 'anna.andersson@test.se');
+# SET @customer_id = LAST_INSERT_ID();
+#
+# INSERT INTO rental (rentalDate, customer_id)
+# VALUES (
+#            NOW(),
+#            @customer_id
+#        );
+#
+# SET @rental_id = LAST_INSERT_ID();
+#
+# SELECT itemId, title FROM movie LIMIT 2;
+#
+# SET @movie1_id = 1;
+# SET @movie2_id = 2;
+#
+#
+# INSERT INTO movie_rental (rental_id, movie_id)
+# VALUES
+#     (@rental_id, @movie1_id),
+#     (@rental_id, @movie2_id);
+#
+# select * from movie m
+# join movie_rental mr on m.itemId = mr.movie_id
+# join rental r on mr.rental_id = r.rentalId
+# where r.customer_id = 3;
+#
+# delete from customer where customerId = 2;

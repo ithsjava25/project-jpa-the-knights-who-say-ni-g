@@ -77,7 +77,8 @@ public class RentalService {
         // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
         List<Tuple> rows =
             ss.createNativeQuery(
-                    "SELECT r.rental_id as rentalId, m.title as title, m.price as price, r.return_date as returnDate, r.total_rental_price as totalRentalPrice FROM movie m " +
+                    "SELECT m.price as price, m.title as title,r.rental_id as rentalId, " +
+                        "r.return_date as returnDate, r.total_rental_price as totalRentalPrice, r.additional_cost as additionalCost FROM movie m " +
                         "JOIN movie_rental mr ON m.item_id = mr.movie_id " +
                         "JOIN rental r ON mr.rental_id = r.rental_id " +
                         "WHERE r.customer_id = :cId", Tuple.class)
@@ -96,7 +97,8 @@ public class RentalService {
                 t.get("title", String.class),
                 t.get("price", BigDecimal.class),
                 t.get("returnDate", LocalDateTime.class),
-                t.get("totalRentalPrice", BigDecimal.class)
+                t.get("totalRentalPrice", BigDecimal.class),
+                t.get("additionalCost", BigDecimal.class)
             ))
             .toList();
     }
@@ -121,7 +123,8 @@ public class RentalService {
             ss.createNativeQuery("""
                     update rental
                     set return_date = DATE_ADD(return_date, INTERVAL 24 HOUR),
-                        total_rental_price = total_rental_price + 29
+                        total_rental_price = total_rental_price + 29,
+                        additional_cost = coalesce(additional_cost, 0) + 29
                     where rental_id = :rentalId
                     """)
                 .setParameter("rentalId", rentalId)

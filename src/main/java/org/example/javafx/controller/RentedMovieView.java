@@ -12,6 +12,7 @@ public class RentedMovieView {
     private final SimpleObjectProperty<BigDecimal> price;
     private final SimpleObjectProperty<LocalDateTime> returnDate;
     private final SimpleObjectProperty<BigDecimal> totalRentalPrice;
+    private final SimpleObjectProperty<BigDecimal> additionalCost;
 
 
 
@@ -19,12 +20,17 @@ public class RentedMovieView {
         return totalRentalPrice;
     }
 
-    public RentedMovieView(Long rentalId, String title, BigDecimal price, LocalDateTime returnDate, BigDecimal totalRentalPrice) {
+    public RentedMovieView(Long rentalId, String title, BigDecimal price, LocalDateTime returnDate, BigDecimal totalRentalPrice, BigDecimal additionalCost) {
         this.rentalId = rentalId;
         this.title = new SimpleStringProperty(title);
         this.price = new SimpleObjectProperty<>(price);
         this.returnDate = new SimpleObjectProperty<>(returnDate);
         this.totalRentalPrice = new SimpleObjectProperty<>(totalRentalPrice);
+        this.additionalCost = new SimpleObjectProperty<>(additionalCost);
+    }
+
+    public BigDecimal getAdditionalCost() {
+        return additionalCost.get();
     }
 
     public BigDecimal getTotalRentalPrice() {

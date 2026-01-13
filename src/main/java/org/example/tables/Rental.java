@@ -26,6 +26,8 @@ public class Rental {
     @Column(name= "total_rental_price")
     private BigDecimal totalRentalPrice;
 
+    @Column(name = "additional_cost")
+    private BigDecimal additionalCost = BigDecimal.valueOf(0);
 
 
     public Rental() {
@@ -90,6 +92,13 @@ public class Rental {
         this.movierental = movierental;
     }
 
+    public BigDecimal getAdditionalCost() {
+        return additionalCost;
+    }
+
+    public void setAdditionalCost(BigDecimal additionalCost) {
+        this.additionalCost = additionalCost;
+    }
 
     public void addMovie(Movie movie) {
         if (movie != null) {

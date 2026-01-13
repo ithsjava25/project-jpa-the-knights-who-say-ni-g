@@ -148,8 +148,13 @@ public class RentalViewController {
             //Visar totalt pris för uthyrning - hämtas via RentedMovieView
             BigDecimal totalRentalPrice = rentedMovies.getFirst().getTotalRentalPrice();
 
+            BigDecimal extraCost = rentedMovies.getFirst().getAdditionalCost();
+
             //Uppdaterar totalpriset av alla filmer och syns som text
             totalPriceLabel.setText(totalRentalPrice.toString() + "kr");
+
+            //Visar totalt pris för extra kostnader
+            extraPriceLabel.setText(extraCost.toString());
         } catch (Exception e) {
             System.err.println("Kunde inte visa några filmer: " + e.getMessage());
         }
