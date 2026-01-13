@@ -9,6 +9,7 @@ import org.example.repository.RentalRepository_;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.example.tables.Rental;
+import org.example.tables.RentalMovie;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
@@ -30,42 +31,39 @@ public class RentalService {
         // Check the customer (get customer id)?
         Transaction tx = ss.beginTransaction();
         try {
-            //         Customer verifiedCustomer = null;
-//            try {
-//                verifiedCustomer = CustomerRepository.findByEmail(customer.getEmail());
-//            } catch (Exception e) {
-//                System.out.println("The customer does not exist");
-//            }
             LocalDateTime now = LocalDateTime.now();
             // Create rental-objekt
             Rental rental = new Rental();
             rental.setCustomer(customer);
             rental.setRentalDate(now);
-            rental.setReturnDate(now.plusHours(24));
 
-            // Calculates total price for movie rentals
-            rental.setTotalRentalPrice(calculateTotalPriceFromMovies(movies));
-
-            // Create a Rental to get an ID - Because of StatelessSession we need to insert every object
+            // Saves a Rental to get an ID - Because of StatelessSession we need to insert every object
             ss.insert(rental);
 
+            //Skapar 1 RentalMovie per film
             for (Movie movie : movies) {
-                // Manuell SQL eftersom det inte finns någon entitet för kopplingen
-                ss.createNativeQuery(
-                        "INSERT INTO movie_rental (rental_id, movie_id) VALUES (:rId, :mId)")
-                    .setParameter("rId", rental.getRentalId())
-                    .setParameter("mId", movie.getId())
-                    .executeUpdate();
+                RentalMovie rm = new RentalMovie();
+                rm.setRental(rental);
+                rm.setMovie(movie);
+                rm.setPrice(movie.getPrice());
+                rm.setRentedAt(now.plusHours(24));
+                rm.setAdditionalCost(BigDecimal.ZERO);
+
+                rental.getMovierental().add(rm);
+                //sparar ett rental_movie objekt
+                ss.insert(rm);
             }
 
+
             tx.commit();
-            System.out.println("Movie rental created with total price: " + rental.getTotalRentalPrice());
+            System.out.println("Movie rental created");
         } catch (Exception e) {
             tx.rollback();
             throw new RuntimeException("Could not create rental", e);
         }
 
     }
+
     //Projection, istället för att hämta en entitet - hämta ett dto-objekt
     // Return a 'list' in view for the customer to see which movies he/she rents
     // public List<>
@@ -75,59 +73,31 @@ public class RentalService {
         //Returnerar en tom lista om det inte fins några uthyrda filmer
         if (customer == null) return List.of();
         // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
-        List<Tuple> rows =
-            ss.createNativeQuery(
-                    "SELECT m.price as price, m.title as title,r.rental_id as rentalId, " +
-                        "r.return_date as returnDate, r.total_rental_price as totalRentalPrice, r.additional_cost as additionalCost FROM movie m " +
-                        "JOIN movie_rental mr ON m.item_id = mr.movie_id " +
-                        "JOIN rental r ON mr.rental_id = r.rental_id " +
-                        "WHERE r.customer_id = :cId", Tuple.class)
-                .setParameter("cId", customer.getCustomerId())
-                .getResultList();
 
-        return mapToRentedMovieView(rows);
-    }
+        return ss.createQuery(
+                "SELECT new org.example.javafx.controller.RentedMovieView(" +
+                    "rm.id, m.title, rm.basePrice, rm.returnDate, rm.additionalCost)" +
+                    "FROM RentalMovie rm " +
+                    "JOIN rm.movie m " +
+                    "JOIN rm.rental r " +
+                    "WHERE r.customer.customerId = :cId", RentedMovieView.class)
+            .setParameter("cId", customer.getCustomerId())
+            .getResultList();
 
-    //Gör om rådatan till JavaFX-vänliga Objekt
-    private List<RentedMovieView> mapToRentedMovieView(List<Tuple> rows) {
-
-        return rows.stream()
-            .map(t -> new RentedMovieView(
-                t.get("rentalId", Long.class),
-                t.get("title", String.class),
-                t.get("price", BigDecimal.class),
-                t.get("returnDate", LocalDateTime.class),
-                t.get("totalRentalPrice", BigDecimal.class),
-                t.get("additionalCost", BigDecimal.class)
-            ))
-            .toList();
-    }
-
-    //Calculate total rent price based on prices from Movie
-    //För uthyrning
-    public BigDecimal calculateTotalPriceFromMovies(List<Movie> movies) {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (Movie movie : movies) {
-            if (movie.getPrice() != null) {
-                sum = sum.add(movie.getPrice());
-            }
-        }
-        return sum;
     }
 
 
     //Förnyar en uthyrning med 24h, lägger då på 29kr, queryn uppdaterar raden för valt id
-    public void renewRental(Long rentalId) {
+    public void renewRentalMovie(Long rentalMovieId) {
         Transaction tx = ss.beginTransaction();
         try {
             ss.createNativeQuery("""
-                    update rental
+                    update rental_movie
                     set return_date = DATE_ADD(return_date, INTERVAL 24 HOUR),
-                        total_rental_price = total_rental_price + 29,
                         additional_cost = coalesce(additional_cost, 0) + 29
-                    where rental_id = :rentalId
+                    where movie_rental_id = :rentalId
                     """)
-                .setParameter("rentalId", rentalId)
+                .setParameter("rentalId", rentalMovieId)
                 .executeUpdate();
 
             tx.commit();

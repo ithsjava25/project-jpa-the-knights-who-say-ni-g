@@ -14,6 +14,7 @@ import org.example.service.RentalService;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.example.tables.Rental;
+import org.example.tables.RentalMovie;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -92,7 +93,8 @@ public class RentalViewController {
                         ButtonType.NO
                     );
                     if(alert.showAndWait().orElse(ButtonType.NO) == ButtonType.YES){
-                        rentalService.renewRental(rental.getRentalId());
+                        //Raden man klickar på förlängs
+                        rentalService.renewRentalMovie(rental.getRentalId());
                         loadRentedMovies();
                     }
 
@@ -146,15 +148,19 @@ public class RentalViewController {
             rentalTable.setItems(FXCollections.observableArrayList(rentedMovies));
 
             //Visar totalt pris för uthyrning - hämtas via RentedMovieView
-            BigDecimal totalRentalPrice = rentedMovies.getFirst().getTotalRentalPrice();
+            BigDecimal totalRentalPrice = rentedMovies.stream()
+                .map(RentedMovieView::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-            BigDecimal extraCost = rentedMovies.getFirst().getAdditionalCost();
+            BigDecimal totalExtraCost = rentedMovies.stream()
+                .map(RentedMovieView::getAdditionalCost)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             //Uppdaterar totalpriset av alla filmer och syns som text
             totalPriceLabel.setText(totalRentalPrice.toString() + "kr");
+            //Uppdaterar label för extra kostnader
+            extraPriceLabel.setText(totalExtraCost + "kr");
 
-            //Visar totalt pris för extra kostnader
-            extraPriceLabel.setText(extraCost.toString());
         } catch (Exception e) {
             System.err.println("Kunde inte visa några filmer: " + e.getMessage());
         }

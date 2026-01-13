@@ -21,8 +21,8 @@ public class Rental {
     private LocalDateTime rentalDate;
 
     //TotalRentalPrice ska ej lagras permanent, ska beräknas från rentalmovie
-    @Column(name= "total_rental_price")
-    private BigDecimal totalRentalPrice;
+//    @Column(name= "total_rental_price")
+//    private BigDecimal totalRentalPrice;
 
 
 
@@ -65,13 +65,13 @@ public class Rental {
     }
 
 
-    public BigDecimal getTotalRentalPrice() {
-        return totalRentalPrice;
-    }
-
-    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
-        this.totalRentalPrice = totalRentalPrice;
-    }
+//    public BigDecimal getTotalRentalPrice() {
+//        return totalRentalPrice;
+//    }
+//
+//    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
+//        this.totalRentalPrice = totalRentalPrice;
+//    }
 
     public Set<RentalMovie> getMovierental() {
         return movierental;
@@ -98,12 +98,12 @@ public class Rental {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Rental rental)) return false;
-        return Objects.equals(rentalId, rental.rentalId) && Objects.equals(rentalDate, rental.rentalDate) && Objects.equals(totalRentalPrice, rental.totalRentalPrice) && Objects.equals(customer, rental.customer) && Objects.equals(movierental, rental.movierental);
+        return Objects.equals(rentalId, rental.rentalId) && Objects.equals(rentalDate, rental.rentalDate)  && Objects.equals(customer, rental.customer) && Objects.equals(movierental, rental.movierental);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rentalId, rentalDate, totalRentalPrice, customer, movierental);
+        return Objects.hash(rentalId, rentalDate, customer, movierental);
     }
 }
 

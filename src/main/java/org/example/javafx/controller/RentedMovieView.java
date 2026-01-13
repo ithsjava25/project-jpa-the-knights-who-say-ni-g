@@ -7,25 +7,20 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 //Skapad för att kunna visa kolumner från två tabeller i tableview
 public class RentedMovieView {
-    private final Long rentalId;
+    private final Long rentalMovieId;
     private final SimpleStringProperty title;
     private final SimpleObjectProperty<BigDecimal> price;
     private final SimpleObjectProperty<LocalDateTime> returnDate;
-    private final SimpleObjectProperty<BigDecimal> totalRentalPrice;
     private final SimpleObjectProperty<BigDecimal> additionalCost;
 
 
 
-    public SimpleObjectProperty<BigDecimal> totalRentalPriceProperty() {
-        return totalRentalPrice;
-    }
 
-    public RentedMovieView(Long rentalId, String title, BigDecimal price, LocalDateTime returnDate, BigDecimal totalRentalPrice, BigDecimal additionalCost) {
-        this.rentalId = rentalId;
+    public RentedMovieView(Long rentalMovieId, String title, BigDecimal price, LocalDateTime returnDate, BigDecimal additionalCost) {
+        this.rentalMovieId = rentalMovieId;
         this.title = new SimpleStringProperty(title);
         this.price = new SimpleObjectProperty<>(price);
         this.returnDate = new SimpleObjectProperty<>(returnDate);
-        this.totalRentalPrice = new SimpleObjectProperty<>(totalRentalPrice);
         this.additionalCost = new SimpleObjectProperty<>(additionalCost);
     }
 
@@ -33,11 +28,8 @@ public class RentedMovieView {
         return additionalCost.get();
     }
 
-    public BigDecimal getTotalRentalPrice() {
-        return totalRentalPrice.get();
-    }
     public BigDecimal getPrice() {
-        return price.get();
+        return price.get().add(additionalCost.get());
     }
 
     public String getTitle() {
@@ -49,6 +41,6 @@ public class RentedMovieView {
     }
 
     public Long getRentalId() {
-        return rentalId;
+        return rentalMovieId;
     }
 }

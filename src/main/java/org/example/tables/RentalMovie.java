@@ -61,8 +61,8 @@ public class RentalMovie {
         return basePrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.basePrice = price;
+    public void setPrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
     public Rental getRental() {
