@@ -21,7 +21,6 @@
 #loginViewHeader{
     -fx-text-fill: #FFD700;
     -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.3), 10, 0, 0, 0);
-    -fx-letter-spacing: 2px;
 }
 
 .label-text {
@@ -36,7 +35,7 @@
 
     -fx-text-fill: #FFD700;
     -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0 , 2);
-    -fx-background-color: #0f3460  063970;
+    -fx-background-color: #0f3460;
     -fx-background-radius: 18px;
     -fx-border-color: #FFD700;
     -fx-border-radius: 18px;
@@ -113,7 +112,7 @@
     -fx-max-height: 0;
     -fx-pref-height: 0;
     -fx-min-height: 0;
-    -fx-visibility: hidden;
+    visibility: hidden;
 }
 
 .custom-table {
