@@ -82,7 +82,7 @@ public class RentalService {
 
     }
 
-
+    //For MySQL
     //Förnyar en uthyrning med 24h, lägger då på 29kr, queryn uppdaterar raden för valt id
     public void renewRentalMovie(Long rentalMovieId) {
         Transaction tx = ss.beginTransaction();
