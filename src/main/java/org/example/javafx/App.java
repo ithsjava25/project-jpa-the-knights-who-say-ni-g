@@ -10,10 +10,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.service.RentalService;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class App extends Application{
 
     private SeContainer container;
+    private Timer timer;
 
     @Override
     public void start(Stage primaryStage) {
@@ -25,13 +29,22 @@ public class App extends Application{
             // Gets RentalService from container, new instance is created by Weld
             RentalService rentalService = container.select(RentalService.class).get();
 
-            // Clears old rentals from database
-            try {
-                rentalService.deleteOldRentals();
-                System.out.println("Startup: Old rentals cleared");
-            } catch (Exception e) {
-                System.out.println("Could not clear old rentals during startup" + e.getMessage());
-            }
+            // Clears expired RentalMovies from database, set intervall
+            timer = new Timer(true); // daemon-timer
+
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        rentalService.cleanupRentals();
+                        System.out.println("Timer cleanup executed");
+                    } catch (Exception e) {
+                        System.err.println("Timer cleanup failed: " + e.getMessage());
+                    }
+                }
+                }, 0,          // kör direkt vid start
+                20 * 1000   // kör var 10:e sekund
+            );
 
             //Start fxml
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/org/example/maincontrollerview.fxml"));
@@ -58,12 +71,14 @@ public class App extends Application{
 
     }
 
+
     public SeContainer getContainer() {
         return container;
     }
 
     @Override
     public void stop() {
+        timer.cancel();
         container.close();
     }
 

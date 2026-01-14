@@ -84,6 +84,8 @@ public class RentalService {
 
     //For MySQL
     //Förnyar en uthyrning med 24h, lägger då på 29kr, queryn uppdaterar raden för valt id
+    //Gör till en fråga i RentalMovieRepo? Fungerar ej, för kompliserad fråga för Jakarta Data
+    //coalesce en variant av switch med cases
     public void renewRentalMovie(Long rentalMovieId) {
         Transaction tx = ss.beginTransaction();
         try {
@@ -106,29 +108,51 @@ public class RentalService {
         }
     }
 
-    public void deleteOldRentals() {
-        LocalDateTime cutoff = LocalDateTime.now().minusHours(24);
+    public void deleteExpiredRentalMovies() {
+        //SQL now current timestamp
+        //Flyttas in till RentalMovieRepo
+        LocalDateTime now = LocalDateTime.now();
         Transaction tx = ss.beginTransaction();
 
         try {
-            // Finds all rentals older than 24h
-            List<Rental> oldRentals = rentalRepository.findByRentalDateLessThan(cutoff);
-
-            // Loops through and deletes
-            // Måste rensa kopplingstabellen manuellt först via NativeQuery pga StatelessSession
-            for (Rental rental : oldRentals) {
-                ss.createNativeQuery("DELETE from rental_movie WHERE rental_id = :rId")
-                    .setParameter("rId", rental.getRentalId())
-                    .executeUpdate();
-
-                rentalRepository.delete(rental);
-            }
+            int deleted = ss.createNativeQuery("""
+                    delete from rental_movie
+                    where return_date < :now""")
+                .setParameter("now", now)
+                .executeUpdate();
             tx.commit();
-            System.out.println("Cleared " + oldRentals.size() + " old rentals.");
+            System.out.println("Deleted " + deleted + " old expired rental movies.");
         } catch (Exception e) {
             tx.rollback();
-            throw new RuntimeException("Could not clear old rentals", e);
+            throw new RuntimeException("Could not delete expired rental movies", e);
         }
 
     }
+    public void deleteEmptyRentals() {
+        Transaction tx = ss.beginTransaction();
+
+        try {
+            int deleted = ss.createNativeQuery("""
+            delete from rental
+            where rental_id not in(
+                select distinct rental_id
+                from rental_movie
+            )
+""")
+                .executeUpdate();
+            tx.commit();
+            System.out.println("Deleted " + deleted + " empty rentals.");
+        }catch(Exception e) {
+            tx.rollback();
+            throw new RuntimeException("Could not delete empty rentals", e);
+        }
+    }
+    // RentalService
+    // 1) delete expired rental_movies
+    // 2) delete rentals that became empty
+    public void cleanupRentals() {
+        deleteExpiredRentalMovies();
+        deleteEmptyRentals();
+    }
+
 }
