@@ -1,22 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.Rectangle?>
-<BorderPane  fx:id="blockRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.BlockBusterLabelController">
+
+<BorderPane fx:id="blockRoot" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.BlockBusterLabelController">
     <top>
-    <HBox  alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">
+    <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20;">
             <HBox>
-                <Label text="BlockbusterGang" style="-fx-font-size: 35; " textAlignment="CENTER"/>
+                <Label fx:id="headTitle" style="-fx-font-size: 35; " text="BlockbusterGang" textAlignment="CENTER" />
             </HBox>
-            <Region HBox.hgrow="ALWAYS"/>
+            <Region HBox.hgrow="ALWAYS" />
         <HBox>
-            <Button fx:id="rentalView" text="Rentals"/>
+            <Button fx:id="rentalView" text="Rentals" />
         </HBox>
             <HBox>
-                <Button fx:id="homeButton" text="goHome"/>
+                <Button fx:id="homeButton" text="goHome" />
             </HBox>
             <HBox prefHeight="100.0" BorderPane.alignment="TOP_RIGHT">
-                <TextField fx:id="globalSearchField" promptText="Search movie or genre..."/>
+                <TextField fx:id="globalSearchField" promptText="Search movie or genre..." />
             </HBox>
         </HBox>
     </top>
