@@ -36,9 +36,6 @@ public class Rental {
     //orphanRemoval tvingar movieRental-tabellen att ta bort objektet om en rental försvinner, en rentalMovie ska inte kunna existera utan en rental
     @OneToMany(mappedBy = "rental",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RentalMovie> movierental = new HashSet<>();
-    //Blir det många listor om man har List<Movierental> här?
-    //Eller kan man slå ihop dem med att ha List<Movie> istället?
-
 
     public Customer getCustomer() {
         return customer;
