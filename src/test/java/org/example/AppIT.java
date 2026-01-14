@@ -1,13 +1,11 @@
 package org.example;
 
-import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.io.SessionInputBuffer;
-import jakarta.enterprise.inject.se.SeContainer;
-import jakarta.enterprise.inject.se.SeContainerInitializer;
 import org.example.javafx.HibernateUtil;
 import org.example.repository.CustomerRepository;
 import org.example.repository.CustomerRepository_;
 import org.example.repository.MovieRepository;
 import org.example.repository.MovieRepository_;
+import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
 import org.example.tables.Customer;
@@ -44,10 +42,9 @@ public class AppIT {
         System.setProperty("APP_DB_PASS", mysql.getPassword());
 
     }
-        // Flytta SeContainer till @BeforeAll för att minska påverkan på prestanda?
 
     @Test
-    void TestHibernateConnection() {
+    void verifyHibernateConnection() {
         System.out.println("Försöker hämta SessionFactory");
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         System.out.println("SessionFactory hämtad!");
@@ -55,38 +52,71 @@ public class AppIT {
         try (Session session = sessionFactory.openSession()) {
             assertThat(session.isConnected()).isTrue();
 
-            // Funkar men raden nedan (Object result) är bättre praxis
-//            Long result = (Long) session.createNativeQuery("SELECT 1").getSingleResult();
-//            assertThat(result).isEqualTo(1);
-
             Object result = session.createNativeQuery("SELECT 1").getSingleResult();
             assertThat(result.toString()).isEqualTo("1");
         }
     }
 
-    // Skapa användare/Customer - C
+
+
+
+    // Kontrollera om annvändaren finns - logga in
     @Test
-    void testCreateCustomer() {
-        try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
-            Transaction tx = ss.beginTransaction();
+    void loginUser_shouldCreateNewUser_WhenEmailDoesNotExist() {
 
-            CustomerRepository customerRepository = new CustomerRepository_(ss);
+        CustomerService service = new CustomerService();
 
-            Customer customer = new Customer();
-            customer.setFirstName("Anna");
-            customer.setLastName("Andersson");
-            customer.setEmail("test@gmail.com");
+        String testEmail = "ny_anvandare@gmail.com";
+        String fName = "Anna";
+        String lName = "Andersson";
 
-            customerRepository.save(customer);
-            tx.commit();
+        Customer result = service.logInOrRegister(fName, lName, testEmail);
 
-            assertThat(customer.getCustomerId()).isNotNull();
+
+        assertThat(result).isNotNull();
+        assertThat(result.getCustomerId()).as("Kunden borde ha fått ett genererat ID").isNotNull();
+        assertThat(result.getEmail()).isEqualTo(testEmail);
+        assertThat(result.getFirstName()).isEqualTo(fName);
+
+        try (StatelessSession verifySession = HibernateUtil.getSessionFactory().openStatelessSession()) {
+            Customer dbCustomer = (Customer) verifySession.createNativeQuery(
+                    "SELECT * FROM customer WHERE EMAIL = :email", Customer.class)
+                .setParameter("email", testEmail)
+                .getSingleResult();
+            assertThat(dbCustomer).isNotNull();
+
         }
     }
 
+    //Kontrollera om annvändaren finns - skapa ny användare
+    @Test
+    void loginUser_shouldReturnExistingCustomer_whenEmailExists(){
+        String existingEmail = "befintligUser@gmail.com";
+        Long existingId;
+
+        try (StatelessSession setupSession = HibernateUtil.getSessionFactory().openStatelessSession()) {
+            Transaction tx = setupSession.beginTransaction();
+            Customer existingC = new Customer("Bob", "Bobsson", existingEmail);
+            setupSession.insert(existingC);
+            tx.commit();
+            existingId = existingC.getCustomerId();
+
+            CustomerService service = new CustomerService();
+            Customer result = service.logInOrRegister("Bob", "Bobsson", existingEmail);
+
+            assertThat(result).isNotNull();
+            assertThat(result.getCustomerId())
+                .as("Borde returnera samma ID som redan finns i databasen")
+                .isEqualTo(existingId);
+
+            assertThat(result.getEmail()).isEqualTo(existingEmail);
+        }
+    }
+
+    // Todo: Se över efter ändrad projekt struktur
     // Skapa uthyrning/Rental
     @Test
-    void testCreateRental() {
+    void createNewRental() {
         try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
             Transaction tx = ss.beginTransaction();
             try {
@@ -126,7 +156,6 @@ public class AppIT {
 
             assertThat(((Number) count).intValue()).isEqualTo(1);
 
-
         } catch (Exception e) {
                 tx.rollback();
                 throw e;
@@ -136,7 +165,7 @@ public class AppIT {
 
     // räkna total price
     @Test
-    void testCalculateTotalPriceForMovies(){
+    void calculateTotalPriceForMovies(){
         // Skapa en instans av servicen manuellt för ett enhetstest
         RentalService service = new RentalService();
 
@@ -151,7 +180,7 @@ public class AppIT {
     }
 
     @Test
-    void testSearchMoviesViaMovieService() {
+    void searchMoviesViaMovieService_shouldFindBothTitleAndGenre() {
         try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
             // Förbereder data
             Transaction tx = ss.beginTransaction();
@@ -160,23 +189,25 @@ public class AppIT {
             tx.commit();
 
             // Skapar Service
-            MovieRepository movieRepository = new MovieRepository_(ss);
             MovieService movieService = new MovieService();
 
-            // Anropar metod från MovieService
-            List<Movie> results = movieService.searchMovies("Stellar");
-
-            // Verifierar
-            assertThat(results)
-                .as("Ska hitta Interstellar via sökning på 'Stellar' tack vare %-logiken i servicen")
+            // Test 1: Sökning via Title
+            List<Movie> titleResult = movieService.searchMovies("Stellar");
+            assertThat(titleResult)
                 .extracting(Movie::getTitle)
-                .containsExactly("Interstellar");
+                .contains("Interstellar");
+
+            // Test 2: Sökning via Genre
+            List<Movie> genreResults = movieService.searchMovies("Sci-Fi");
+            assertThat(genreResults)
+                .extracting(Movie::getTitle)
+                    .contains("Interstellar");
 
         }
     }
 
-    // Uppdatera filmuthyring - U
+    // Uppdatera filmuthyring med nytt pris och förlängd tid - U
 
-    // Ta bort filmuthyrning - D
+    // Ta bort filmuthyrning, när 24h alt 48h passerat? - D
 
 }
