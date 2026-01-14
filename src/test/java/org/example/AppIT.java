@@ -124,7 +124,7 @@ public class AppIT {
     void rentMovies_ShouldCreateRentalAndRentalMoviesInDatabase() {
 
         // Förbereder data
-        Customer customer = new Customer("Förnamn", "Efternamn", "test@mail.com");
+        Customer customer = new Customer("Förnamn", "Efternamn", "rent-test@mail.com");
         Movie movie = new Movie("Interstellar", "Sci-Fi", new BigDecimal("99"));
 
         try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
@@ -171,7 +171,7 @@ public class AppIT {
             Transaction tx = ss.beginTransaction();
 
             // Skapar kund
-            Customer customer = new Customer("Förnamn", "Efternamn", "test@mail.com");
+            Customer customer = new Customer("Förnamn", "Efternamn", "renew-test@mail.com");
             ss.insert(customer);
 
             // Skapar film
