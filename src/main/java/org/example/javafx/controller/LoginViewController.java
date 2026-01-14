@@ -21,6 +21,7 @@ public class LoginViewController {
     public TextField eMail;
     public Button logInReg;
     public Label errorLabel;
+    public Label loginViewHeader;
     @Inject
     NavigationService navigator;
     @Inject

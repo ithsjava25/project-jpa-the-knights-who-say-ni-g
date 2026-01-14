@@ -13,7 +13,7 @@
         <VBox spacing="15" alignment="CENTER"
               style="-fx-padding: 40; -fx-border-color: black; -fx-border-width: 3;">
 
-            <Label text="Blockbuster Login"
+            <Label fx:id="loginViewHeader" text="Blockbuster Login"
                    style="-fx-font-size: 22; -fx-font-weight: bold;" />
 
             <TextField fx:id="forNamn"

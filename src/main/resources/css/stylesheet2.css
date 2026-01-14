@@ -1,10 +1,8 @@
 
 
 #root {
-    /*-fx-background-color: white;*/
-    -fx-background-color: linear-gradient(to bottom right, #1a1a2e, #16213e, #0f3460);
+    -fx-background-color: "gray";
     -fx-font-family: Arial;
-
 }
 
 #homebuttonpane {
@@ -18,11 +16,6 @@
     -fx-border-color: transparent;
 }
 
-#loginViewHeader{
-    -fx-text-fill: #FFD700;
-    -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.3), 10, 0, 0, 0);
-    -fx-letter-spacing: 2px;
-}
 
 .label-text {
     -fx-font-size: 25px;
@@ -31,18 +24,6 @@
     -fx-font-weight: bold;
     -fx-background-color: transparent;
 }
-/* Blockbuster titeln*/
-#headTitle {
-
-    -fx-text-fill: #FFD700;
-    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0 , 2);
-    -fx-background-color: #0f3460  063970;
-    -fx-background-radius: 18px;
-    -fx-border-color: #FFD700;
-    -fx-border-radius: 18px;
-    -fx-padding: 5 10 5 10;
-}
-
 
 /* --- Inre ScrollPanes (movies/genres) --- */
 .content-scroll-pane {
@@ -131,28 +112,4 @@
 .custom-table .table-cell {
     -fx-border-color: transparent black transparent transparent; /* Vertikal linje innan priset */
     -fx-padding: 5;
-}
-
-#titleLabel {
-    -fx-text-fill: #FFD700;
-    -fx-font-size: 20px;
-}
-#priceLabel{
-    -fx-text-fill: #FFD700;
-    -fx-font-size: 20px;
-}
-#logOut{
-    -fx-padding: 5 20;
-    -fx-background-color: transparent;
-    -fx-border-color: #FFD700;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-text-fill: #FFD700;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-}
-#logOut:hover{
-    -fx-background-color: #FFD700;
-    -fx-text-fill: #1a1a1a; /* Mörk text när knappen blir guldig */
-    -fx-effect: dropshadow(three-pass-box, rgba(255, 215, 0, 0.5), 10, 0, 0, 0);
 }

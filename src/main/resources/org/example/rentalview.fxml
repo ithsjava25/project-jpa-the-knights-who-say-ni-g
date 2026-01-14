@@ -7,12 +7,12 @@
 <center>
     <VBox>
         <VBox>
-            <Label text="Dina hyrda filmer" />
+            <Label text="Dina hyrda filmer" style="-fx-font-weight: bold; -fx-font-size: 20px;" textFill="#FFD700"/>
 
             <HBox spacing="0">
-                <Label prefWidth="350" text="Film" />
-                <Label prefWidth="200" text="Tillgänglig t.o.m" />
-                <Label prefWidth="80" text="Pris" textAlignment="RIGHT" />
+                <Label prefWidth="350" text="Film" textFill="#FFD700"/>
+                <Label prefWidth="200" text="Tillgänglig t.o.m" textFill="#FFD700"/>
+                <Label prefWidth="80" text="Pris" textAlignment="RIGHT" textFill="#FFD700"/>
             </HBox>
             <TableView fx:id="rentalTable" prefHeight="300" styleClass="custom-table">
                 <columns>
@@ -28,21 +28,21 @@
                   style="-fx-border-color: black; -fx-border-width: 2 0 0 0; -fx-padding: 5 0 0 0;">
 
                 <HBox>
-                    <Label text="Extra avgifter:" style="-fx-font-weight: bold;" />
+                    <Label text="Extra avgifter:" style="-fx-font-weight: bold;" textFill="#FFD700"/>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Label fx:id="extraPriceLabel" style="-fx-font-weight: bold;" text="0 kr" />
+                    <Label fx:id="extraPriceLabel" style="-fx-font-weight: bold;" text="0 kr" textFill="#FFD700"/>
                 </HBox>
 
                 <HBox>
-                    <Label text="Totalt pris:" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                    <Label text="Totalt pris:" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="#FFD700"/>
                     <Region HBox.hgrow="ALWAYS" />
                     <Label fx:id="totalPriceLabel"
-                           style="-fx-font-weight: bold; -fx-font-size: 14px;"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="#FFD700"
                            text="0 kr" />
 
                 </HBox>
                 <HBox alignment="BOTTOM_RIGHT" prefHeight="60">
-                <Button fx:id="logOut" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 3; -fx-font-weight: bold; -fx-padding: 5 20;" text="Logga ut"/>
+                <Button fx:id="logOut"  text="Logga ut"/>
                 </HBox>
 
             </VBox>
