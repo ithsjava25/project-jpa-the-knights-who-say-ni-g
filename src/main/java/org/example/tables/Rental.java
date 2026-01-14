@@ -20,10 +20,6 @@ public class Rental {
     @Column(name= "rental_date")
     private LocalDateTime rentalDate;
 
-    //TotalRentalPrice ska ej lagras permanent, ska beräknas från rentalmovie
-//    @Column(name= "total_rental_price")
-//    private BigDecimal totalRentalPrice;
-
 
 
     public Rental() {
@@ -63,15 +59,6 @@ public class Rental {
     public void setRentalDate(LocalDateTime rentalDate) {
         this.rentalDate = rentalDate;
     }
-
-
-//    public BigDecimal getTotalRentalPrice() {
-//        return totalRentalPrice;
-//    }
-//
-//    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
-//        this.totalRentalPrice = totalRentalPrice;
-//    }
 
     public Set<RentalMovie> getMovierental() {
         return movierental;

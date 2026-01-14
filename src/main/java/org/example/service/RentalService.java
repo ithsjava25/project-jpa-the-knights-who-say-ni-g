@@ -1,7 +1,6 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.Tuple;
 import org.example.javafx.HibernateUtil;
 import org.example.javafx.controller.RentedMovieView;
 import org.example.repository.RentalRepository;
@@ -65,10 +64,7 @@ public class RentalService {
     }
 
     //Projection, istället för att hämta en entitet - hämta ett dto-objekt
-    // Return a 'list' in view for the customer to see which movies he/she rents
-    // public List<>
-    //Testade med att använda Object[] men detta blev fel när jag försökte sätta kolumnnamnen i Array, då ordningen ej är tydlig eller kan ändras i tabellen
-    //Tuple är en rad från databasen där varje kolumn har ett namn(Ett alternativ till Object[]). Nycklarna används sedan i mapToRentedMovies för att använda rätt kolumner i tabellen
+    // Return a 'list' of DTO-objects regarding the customer to see which movies he/she rents
     public List<RentedMovieView> getRentedMoviesByCustomer(Customer customer) {
         //Returnerar en tom lista om det inte fins några uthyrda filmer
         if (customer == null) return List.of();
