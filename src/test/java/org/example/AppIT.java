@@ -93,10 +93,10 @@ public class AppIT {
 
         try (StatelessSession setupSession = HibernateUtil.getSessionFactory().openStatelessSession()) {
             Transaction tx = setupSession.beginTransaction();
+
             Customer existingC = new Customer("Bob", "Bobsson", existingEmail);
-            setupSession.insert(existingC);
+            existingId = (Long) setupSession.insert(existingC);
             tx.commit();
-            existingId = existingC.getCustomerId();
 
             CustomerService service = new CustomerService();
             Customer result = service.logInOrRegister("Bob", "Bobsson", existingEmail);
