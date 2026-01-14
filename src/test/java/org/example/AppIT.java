@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
@@ -58,9 +59,6 @@ public class AppIT {
     }
 
 
-
-
-    // Kontrollera om annvändaren finns - logga in
     @Test
     void loginUser_shouldCreateNewUser_WhenEmailDoesNotExist() {
 
@@ -88,8 +86,7 @@ public class AppIT {
         }
     }
 
-    //Kontrollera om annvändaren finns - skapa ny användare
-    @Test
+   @Test
     void loginUser_shouldReturnExistingCustomer_whenEmailExists(){
         String existingEmail = "befintligUser@gmail.com";
         Long existingId;
@@ -113,8 +110,17 @@ public class AppIT {
         }
     }
 
+    @Test
+    void loginOrRegister_ShouldThrowException_WhenEmailIsInvalid() {
+
+        CustomerService service = new CustomerService();
+        assertThatThrownBy(() -> service.logInOrRegister("Anna", "A", "ogiltig-email"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("Invalid email format");
+
+    }
+
     // Todo: Se över efter ändrad projekt struktur
-    // Skapa uthyrning/Rental
     @Test
     void createNewRental() {
         try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
@@ -207,6 +213,7 @@ public class AppIT {
     }
 
     // Uppdatera filmuthyring med nytt pris och förlängd tid - U
+
 
     // Ta bort filmuthyrning, när 24h alt 48h passerat? - D
 
