@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rental_movie")
@@ -15,9 +16,11 @@ public class RentalMovie {
         private Long id;
 
         @ManyToOne(optional = false)
+        @JoinColumn(name = "rental_id")
         private Rental rental;
 
         @ManyToOne(optional = false)
+        @JoinColumn(name = "movie_id")
         private Movie movie;
 
         @Column(nullable = false, name = "base_price")
@@ -79,6 +82,17 @@ public class RentalMovie {
 
     public void setRentedAt(LocalDateTime rentedAt) {
         this.returnDate = rentedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof RentalMovie that)) return false;
+        return Objects.equals(id, that.id) && Objects.equals(rental, that.rental) && Objects.equals(movie, that.movie) && Objects.equals(basePrice, that.basePrice) && Objects.equals(returnDate, that.returnDate) && Objects.equals(additionalCost, that.additionalCost);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, rental, movie, basePrice, returnDate, additionalCost);
     }
 }
 

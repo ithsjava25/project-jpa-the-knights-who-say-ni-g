@@ -24,7 +24,7 @@ import java.util.List;
 public class RentalViewController {
 
 
-    public Label extraPriceLabel;
+
     @Inject
     NavigationService navigator;
 
@@ -57,6 +57,9 @@ public class RentalViewController {
 
     @FXML
     Label totalPriceLabel;
+
+    @FXML
+    Label extraPriceLabel;
 
     @FXML
     BorderPane rentalRoot;

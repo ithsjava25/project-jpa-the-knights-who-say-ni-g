@@ -1,6 +1,9 @@
 package org.example.repository;
 
 import jakarta.data.repository.CrudRepository;
+import jakarta.data.repository.Repository;
+import org.example.tables.RentalMovie;
 
-public interface RentalMovieRepository extends CrudRepository {
+@Repository
+public interface RentalMovieRepository extends CrudRepository<RentalMovie, Long> {
 }

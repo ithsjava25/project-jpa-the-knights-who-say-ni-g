@@ -29,7 +29,8 @@ public class RentedMovieView {
     }
 
     public BigDecimal getPrice() {
-        return price.get().add(additionalCost.get());
+        BigDecimal additional = additionalCost.get();
+        return additional != null ? price.get().add(additional) : price.get();
     }
 
     public String getTitle() {

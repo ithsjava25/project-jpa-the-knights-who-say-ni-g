@@ -78,19 +78,21 @@ public class Rental {
     }
 
     public void removeItem(RentalMovie item) {
-        movierental.remove(item);
-        item.setRental(null);
+        if(item != null && movierental.remove(item)) {
+            movierental.remove(item);
+            item.setRental(null);
+        }
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Rental rental)) return false;
-        return Objects.equals(rentalId, rental.rentalId) && Objects.equals(rentalDate, rental.rentalDate)  && Objects.equals(customer, rental.customer) && Objects.equals(movierental, rental.movierental);
+        return rentalId != null && Objects.equals(rentalId, rental.rentalId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rentalId, rentalDate, customer, movierental);
+        return Objects.hash(rentalId);
     }
 }
 

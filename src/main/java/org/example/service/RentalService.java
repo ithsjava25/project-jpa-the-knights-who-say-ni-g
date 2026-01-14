@@ -114,7 +114,7 @@ public class RentalService {
             // Loops through and deletes
             // Måste rensa kopplingstabellen manuellt först via NativeQuery pga StatelessSession
             for (Rental rental : oldRentals) {
-                ss.createNativeQuery("DELETE from movie_rental WHERE rental_id = :rId")
+                ss.createNativeQuery("DELETE from rental_movie WHERE rental_id = :rId")
                     .setParameter("rId", rental.getRentalId())
                     .executeUpdate();
 
