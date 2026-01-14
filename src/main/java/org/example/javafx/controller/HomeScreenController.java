@@ -6,11 +6,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
@@ -102,8 +104,21 @@ public class HomeScreenController {
         Rectangle poster = new Rectangle(120, 160);
         poster.setArcHeight(15);
         poster.setArcWidth(15);
-        poster.setFill(Color.WHITE);
+        //poster.setFill(Color.WHITE);
         poster.setStroke(Color.BLACK);
+
+        var resource = getClass().getResource("/images/" + "default.jpg");
+
+        if (resource != null) {
+            // 2. Skapa bilden (utan 'true' för att säkerställa att den laddas direkt)
+            Image img = new Image(resource.toExternalForm());
+            // 3. Fyll rektangeln med bilden
+            poster.setFill(new ImagePattern(img));
+        } else {
+            // Om bilden saknas, använd en snygg reservfärg (t.ex. mörkgrå)
+            poster.setFill(Color.web("#2a2a2a"));
+            System.out.println("Kunde inte hitta bild: " + movie.getImageUrl());
+        }
 
         Label titleLabel = new Label(movie.getTitle());
         titleLabel.setMaxWidth((115));

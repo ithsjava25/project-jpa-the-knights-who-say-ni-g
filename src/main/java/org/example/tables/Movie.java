@@ -23,6 +23,8 @@ public class Movie {
 
     private BigDecimal price = new BigDecimal(0);
 
+    private String imageUrl;
+
 
     public Movie(){}
 
@@ -100,5 +102,18 @@ public class Movie {
     @Override
     public int hashCode() {
         return Objects.hashCode(itemId);
+    }
+
+    public String getImageUrl() {
+        // 1. Om variabeln imageUrl i databasen är tom, returnera en placeholder
+        if (this.imageUrl == null || this.imageUrl.isEmpty()) {
+            return Objects.requireNonNull(getClass().getResource("/images/no-poster.png")).toExternalForm();
+        }
+
+        // 2. Försök hitta bilden i resources/images/
+        var resource = getClass().getResource("/images/" + this.imageUrl);
+
+        // 3. Om filen finns, returnera dess externa form, annars placeholder
+        return Objects.requireNonNullElseGet(resource, () -> Objects.requireNonNull(getClass().getResource("/images/no-poster.png"))).toExternalForm();
     }
 }
