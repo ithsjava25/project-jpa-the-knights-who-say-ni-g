@@ -72,7 +72,7 @@ public class RentalService {
 
         return ss.createQuery(
                 "SELECT new org.example.javafx.controller.RentedMovieView(" +
-                    "rm.id, m.title, rm.basePrice, rm.returnDate, rm.additionalCost)" +
+                    "rm.id, m.title, rm.basePrice, rm.returnDate, rm.additionalCost) " +
                     "FROM RentalMovie rm " +
                     "JOIN rm.movie m " +
                     "JOIN rm.rental r " +
