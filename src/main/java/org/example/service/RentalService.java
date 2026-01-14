@@ -23,8 +23,6 @@ public class RentalService {
     private final RentalRepository rentalRepository = new RentalRepository_(ss);
 
 
-    // get all rentals for a costumer? Via Repository
-
     // Create a rental for a customer, information sent to Repository via save
     public void rentMovies(Customer customer, List<Movie> movies) {
         // Check the customer (get customer id)?
@@ -110,7 +108,7 @@ public class RentalService {
 
     public void deleteExpiredRentalMovies() {
         //SQL now current timestamp
-        //Flyttas in till RentalMovieRepo
+        //Flyttas ej in till RentalMovieRepo då det är en för komplicerad fråga för Jakarta Data
         LocalDateTime now = LocalDateTime.now();
         Transaction tx = ss.beginTransaction();
 

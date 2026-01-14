@@ -43,7 +43,7 @@ public class App extends Application{
                     }
                 }
                 }, 0,          // kör direkt vid start
-                20 * 1000   // kör var 10:e sekund
+                20 * 1000   // kör var 20:e sekund
             );
 
             //Start fxml
@@ -78,8 +78,12 @@ public class App extends Application{
 
     @Override
     public void stop() {
-        timer.cancel();
-        container.close();
+        if (timer!=null) {
+            timer.cancel();
+        }
+        if (container!=null) {
+            container.close();
+        }
     }
 
 //Hickaricp, använder en pool av connections till databasen
