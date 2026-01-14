@@ -19,6 +19,7 @@ public interface RentalRepository extends CrudRepository<Rental,Long> {
     @Insert
     Rental createRental(Rental rental);
 
+    //deleteByRental i movierental
     @Find
     List<Rental> findByRentalDateLessThan(LocalDateTime rentalDate);
 

@@ -39,8 +39,8 @@ public class Movie {
     private Set<Actor> actor = new HashSet<>();
 
 
-    @ManyToMany(mappedBy ="movierental")
-    private Set<Rental> rentals = new HashSet<>();
+    @OneToMany(mappedBy ="movie")
+    private Set<RentalMovie> rentals = new HashSet<>();
 
 
 
@@ -83,22 +83,22 @@ public class Movie {
         this.actor = actor;
     }
 
-    public Set<Rental> getRentals() {
+    public Set<RentalMovie> getRentals() {
         return rentals;
     }
 
-    public void setRentals(Set<Rental> inventoryList) {
+    public void setRentals(Set<RentalMovie> inventoryList) {
         this.rentals = inventoryList;
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Movie movie)) return false;
-        return itemId == movie.itemId && Objects.equals(title, movie.title) && Objects.equals(genre, movie.genre) && Objects.equals(price, movie.price) && Objects.equals(actor, movie.actor) && Objects.equals(rentals, movie.rentals);
+        return itemId == movie.itemId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, title, genre, price, actor, rentals);
+        return Objects.hashCode(itemId);
     }
 }

@@ -14,6 +14,7 @@ import org.example.service.RentalService;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.example.tables.Rental;
+import org.example.tables.RentalMovie;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RentalViewController {
+
 
 
     @Inject
@@ -42,6 +44,9 @@ public class RentalViewController {
     TableView<RentedMovieView> rentalTable; // todo: lösa så att tableview kan se rentaltabellen
 
     @FXML
+    TableColumn<RentedMovieView, Void> renewColumn;
+
+    @FXML
     TableColumn<RentedMovieView, LocalDateTime> returnColumn;
 
     @FXML
@@ -52,6 +57,9 @@ public class RentalViewController {
 
     @FXML
     Label totalPriceLabel;
+
+    @FXML
+    Label extraPriceLabel;
 
     @FXML
     BorderPane rentalRoot;
@@ -65,6 +73,7 @@ public class RentalViewController {
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 
+
     @FXML
     public void initialize() {
 
@@ -73,8 +82,40 @@ public class RentalViewController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         returnColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
-        returnColumn.setCellFactory(column -> new TableCell<>() {
+        renewColumn.setCellFactory(col-> new TableCell<>(){
+            private final Button renewButton = new Button("Hyr om");
+            {
+                renewButton.setOnAction(event -> {
+                    RentedMovieView rental =
+                        getTableView().getItems().get(getIndex());
 
+                    Alert alert = new Alert(
+                        Alert.AlertType.CONFIRMATION,
+                        "Förläng uthyrningen med 24h för 29kr?",
+                        ButtonType.YES,
+                        ButtonType.NO
+                    );
+                    if(alert.showAndWait().orElse(ButtonType.NO) == ButtonType.YES){
+                        //Raden man klickar på förlängs
+                        rentalService.renewRentalMovie(rental.getRentalId());
+                        loadRentedMovies();
+                    }
+
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if(empty){
+                    setGraphic(null);
+                } else {
+                    setGraphic(renewButton);
+                }
+            }
+        });
+
+        returnColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {
                 super.updateItem(item, empty);
@@ -86,6 +127,8 @@ public class RentalViewController {
                 }
             }
         });
+
+
 
         logOut.setOnAction(event -> {
             navigator.setCenter("/org/example/loginview.fxml");
@@ -107,9 +150,21 @@ public class RentalViewController {
             //Lägger till listan i TableView
             rentalTable.setItems(FXCollections.observableArrayList(rentedMovies));
 
+            //Visar totalt pris för uthyrning - hämtas via RentedMovieView
+            BigDecimal totalRentalPrice = rentedMovies.stream()
+                .map(RentedMovieView::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            BigDecimal totalExtraCost = rentedMovies.stream()
+                .map(RentedMovieView::getAdditionalCost)
+                .map(cost -> cost != null ? cost : BigDecimal.ZERO)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
             //Uppdaterar totalpriset av alla filmer och syns som text
-            BigDecimal totalPrice = rentalService.calculateTotalPriceFromView(rentedMovies);
-            totalPriceLabel.setText(totalPrice.toString() + "kr");
+            totalPriceLabel.setText(totalRentalPrice.toString() + "kr");
+            //Uppdaterar label för extra kostnader
+            extraPriceLabel.setText(totalExtraCost + "kr");
+
         } catch (Exception e) {
             System.err.println("Kunde inte visa några filmer: " + e.getMessage());
         }
@@ -117,50 +172,6 @@ public class RentalViewController {
 
     }
 
-//    // ===== Test‑support =====
-//    /**
-//     * Skapar eller hämtar en testcustomer och hyr ut ett antal filmer till den.
-//     * Används för att fylla tabellen vid utveckling/testning.
-//     */
-//    private Optional<Customer> createOrFetchTestCustomer() {
-//        // Förutsatt att du har en CustomerRepository tillgänglig via DI
-//        Optional<Customer> testCustomer = customerService.findByEmail("anna.andersson@test.se");
-//        if (!testCustomer.isPresent()) {
-//            //Optional<Customer> newCustomer = Optional.of(new Customer("Test", "user", "test@mail"));
-//            // Spara kunden – antag att du har en save‑metod
-//            customerService.createCustomer("Test", "user", "test@mail");
-//        }
-//        return testCustomer;
-//    }
-//
-//    /**
-//     * Håller koll på vilka filmer som ska hyras ut i test.
-//     */
-//    private List<Movie> getTestMovies() {
-//        // Exempel: hämta de första 3 filmerna från MovieRepository
-//        return movieService.getAllMovies().stream()
-//            .limit(3)
-//            .collect(Collectors.toList());
-//    }
-//
-//    /**
-//     * Laddar hyrda filmer för test‑kunden.
-//     */
-//    private void loadTestRentedMovies() {
-//        Optional<Customer> testCustomer = createOrFetchTestCustomer();
-//        List<Movie> moviesToRent = getTestMovies();
-//
-//        // Om kunden ännu inte har hyrt någon film, skapa en ny uthyrning
-//        if (rentalService.getRentedMoviesByCustomer(testCustomer.get()).isEmpty()) {
-//            rentalService.rentMovies(testCustomer.get(), moviesToRent);
-//        }
-//
-//        List<Movie> rented = rentalService.getRentedMoviesByCustomer(testCustomer.get());
-//        // Här kan du sedan binda 'rented' till din TableView eller liknande
-//        rentalTable.setItems(FXCollections.observableArrayList(rented));
-//        BigDecimal totalPrice = rentalService.calculatePrice(rented);
-//        totalPriceLabel.setText(totalPrice.toString() + "kr");
-//    }
 
 
 }

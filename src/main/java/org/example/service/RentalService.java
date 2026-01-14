@@ -1,7 +1,6 @@
 package org.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.Tuple;
 import org.example.javafx.HibernateUtil;
 import org.example.javafx.controller.RentedMovieView;
 import org.example.repository.RentalRepository;
@@ -9,13 +8,12 @@ import org.example.repository.RentalRepository_;
 import org.example.tables.Customer;
 import org.example.tables.Movie;
 import org.example.tables.Rental;
+import org.example.tables.RentalMovie;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -32,96 +30,80 @@ public class RentalService {
         // Check the customer (get customer id)?
         Transaction tx = ss.beginTransaction();
         try {
-            //         Customer verifiedCustomer = null;
-//            try {
-//                verifiedCustomer = CustomerRepository.findByEmail(customer.getEmail());
-//            } catch (Exception e) {
-//                System.out.println("The customer does not exist");
-//            }
             LocalDateTime now = LocalDateTime.now();
             // Create rental-objekt
             Rental rental = new Rental();
             rental.setCustomer(customer);
             rental.setRentalDate(now);
-            rental.setReturnDate(now.plusHours(24));
 
-            // Calculates total price for movie rentals
-            rental.setTotalRentalPrice(calculateTotalPriceFromMovies(movies));
-
-            // Create a Rental to get an ID - Because of StatelessSession we need to insert every object
+            // Saves a Rental to get an ID - Because of StatelessSession we need to insert every object
             ss.insert(rental);
 
+            //Skapar 1 RentalMovie per film
             for (Movie movie : movies) {
-                // Manuell SQL eftersom det inte finns någon entitet för kopplingen
-                ss.createNativeQuery(
-                    "INSERT INTO movie_rental (rental_id, movie_id) VALUES (:rId, :mId)")
-                    .setParameter("rId", rental.getRentalId())
-                    .setParameter("mId", movie.getId())
-                    .executeUpdate();
-                }
+                RentalMovie rm = new RentalMovie();
+                rm.setRental(rental);
+                rm.setMovie(movie);
+                rm.setPrice(movie.getPrice());
+                rm.setRentedAt(now.plusHours(24));
+                rm.setAdditionalCost(BigDecimal.ZERO);
 
-                    tx.commit();
-            System.out.println("Movie rental created with total price: " + rental.getTotalRentalPrice());
+                rental.getMovierental().add(rm);
+                //sparar ett rental_movie objekt
+                ss.insert(rm);
+            }
+
+
+            tx.commit();
+            System.out.println("Movie rental created");
         } catch (Exception e) {
             tx.rollback();
             throw new RuntimeException("Could not create rental", e);
         }
 
     }
-    // Return a 'list' in view for the customer to see which movies he/she rents
-    // public List<>
-    //Testade med att använda Object[] men detta blev fel när jag försökte sätta kolumnnamnen i Array, då ordningen ej är tydlig eller kan ändras i tabellen
-    //Tuple är en rad från databasen där varje kolumn har ett namn(Ett alternativ till Object[]). Nycklarna används sedan i mapToRentedMovies för att använda rätt kolumner i tabellen
+
+    //Projection, istället för att hämta en entitet - hämta ett dto-objekt
+    // Return a 'list' of DTO-objects regarding the customer to see which movies he/she rents
     public List<RentedMovieView> getRentedMoviesByCustomer(Customer customer) {
         //Returnerar en tom lista om det inte fins några uthyrda filmer
         if (customer == null) return List.of();
         // hämtar alla filmer som är kopplade till kunden via movie_rental och rental-tabellerna för att visa i vyn
-        List<Tuple> rows =
-         ss.createNativeQuery(
-                "SELECT m.title as title, m.price as price, r.return_date as returnDate FROM movie m " +
-                    "JOIN movie_rental mr ON m.item_id = mr.movie_id " +
-                    "JOIN rental r ON mr.rental_id = r.rental_id " +
-                    "WHERE r.customer_id = :cId", Tuple.class)
+
+        return ss.createQuery(
+                "SELECT new org.example.javafx.controller.RentedMovieView(" +
+                    "rm.id, m.title, rm.basePrice, rm.returnDate, rm.additionalCost) " +
+                    "FROM RentalMovie rm " +
+                    "JOIN rm.movie m " +
+                    "JOIN rm.rental r " +
+                    "WHERE r.customer.customerId = :cId", RentedMovieView.class)
             .setParameter("cId", customer.getCustomerId())
             .getResultList();
 
-        return mapToRentedMovieView(rows);
     }
 
-    //Gör om rådatan till JavaFX-vänliga Objekt
-    private List<RentedMovieView> mapToRentedMovieView(List<Tuple> rows) {
-        List<RentedMovieView> result = rows.stream()
-            .map(t -> new RentedMovieView(
-                t.get("title", String.class),
-                t.get("price", BigDecimal.class),
-                t.get("returnDate", LocalDateTime.class)
-            ))
-            .toList();
-
-        return result;
-    }
-
-    //Calculate total rent price based on prices from MovieRepository
-    //För uthyrning
-    public BigDecimal calculateTotalPriceFromMovies(List<Movie> movies) {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (Movie movie : movies) {
-            if(movie.getPrice() != null) {
-                sum = sum.add(movie.getPrice());
-           }
-        }
-        return sum;
-    }
-
-    //För vyn
-    public BigDecimal calculateTotalPriceFromView(List<RentedMovieView> movies) {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (RentedMovieView movie : movies) {
-            if(movie.getPrice() != null) {
-                sum = sum.add(movie.getPrice());
+    //For MySQL
+    //Förnyar en uthyrning med 24h, lägger då på 29kr, queryn uppdaterar raden för valt id
+    public void renewRentalMovie(Long rentalMovieId) {
+        Transaction tx = ss.beginTransaction();
+        try {
+            int updated = ss.createNativeQuery("""
+                    update rental_movie
+                    set return_date = DATE_ADD(return_date, INTERVAL 24 HOUR),
+                        additional_cost = coalesce(additional_cost, 0) + 29
+                    where movie_rental_id = :rentalId
+                    """)
+                .setParameter("rentalId", rentalMovieId)
+                .executeUpdate();
+            if(updated == 0){
+                throw new IllegalArgumentException("RentalMovie not found: " + rentalMovieId);
             }
+
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            throw new RuntimeException("Could not renew rental. ", e);
         }
-        return sum;
     }
 
     public void deleteOldRentals() {
@@ -135,14 +117,14 @@ public class RentalService {
             // Loops through and deletes
             // Måste rensa kopplingstabellen manuellt först via NativeQuery pga StatelessSession
             for (Rental rental : oldRentals) {
-                ss.createNativeQuery("DELETE from movie_rental WHERE rental_id = :rId")
+                ss.createNativeQuery("DELETE from rental_movie WHERE rental_id = :rId")
                     .setParameter("rId", rental.getRentalId())
                     .executeUpdate();
 
                 rentalRepository.delete(rental);
             }
             tx.commit();
-            System.out.println("Cleared " +  oldRentals.size() + " old rentals.");
+            System.out.println("Cleared " + oldRentals.size() + " old rentals.");
         } catch (Exception e) {
             tx.rollback();
             throw new RuntimeException("Could not clear old rentals", e);

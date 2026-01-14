@@ -20,12 +20,6 @@ public class Rental {
     @Column(name= "rental_date")
     private LocalDateTime rentalDate;
 
-    @Column(name= "return_date")
-    private LocalDateTime returnDate;
-
-    @Column(name= "total_rental_price")
-    private BigDecimal totalRentalPrice;
-
 
 
     public Rental() {
@@ -37,11 +31,11 @@ public class Rental {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToMany
-    @JoinTable(name = "movie_rental",
-        joinColumns = @JoinColumn(name = "rental_id"),
-        inverseJoinColumns = @JoinColumn(name = "movie_id"))
-    private Set<Movie> movierental = new HashSet<>();
+    //ersätta many to many - egen entitet med id sammansatt nyckel film id och rental id
+    //Cascade.all tar bort föräldern samt barn
+    //orphanRemoval tvingar movieRental-tabellen att ta bort objektet om en rental försvinner, en rentalMovie ska inte kunna existera utan en rental
+    @OneToMany(mappedBy = "rental",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RentalMovie> movierental = new HashSet<>();
     //Blir det många listor om man har List<Movierental> här?
     //Eller kan man slå ihop dem med att ha List<Movie> istället?
 
@@ -66,47 +60,38 @@ public class Rental {
         this.rentalDate = rentalDate;
     }
 
-        public LocalDateTime getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(LocalDateTime returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public BigDecimal getTotalRentalPrice() {
-        return totalRentalPrice;
-    }
-
-    public void setTotalRentalPrice(BigDecimal totalRentalPrice) {
-        this.totalRentalPrice = totalRentalPrice;
-    }
-
-    public Set<Movie> getMovierental() {
+    public Set<RentalMovie> getMovierental() {
         return movierental;
     }
 
-    public void setMovierental(Set<Movie> movierental) {
+    public void setMovierental(Set<RentalMovie> movierental) {
         this.movierental = movierental;
     }
 
 
-    public void addMovie(Movie movie) {
-        if (movie != null) {
-            this.movierental.add(movie);
-            movie.getRentals().add(this);
+
+    public void addItem(RentalMovie item) {
+        if (item != null) {
+            movierental.add(item);
+            item.setRental(this);
+        }
+    }
+
+    public void removeItem(RentalMovie item) {
+        if(item != null && movierental.remove(item)) {
+            item.setRental(null);
         }
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Rental rental)) return false;
-        return Objects.equals(rentalId, rental.rentalId) && Objects.equals(rentalDate, rental.rentalDate) && Objects.equals(totalRentalPrice, rental.totalRentalPrice) && Objects.equals(customer, rental.customer) && Objects.equals(movierental, rental.movierental);
+        return Objects.equals(rentalId, rental.rentalId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rentalId, rentalDate, totalRentalPrice, customer, movierental);
+        return Objects.hashCode(rentalId);
     }
 }
 

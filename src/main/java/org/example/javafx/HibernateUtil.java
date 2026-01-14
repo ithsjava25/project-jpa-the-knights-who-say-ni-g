@@ -32,6 +32,7 @@ public class HibernateUtil {
                 .addAnnotatedClasses(org.example.tables.Rental.class)
                 .addAnnotatedClasses(org.example.tables.Actor.class)
                 .addAnnotatedClasses(org.example.tables.Customer.class)
+                .addAnnotatedClasses(org.example.tables.RentalMovie.class)
                 .getMetadataBuilder()
                 .build()
                 .getSessionFactoryBuilder()
