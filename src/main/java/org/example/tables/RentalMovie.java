@@ -87,12 +87,12 @@ public class RentalMovie {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof RentalMovie that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(rental, that.rental) && Objects.equals(movie, that.movie) && Objects.equals(basePrice, that.basePrice) && Objects.equals(returnDate, that.returnDate) && Objects.equals(additionalCost, that.additionalCost);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rental, movie, basePrice, returnDate, additionalCost);
+        return Objects.hashCode(id);
     }
 }
 

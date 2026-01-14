@@ -157,6 +157,7 @@ public class RentalViewController {
 
             BigDecimal totalExtraCost = rentedMovies.stream()
                 .map(RentedMovieView::getAdditionalCost)
+                .map(cost -> cost != null ? cost : BigDecimal.ZERO)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             //Uppdaterar totalpriset av alla filmer och syns som text

@@ -87,7 +87,7 @@ public class RentalService {
     public void renewRentalMovie(Long rentalMovieId) {
         Transaction tx = ss.beginTransaction();
         try {
-            ss.createNativeQuery("""
+            int updated = ss.createNativeQuery("""
                     update rental_movie
                     set return_date = DATE_ADD(return_date, INTERVAL 24 HOUR),
                         additional_cost = coalesce(additional_cost, 0) + 29
@@ -95,6 +95,9 @@ public class RentalService {
                     """)
                 .setParameter("rentalId", rentalMovieId)
                 .executeUpdate();
+            if(updated == 0){
+                throw new IllegalArgumentException("RentalMovie not found: " + rentalMovieId);
+            }
 
             tx.commit();
         } catch (Exception e) {

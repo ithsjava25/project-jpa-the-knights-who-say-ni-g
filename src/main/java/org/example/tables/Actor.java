@@ -76,11 +76,11 @@ public class Actor {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Actor actor)) return false;
-        return id == actor.id && Objects.equals(firstName, actor.firstName) && Objects.equals(lastName, actor.lastName) && Objects.equals(movie, actor.movie);
+        return id == actor.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, movie);
+        return Objects.hashCode(id);
     }
 }

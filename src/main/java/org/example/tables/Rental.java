@@ -79,7 +79,6 @@ public class Rental {
 
     public void removeItem(RentalMovie item) {
         if(item != null && movierental.remove(item)) {
-            movierental.remove(item);
             item.setRental(null);
         }
     }
@@ -87,12 +86,12 @@ public class Rental {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Rental rental)) return false;
-        return rentalId != null && Objects.equals(rentalId, rental.rentalId);
+        return Objects.equals(rentalId, rental.rentalId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rentalId);
+        return Objects.hashCode(rentalId);
     }
 }
 
