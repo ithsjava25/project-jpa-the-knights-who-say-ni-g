@@ -69,10 +69,6 @@ public class HomeScreenController {
         });
 
 
-
-
-//        topListener();
-        //printOutButtons();
     }
     public void setRoot(BorderPane root) {
         this.root = root;

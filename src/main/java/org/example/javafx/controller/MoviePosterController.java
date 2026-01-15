@@ -53,6 +53,7 @@ public class MoviePosterController {
         // PLaceholder för framtida bilder
 //        Image image = new Image(movie.getImageUrl());
 //        posterRectangle.setFill(new ImagePattern(img));
+
 //// Hämta URL:en till bilden från resources
 //        String imagePath = getClass().getResource("/images/" + movie.getImageUrl()).toExternalForm();
 //
