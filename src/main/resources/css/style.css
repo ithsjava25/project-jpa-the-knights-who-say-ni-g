@@ -155,3 +155,14 @@
     -fx-text-fill: #1a1a1a; /* Mörk text när knappen blir guldig */
     -fx-effect: dropshadow(three-pass-box, rgba(255, 215, 0, 0.5), 10, 0, 0, 0);
 }
+
+.actor-header {
+    -fx-text-fill: gold;
+    -fx-font-weight: bold;
+}
+
+.actor-name {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+

@@ -25,12 +25,14 @@ import java.math.BigDecimal;
 
 public class MoviePosterController {
 
+
     @Inject
     AppModel model;
 
     @Inject
     NavigationService navigator;
 
+    @FXML private VBox actorBox;
     @FXML private Label titleLabel;
     @FXML private Label priceLabel;
     @FXML private Rectangle posterRectangle;
@@ -50,6 +52,7 @@ public class MoviePosterController {
         // Image image = new Image(movie.getImageUrl());
         //posterRectangle.setFill(new ImagePattern(img));
 
+        showActors(movie);
         addListener();
     }
 
@@ -67,4 +70,24 @@ public class MoviePosterController {
 
         });
     }
+    private void showActors(Movie movie) {
+        actorBox.getChildren().clear();
+
+        if (movie.getActor() == null || movie.getActor().isEmpty()) {
+            return;
+        }
+
+        Label header = new Label("Skådespelare:");
+        header.getStyleClass().add("actor-header");
+        actorBox.getChildren().add(header);
+
+        movie.getActor().forEach(actor -> {
+            Label actorLabel = new Label(
+                actor.getFirstName() + " " + actor.getLastName()
+            );
+            actorLabel.getStyleClass().add("actor-name");
+            actorBox.getChildren().add(actorLabel);
+        });
+    }
+
 }
