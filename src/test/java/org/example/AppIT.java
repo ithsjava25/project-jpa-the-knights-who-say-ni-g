@@ -1,10 +1,6 @@
 package org.example;
 
 import org.example.javafx.HibernateUtil;
-import org.example.repository.CustomerRepository;
-import org.example.repository.CustomerRepository_;
-import org.example.repository.MovieRepository;
-import org.example.repository.MovieRepository_;
 import org.example.service.CustomerService;
 import org.example.service.MovieService;
 import org.example.service.RentalService;
@@ -22,11 +18,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @Testcontainers
 public class AppIT {
@@ -122,7 +117,6 @@ public class AppIT {
 
     @Test
     void rentMovies_ShouldCreateRentalAndRentalMoviesInDatabase() {
-
         // Förbereder data
         Customer customer = new Customer("Förnamn", "Efternamn", "rent-test@mail.com");
         Movie movie = new Movie("Interstellar", "Sci-Fi", new BigDecimal("99"));
@@ -218,21 +212,6 @@ public class AppIT {
         }
     }
 
-   // Todo: Addera test för beräkna totalpris
-//    @Test
-//    void calculateTotalPriceForMovies(){
-//        // Skapa en instans av servicen manuellt för ett enhetstest
-//        RentalService service = new RentalService();
-//
-//        List<Movie> movies = List.of(
-//            new Movie("Film 1", "Action", new BigDecimal("50.00")),
-//            new Movie("Film 2", "Drama", new BigDecimal("30.00"))
-//        );
-//
-//        BigDecimal result = service.calculateTotalPriceFromMovies(movies);
-//
-//        assertEquals(0, new BigDecimal("80.00").compareTo(result));
-//    }
 
     @Test
     void searchMoviesViaMovieService_shouldFindBothTitleAndGenre() {
@@ -263,5 +242,95 @@ public class AppIT {
 
 
     // Ta bort filmuthyrning, när 24h alt 48h passerat? - D
+    @Test
+    void deleteMovieRental_ShouldRemoveRentalFromDatabase() {
+        Long rentalMovieID;
 
+        // Skapa en fixerad tidpunkt
+        LocalDateTime rentedAt = LocalDateTime.now();
+        LocalDateTime rentalDate = LocalDateTime.now().minusHours(25);
+
+        // Skapar data som ska uppdateras
+        try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
+            Transaction tx = ss.beginTransaction();
+
+            // Skapar kund
+            Customer customer = new Customer("Förnamn", "Efternamn", "renew-test@mail.com");
+            ss.insert(customer);
+
+            // Skapar film
+            Movie movie = new Movie("Interstellar", "Sci-Fi", new BigDecimal("99"));
+            ss.insert(movie);
+
+            // Kopplar kund till rental
+            Rental rental = new Rental();
+            rental.setCustomer(customer);
+            rental.setRentalDate(rentalDate);//15/1 kl 10
+            ss.insert(rental);
+
+            // Skapar RentalMovie
+            RentalMovie rm = new RentalMovie();
+            rm.setRental(rental);
+            rm.setMovie(movie);
+            rm.setPrice(new BigDecimal("99"));
+            rm.setRentedAt(rentedAt); //16/1 kl
+
+            // Sparar och hämtar genererat ID
+            rentalMovieID = (Long) ss.insert(rm);
+            tx.commit();
+        }
+
+        RentalService service = new RentalService();
+        service.deleteExpiredRentalMovies();
+
+            try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
+                RentalMovie deleted = ss.get(RentalMovie.class, rentalMovieID);
+
+            //Kolla att filmen/Rental har försvunnit
+            assertNull(deleted, "Expired RentalMovie should be deleted");
+        }
+    }
+
+    @Test
+    void deleteEmptyRentals() {
+        Long rentalID;
+
+        // Skapa en fixerad tidpunkt
+        LocalDateTime rentedAt = LocalDateTime.now();
+        LocalDateTime rentalDate = LocalDateTime.now().minusHours(23);
+
+
+        // Skapar data som ska uppdateras
+        try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
+            Transaction tx = ss.beginTransaction();
+
+            // Skapar kund
+            Customer customer = new Customer("Förnamn", "Efternamn", "renew-test@mail.com");
+            ss.insert(customer);
+
+            // Skapar film
+            Movie movie = new Movie("Interstellar", "Sci-Fi", new BigDecimal("99"));
+            ss.insert(movie);
+
+            // Kopplar kund till rental
+            Rental rental = new Rental();
+            rental.setCustomer(customer);
+            rental.setRentalDate(rentalDate);
+            rentalID = (Long) ss.insert(rental);
+
+            tx.commit();
+        }
+
+        RentalService service = new RentalService();
+        service.deleteEmptyRentals();
+
+
+        try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
+            Rental deleted = ss.get(Rental.class, rentalID);
+
+            //Kolla att Rental har försvunnit
+            assertNull(deleted, "Expired Rental should be deleted");
+
+        }
+    }
 }

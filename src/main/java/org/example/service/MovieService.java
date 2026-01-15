@@ -66,16 +66,5 @@ public class MovieService{
     }
 
 
-//    public void saveMovie(Movie movie) {
-//        movieRepository.save(movie);
-//    }
-//
-//    @Transactional
-//    public boolean deleteMovie(int id) {
-//        if (movieRepository.existsById(id)){
-//            movieRepository.deleteById(id);
-//            return  true;
-//        }
-//        return false;
-//    }
+
 }
