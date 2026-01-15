@@ -7,25 +7,32 @@
 
 <BorderPane fx:id="movieRoot" prefWidth="315.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafx.controller.MoviePosterController">
     <center>
-        <VBox fx:id="baseVbox" alignment="CENTER" spacing="15">
+        <HBox fx:id="baseVbox" alignment="TOP_CENTER" spacing="40">
 
-            <VBox fx:id="moviePoster" alignment="CENTER">
-               <Label fx:id="titleLabel"  text="Filmtitel"> </Label>
+            <VBox fx:id="moviePoster" alignment="CENTER" spacing="15">
+               <Label fx:id="titleLabel"  text="Filmtitel"/>
 
                 <StackPane>
                     <Rectangle fx:id="posterRectangle" arcHeight="15" arcWidth="15" fill="WHITE" height="320" stroke="BLACK" width="240" />
                 </StackPane>
-            </VBox>
 
-            <HBox fx:id="buttonSpace" alignment="CENTER" maxWidth="350" spacing="10">
+
+
+
+            <HBox fx:id="buttonSpace" alignment="CENTER"  spacing="10">
                 <Label fx:id="priceLabel" text="0.00 kr"> </Label>
                 <Button fx:id="MovieButton" prefHeight="30" prefWidth="100" text="Lägg till film"> </Button>
                 <Button fx:id="RentMoreMoviesButton" prefHeight="30" prefWidth="100" text="Hyr fler filmer"> </Button>
             <opaqueInsets>
                <Insets />
             </opaqueInsets>
-            </HBox>
-        </VBox>
+                </HBox>
+                </VBox>
+                <VBox fx:id="actorBox"
+                      alignment="CENTER_LEFT"
+                      spacing="6"
+                      prefWidth="180"/>
+        </HBox>
     </center>
    <opaqueInsets>
       <Insets />

@@ -34,16 +34,12 @@ public class MoviePosterController {
     @Inject
     NavigationService navigator;
 
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private Label priceLabel;
-    @FXML
-    private Rectangle posterRectangle;
-    @FXML
-    private Button MovieButton;
-    @FXML
-    private Button RentMoreMoviesButton;
+    @FXML private VBox actorBox;
+    @FXML private Label titleLabel;
+    @FXML private Label priceLabel;
+    @FXML private Rectangle posterRectangle;
+    @FXML private Button MovieButton;
+    @FXML private Button RentMoreMoviesButton;
 
     private Movie selectedMovie;
 
@@ -51,8 +47,8 @@ public class MoviePosterController {
         this.selectedMovie = movie;
 
         // Uppdaterar innehållet dynamiskt
-        titleLabel.setText(movie.getTitle());
-        priceLabel.setText(String.format("%.2f", movie.getPrice()));
+       titleLabel.setText(movie.getTitle());
+       priceLabel.setText(String.format("%.2f", movie.getPrice()));
 
         // PLaceholder för framtida bilder
 //        Image image = new Image(movie.getImageUrl());
@@ -81,6 +77,7 @@ public class MoviePosterController {
             System.out.println("Hittade inte bilden: " + imageFileName);
             posterRectangle.setFill(Color.GRAY);
         }
+        showActors(movie);
         addListener();
     }
 
@@ -98,4 +95,24 @@ public class MoviePosterController {
 
         });
     }
+    private void showActors(Movie movie) {
+        actorBox.getChildren().clear();
+
+        if (movie.getActor() == null || movie.getActor().isEmpty()) {
+            return;
+        }
+
+        Label header = new Label("Skådespelare:");
+        header.getStyleClass().add("actor-header");
+        actorBox.getChildren().add(header);
+
+        movie.getActor().forEach(actor -> {
+            Label actorLabel = new Label(
+                actor.getFirstName() + " " + actor.getLastName()
+            );
+            actorLabel.getStyleClass().add("actor-name");
+            actorBox.getChildren().add(actorLabel);
+        });
+    }
+
 }
