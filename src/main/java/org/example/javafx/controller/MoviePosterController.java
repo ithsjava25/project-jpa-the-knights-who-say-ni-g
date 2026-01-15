@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import org.example.javafx.AppModel;
@@ -21,10 +23,10 @@ import org.example.service.RentalService;
 import org.example.tables.Movie;
 
 import javax.smartcardio.Card;
+
 import java.math.BigDecimal;
 
 public class MoviePosterController {
-
 
     @Inject
     AppModel model;
@@ -49,9 +51,32 @@ public class MoviePosterController {
        priceLabel.setText(String.format("%.2f", movie.getPrice()));
 
         // PLaceholder för framtida bilder
-        // Image image = new Image(movie.getImageUrl());
-        //posterRectangle.setFill(new ImagePattern(img));
+//        Image image = new Image(movie.getImageUrl());
+//        posterRectangle.setFill(new ImagePattern(img));
+//// Hämta URL:en till bilden från resources
+//        String imagePath = getClass().getResource("/images/" + movie.getImageUrl()).toExternalForm();
+//
+//// Skapa bilden
+//        Image img = new Image(imagePath);
+//
+//// Applicera den på din rektangel
+//        posterRectangle.setFill(new ImagePattern(img));
+        String imageFileName = movie.getImageUrl();
+        // Säkerhetskoll: om url saknas i databasen, använd en backup
+        if (imageFileName == null || imageFileName.isEmpty()) {
+            imageFileName = "default.jpg";
+        }
 
+        var resource = getClass().getResource("/images/" + "default.jpg");
+
+        if (resource != null) {
+            // Vi kör utan 'true' eftersom det fungerade för dig
+            Image img = new Image(resource.toExternalForm(), false);
+            posterRectangle.setFill(new ImagePattern(img));
+        } else {
+            System.out.println("Hittade inte bilden: " + imageFileName);
+            posterRectangle.setFill(Color.GRAY);
+        }
         showActors(movie);
         addListener();
     }

@@ -11,7 +11,7 @@
     <left>
         <VBox>
             <VBox>
-        <ListView fx:id="shoppingList" prefWidth="200.0">
+        <ListView fx:id="shoppingList" prefWidth="250.0">
 
         </ListView>
             </VBox>
