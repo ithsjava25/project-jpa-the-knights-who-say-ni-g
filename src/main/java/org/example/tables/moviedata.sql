@@ -1,4 +1,6 @@
 use blockbuster_gang;
+
+
 insert into movie (title, genre, price)
 values ('The Shawshank Redemption', 'Drama', 79),
        ('The Godfather', 'Crime', 99),
@@ -22,90 +24,89 @@ values ('The Shawshank Redemption', 'Drama', 79),
        ('The Lion King', 'Animation', 49);
 
 insert into actor (first_name, last_name) values
-                                              ('Tim', 'Robbins'),
-                                              ('Morgan', 'Freeman'),
-                                              ('Bob', 'Gunton'),
-                                              ('William', 'Sadler'),
+                                              ('Tim','Robbins'),
+                                              ('Morgan','Freeman'),
+                                              ('Bob','Gunton'),
+                                              ('William','Sadler'),
 
-                                              ('Marlon', 'Brando'),
-                                              ('Al', 'Pacino'),
-                                              ('James', 'Caan'),
-                                              ('Diane', 'Keaton'),
+                                              ('Marlon','Brando'),
+                                              ('Al','Pacino'),
+                                              ('James','Caan'),
+                                              ('Diane','Keaton'),
 
-                                              ('Christian', 'Bale'),
-                                              ('Heath', 'Ledger'),
-                                              ('Aaron', 'Eckhart'),
-                                              ('Gary', 'Oldman'),
-                                              ('Michael', 'Caine'),
+                                              ('Christian','Bale'),
+                                              ('Heath','Ledger'),
+                                              ('Aaron','Eckhart'),
+                                              ('Gary','Oldman'),
+                                              ('Michael','Caine'),
 
-                                              ('John', 'Travolta'),
-                                              ('Samuel L.', 'Jackson'),
-                                              ('Uma', 'Thurman'),
-                                              ('Bruce', 'Willis'),
+                                              ('John','Travolta'),
+                                              ('Samuel L.','Jackson'),
+                                              ('Uma','Thurman'),
+                                              ('Bruce','Willis'),
 
-                                              ('Liam', 'Neeson'),
-                                              ('Ralph', 'Fiennes'),
-                                              ('Ben', 'Kingsley'),
+                                              ('Liam','Neeson'),
+                                              ('Ralph','Fiennes'),
+                                              ('Ben','Kingsley'),
 
-                                              ('Elijah', 'Wood'),
-                                              ('Ian', 'McKellen'),
-                                              ('Viggo', 'Mortensen'),
-                                              ('Sean', 'Astin'),
-                                              ('Andy', 'Serkis'),
+                                              ('Elijah','Wood'),
+                                              ('Ian','McKellen'),
+                                              ('Viggo','Mortensen'),
+                                              ('Sean','Astin'),
+                                              ('Andy','Serkis'),
 
-                                              ('Brad', 'Pitt'),
-                                              ('Edward', 'Norton'),
-                                              ('Helena', 'Bonham Carter'),
+                                              ('Brad','Pitt'),
+                                              ('Edward','Norton'),
+                                              ('Helena','Bonham Carter'),
 
-                                              ('Tom', 'Hanks'),
-                                              ('Robin', 'Wright'),
-                                              ('Gary', 'Sinise'),
+                                              ('Tom','Hanks'),
+                                              ('Robin','Wright'),
+                                              ('Gary','Sinise'),
 
-                                              ('Leonardo', 'DiCaprio'),
-                                              ('Joseph', 'Gordon-Levitt'),
-                                              ('Elliot', 'Page'),
-                                              ('Tom', 'Hardy'),
+                                              ('Leonardo','DiCaprio'),
+                                              ('Joseph','Gordon-Levitt'),
+                                              ('Elliot','Page'),
+                                              ('Tom','Hardy'),
 
-                                              ('Keanu', 'Reeves'),
-                                              ('Laurence', 'Fishburne'),
-                                              ('Carrie-Anne', 'Moss'),
-                                              ('Hugo', 'Weaving'),
+                                              ('Keanu','Reeves'),
+                                              ('Laurence','Fishburne'),
+                                              ('Carrie-Anne','Moss'),
+                                              ('Hugo','Weaving'),
 
-                                              ('Ray', 'Liotta'),
-                                              ('Joe', 'Pesci'),
-                                              ('Robert', 'De Niro'),
+                                              ('Ray','Liotta'),
+                                              ('Joe','Pesci'),
+                                              ('Robert','De Niro'),
 
-                                              ('Jodie', 'Foster'),
-                                              ('Anthony', 'Hopkins'),
-                                              ('Scott', 'Glenn'),
+                                              ('Jodie','Foster'),
+                                              ('Anthony','Hopkins'),
+                                              ('Scott','Glenn'),
 
-                                              ('Brad', 'Pitt'),
-                                              ('Morgan', 'Freeman'),
-                                              ('Gwyneth', 'Paltrow'),
+                                              ('Gwyneth','Paltrow'),
 
-                                              ('Matthew', 'McConaughey'),
-                                              ('Anne', 'Hathaway'),
-                                              ('Jessica', 'Chastain'),
+                                              ('Matthew','McConaughey'),
+                                              ('Anne','Hathaway'),
+                                              ('Jessica','Chastain'),
 
-                                              ('Song', 'Kang-ho'),
-                                              ('Lee', 'Sun-kyun'),
-                                              ('Cho', 'Yeo-jeong'),
+                                              ('Song','Kang-ho'),
+                                              ('Lee','Sun-kyun'),
+                                              ('Cho','Yeo-jeong'),
 
-                                              ('Russell', 'Crowe'),
-                                              ('Joaquin', 'Phoenix'),
-                                              ('Connie', 'Nielsen'),
+                                              ('Russell','Crowe'),
+                                              ('Joaquin','Phoenix'),
+                                              ('Connie','Nielsen'),
 
-                                              ('David', 'Morse'),
-                                              ('Michael Clarke', 'Duncan'),
+                                              ('David','Morse'),
+                                              ('Michael Clarke','Duncan'),
 
-                                              ('Vin', 'Diesel'),
-                                              ('Matt', 'Damon'),
+                                              ('Vin','Diesel'),
+                                              ('Matt','Damon'),
 
-                                              ('Miyu', 'Irino'),
+                                              ('Miyu','Irino'),
 
-                                              ('Matthew', 'Broderick'),
-                                              ('Jeremy', 'Irons'),
-                                              ('James Earl', 'Jones');
+                                              ('Matthew','Broderick'),
+                                              ('Jeremy','Irons'),
+                                              ('James Earl','Jones');
+
 
 
 insert into movie_actor (movie_id, actor_id) values
@@ -121,7 +122,7 @@ insert into movie_actor (movie_id, actor_id) values
 -- Pulp Fiction
 (4,14),(4,15),(4,16),(4,17),
 
--- Schindler
+-- Schindler's List
 (5,18),(5,19),(5,20),
 
 -- LOTR
@@ -146,28 +147,29 @@ insert into movie_actor (movie_id, actor_id) values
 (12,43),(12,44),(12,45),
 
 -- Se7en
-(13,46),(13,47),(13,48),
+(13,26),(13,2),(13,46),
 
 -- Interstellar
-(14,49),(14,50),(14,51),
+(14,47),(14,48),(14,49),
 
 -- Parasite
-(15,52),(15,53),(15,54),
+(15,50),(15,51),(15,52),
 
 -- Gladiator
-(16,55),(16,56),(16,57),
+(16,53),(16,54),(16,55),
 
 -- Green Mile
-(17,29),(17,58),(17,59),
+(17,29),(17,56),(17,57),
 
 -- Saving Private Ryan
-(18,29),(18,60),(18,61),
+(18,29),(18,58),(18,59),
 
 -- Spirited Away
-(19,62),
+(19,60),
 
 -- Lion King
-(20,63),(20,64),(20,65);
+(20,61),(20,62),(20,63);
+
 
 -- Select fråga för test
 
