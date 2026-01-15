@@ -248,7 +248,7 @@ public class AppIT {
 
         // Skapa en fixerad tidpunkt
         LocalDateTime rentedAt = LocalDateTime.now();
-        LocalDateTime rentalDate = LocalDateTime.now().minusHours(24);
+        LocalDateTime rentalDate = LocalDateTime.now().minusHours(25);
 
         // Skapar data som ska uppdateras
         try (StatelessSession ss = HibernateUtil.getSessionFactory().openStatelessSession()) {
